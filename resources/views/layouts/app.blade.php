@@ -1,21 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-slate-900 text-slate-100">
+<html lang="en" class="h-full bg-slate-50 text-slate-800">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'CargoTrace') - Global Shipment Visibility & Tracking Platform</title>
 
-    <!-- Google Fonts: Inter -->
+    <!-- Google Fonts: Inter / Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
@@ -23,20 +22,15 @@
                         mono: ['"JetBrains Mono"', 'monospace'],
                     },
                     colors: {
-                        brand: {
+                        primary: {
                             50: '#eff6ff',
                             100: '#dbeafe',
-                            400: '#60a5fa',
+                            200: '#bfdbfe',
                             500: '#3b82f6',
                             600: '#2563eb',
                             700: '#1d4ed8',
-                            900: '#1e3a8a',
                         },
-                        navy: {
-                            800: '#1e293b',
-                            900: '#0f172a',
-                            950: '#020617',
-                        }
+                        surface: '#f8fafc',
                     }
                 }
             }
@@ -57,186 +51,240 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .font-mono { font-family: 'JetBrains Mono', monospace; }
         .leaflet-popup-content-wrapper {
-            background-color: #0f172a !important;
-            color: #f1f5f9 !important;
+            background-color: #ffffff !important;
+            color: #1e293b !important;
             border-radius: 0.75rem !important;
-            border: 1px solid #334155 !important;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5) !important;
+            border: 1px solid #e2e8f0 !important;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08) !important;
         }
         .leaflet-popup-tip {
-            background-color: #0f172a !important;
+            background-color: #ffffff !important;
         }
         .leaflet-container {
             font-family: 'Plus Jakarta Sans', sans-serif !important;
         }
         /* Custom scrollbar */
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
     @stack('styles')
 </head>
-<body class="h-full flex flex-col bg-slate-950 text-slate-100 antialiased selection:bg-brand-500 selection:text-white">
+<body class="h-full bg-slate-50 text-slate-800 antialiased flex flex-col md:flex-row">
 
-    <!-- Top Navigation Bar -->
-    <nav class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <!-- Left: Brand Logo -->
-                <div class="flex items-center gap-8">
-                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 group">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-cyan-500 flex items-center justify-center shadow-lg shadow-brand-500/20 group-hover:scale-105 transition duration-200">
-                            <i class="fa-solid fa-earth-americas text-white text-lg"></i>
-                        </div>
-                        <div>
-                            <span class="text-xl font-bold tracking-tight text-white flex items-center gap-1.5">
-                                Cargo<span class="text-brand-400">Trace</span>
-                                <span class="px-1.5 py-0.5 text-[10px] uppercase font-bold tracking-wider rounded bg-brand-500/10 text-brand-400 border border-brand-500/20">Global</span>
-                            </span>
-                            <p class="text-[10px] text-slate-400 font-medium">Visibility & Tracking Platform</p>
-                        </div>
-                    </a>
-
-                    <!-- Nav Links -->
-                    <div class="hidden md:flex items-center space-x-1">
-                        <a href="{{ route('dashboard') }}" class="px-3 py-2 rounded-lg text-sm font-medium transition {{ request()->routeIs('dashboard') ? 'bg-slate-800 text-brand-400 font-semibold' : 'text-slate-300 hover:bg-slate-800/60 hover:text-white' }}">
-                            <i class="fa-solid fa-chart-pie mr-1.5 text-xs"></i> Dashboard
-                        </a>
-                        <a href="{{ route('shipments.index') }}" class="px-3 py-2 rounded-lg text-sm font-medium transition {{ request()->routeIs('shipments.*') ? 'bg-slate-800 text-brand-400 font-semibold' : 'text-slate-300 hover:bg-slate-800/60 hover:text-white' }}">
-                            <i class="fa-solid fa-boxes-stacked mr-1.5 text-xs"></i> Shipments
-                        </a>
-                        <a href="{{ route('locations.index') }}" class="px-3 py-2 rounded-lg text-sm font-medium transition {{ request()->routeIs('locations.*') ? 'bg-slate-800 text-brand-400 font-semibold' : 'text-slate-300 hover:bg-slate-800/60 hover:text-white' }}">
-                            <i class="fa-solid fa-globe mr-1.5 text-xs"></i> World Ports
-                        </a>
-                        <a href="{{ route('carriers.index') }}" class="px-3 py-2 rounded-lg text-sm font-medium transition {{ request()->routeIs('carriers.*') ? 'bg-slate-800 text-brand-400 font-semibold' : 'text-slate-300 hover:bg-slate-800/60 hover:text-white' }}">
-                            <i class="fa-solid fa-ship mr-1.5 text-xs"></i> Carriers
-                        </a>
-                        <a href="{{ route('currencies.index') }}" class="px-3 py-2 rounded-lg text-sm font-medium transition {{ request()->routeIs('currencies.*') ? 'bg-slate-800 text-brand-400 font-semibold' : 'text-slate-300 hover:bg-slate-800/60 hover:text-white' }}">
-                            <i class="fa-solid fa-coins mr-1.5 text-xs"></i> Currencies
-                        </a>
-                        @if(Auth::check() && Auth::user()->isAdmin())
-                        <a href="{{ route('audit-logs.index') }}" class="px-3 py-2 rounded-lg text-sm font-medium transition {{ request()->routeIs('audit-logs.*') ? 'bg-slate-800 text-brand-400 font-semibold' : 'text-slate-300 hover:bg-slate-800/60 hover:text-white' }}">
-                            <i class="fa-solid fa-shield-halved mr-1.5 text-xs"></i> Audit Logs
-                        </a>
-                        @endif
-                    </div>
+    <!-- Sidebar Navigation (Matching User Reference Image) -->
+    <aside class="w-full md:w-64 bg-white border-r border-slate-200/80 shrink-0 flex flex-col justify-between h-auto md:min-h-screen">
+        <div class="p-5">
+            <!-- App Brand Header -->
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-sm shadow-blue-500/20">
+                    <i class="fa-solid fa-ship text-lg"></i>
                 </div>
+                <div>
+                    <h1 class="text-base font-bold text-slate-900 leading-tight">CargoTrace</h1>
+                    <p class="text-[11px] text-slate-400 font-medium">Shipment Visibility</p>
+                </div>
+            </div>
 
-                <!-- Right: Currency Switcher, Notifications, User Menu -->
-                <div class="flex items-center gap-3">
-                    <!-- Global Currency Switcher Dropdown -->
-                    <form action="{{ route('currency.switch') }}" method="POST" class="inline-flex items-center">
-                        @csrf
-                        <div class="relative inline-block text-left">
-                            <label for="currencySelect" class="sr-only">Switch Currency</label>
-                            <div class="flex items-center bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 hover:border-slate-600 transition">
-                                <i class="fa-solid fa-money-bill-transfer text-amber-400 mr-1.5"></i>
-                                <select id="currencySelect" name="currency_code" onchange="this.form.submit()" class="bg-transparent text-xs font-semibold focus:outline-none cursor-pointer pr-1">
-                                    @foreach($globalCurrencies ?? [] as $curr)
-                                        <option value="{{ $curr->code }}" {{ ($activeCurrencyCode ?? 'USD') === $curr->code ? 'selected' : '' }} class="bg-slate-900 text-slate-100">
-                                            {{ $curr->code }} ({{ $curr->symbol }})
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </form>
-
-                    <!-- Public Track Link -->
-                    <a href="{{ route('public.track') }}" target="_blank" title="Open Public Tracking Portal" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800/80 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700/60 transition">
-                        <i class="fa-solid fa-magnifying-glass-location text-brand-400"></i> Track Code
+            <!-- Navigation Links by Category -->
+            <nav class="space-y-6">
+                <!-- Group 1: OVERVIEW -->
+                <div class="space-y-1">
+                    <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Overview</p>
+                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('dashboard') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
+                        <i class="fa-solid fa-grip text-sm w-4"></i>
+                        <span>Dashboard</span>
                     </a>
-
+                    <a href="{{ route('public.track') }}" target="_blank" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition">
+                        <i class="fa-solid fa-earth-americas text-sm w-4"></i>
+                        <span>Public Tracker</span>
+                    </a>
                     @auth
-                    <!-- Notifications Bell -->
-                    <a href="{{ route('notifications.index') }}" class="relative p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition" title="Notifications">
-                        <i class="fa-regular fa-bell text-base"></i>
+                    <a href="{{ route('notifications.index') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('notifications.*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-regular fa-bell text-sm w-4"></i>
+                            <span>Notifications</span>
+                        </div>
                         @if(($unreadNotificationsCount ?? 0) > 0)
-                        <span class="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white ring-2 ring-slate-900">
+                        <span class="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-red-100 text-red-600">
                             {{ $unreadNotificationsCount }}
                         </span>
                         @endif
                     </a>
-
-                    <!-- User Profile & Role Badge -->
-                    <div class="flex items-center gap-3 pl-2 border-l border-slate-800">
-                        <div class="text-right hidden lg:block">
-                            <div class="text-xs font-semibold text-white leading-tight">{{ Auth::user()->name }}</div>
-                            <span class="inline-flex items-center px-1.5 py-0.2 rounded text-[10px] font-bold uppercase
-                                {{ Auth::user()->role === 'admin' ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30' : '' }}
-                                {{ Auth::user()->role === 'operator' ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30' : '' }}
-                                {{ Auth::user()->role === 'customer' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : '' }}">
-                                {{ Auth::user()->role }}
-                            </span>
-                        </div>
-
-                        <!-- Logout Form -->
-                        <form action="{{ route('logout') }}" method="POST" class="inline">
-                            @csrf
-                            <button type="submit" class="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition" title="Log out">
-                                <i class="fa-solid fa-arrow-right-from-bracket text-base"></i>
-                            </button>
-                        </form>
-                    </div>
-                    @else
-                    <a href="{{ route('login') }}" class="px-4 py-2 text-xs font-semibold rounded-lg bg-brand-600 hover:bg-brand-500 text-white transition">Sign In</a>
                     @endauth
                 </div>
+
+                <!-- Group 2: INVENTORY & OPERATIONS -->
+                <div class="space-y-1">
+                    <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Logistics</p>
+                    <a href="{{ route('shipments.index') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('shipments.*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
+                        <i class="fa-solid fa-box-archive text-sm w-4"></i>
+                        <span>Shipments</span>
+                    </a>
+                    <a href="{{ route('locations.index') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('locations.*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
+                        <i class="fa-solid fa-location-dot text-sm w-4"></i>
+                        <span>World Ports</span>
+                    </a>
+                    <a href="{{ route('carriers.index') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('carriers.*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
+                        <i class="fa-solid fa-truck-fast text-sm w-4"></i>
+                        <span>Carriers</span>
+                    </a>
+                </div>
+
+                <!-- Group 3: FINANCIALS & MULTI-CURRENCY -->
+                <div class="space-y-1">
+                    <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Financials</p>
+                    <a href="{{ route('currencies.index') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('currencies.*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-coins text-sm w-4 text-amber-500"></i>
+                            <span>Multi-Currency</span>
+                        </div>
+                        <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
+                            {{ $activeCurrencyCode ?? 'USD' }}
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Group 4: SYSTEM (Admin only) -->
+                @if(Auth::check() && Auth::user()->isAdmin())
+                <div class="space-y-1">
+                    <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">System</p>
+                    <a href="{{ route('audit-logs.index') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('audit-logs.*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
+                        <i class="fa-solid fa-shield text-sm w-4"></i>
+                        <span>Audit Logs</span>
+                    </a>
+                </div>
+                @endif
+            </nav>
+        </div>
+
+        <!-- User Profile Card at bottom of Sidebar -->
+        <div class="p-4 border-t border-slate-200/80 bg-slate-50/50">
+            @auth
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs shrink-0">
+                        {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-xs font-semibold text-slate-900 truncate leading-tight">{{ Auth::user()->name }}</p>
+                        <span class="inline-block text-[10px] font-medium text-slate-400 uppercase tracking-wider">
+                            {{ Auth::user()->role }}
+                        </span>
+                    </div>
+                </div>
+
+                <form action="{{ route('logout') }}" method="POST" class="inline">
+                    @csrf
+                    <button type="submit" title="Sign out" class="p-1.5 text-slate-400 hover:text-red-500 rounded-lg hover:bg-red-50 transition">
+                        <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
+                    </button>
+                </form>
             </div>
+            @else
+            <a href="{{ route('login') }}" class="w-full flex items-center justify-center py-2 px-3 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-500 rounded-xl transition shadow-sm">
+                Sign In to Console
+            </a>
+            @endauth
         </div>
-    </nav>
+    </aside>
 
-    <!-- Flash Alerts -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 w-full">
-        @if(session('success'))
-        <div class="flex items-center gap-3 p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm mb-4 animate-fade-in shadow-lg shadow-emerald-500/5">
-            <i class="fa-solid fa-circle-check text-base"></i>
-            <span class="font-medium">{{ session('success') }}</span>
-        </div>
-        @endif
-
-        @if(session('info'))
-        <div class="flex items-center gap-3 p-3.5 rounded-xl bg-brand-500/10 border border-brand-500/20 text-brand-400 text-sm mb-4">
-            <i class="fa-solid fa-circle-info text-base"></i>
-            <span class="font-medium">{{ session('info') }}</span>
-        </div>
-        @endif
-
-        @if($errors->any())
-        <div class="p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm mb-4">
-            <div class="flex items-center gap-2 font-semibold mb-1">
-                <i class="fa-solid fa-triangle-exclamation text-base"></i>
-                <span>Please correct the errors below:</span>
+    <!-- Main Content Area with Top Header Bar -->
+    <div class="flex-1 flex flex-col min-w-0 min-h-screen">
+        <!-- Top Header Bar -->
+        <header class="bg-white border-b border-slate-200/80 px-6 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 sticky top-0 z-30">
+            <!-- Breadcrumbs / Title Context -->
+            <div class="flex items-center gap-2 text-xs text-slate-400 font-medium">
+                <i class="fa-regular fa-square text-slate-300"></i>
+                <a href="{{ route('dashboard') }}" class="hover:text-slate-700">Dashboard</a>
+                <span>&gt;</span>
+                <span class="text-slate-800 font-semibold">@yield('title', 'Overview')</span>
             </div>
-            <ul class="list-disc list-inside space-y-0.5 text-xs text-red-300 ml-4">
-                @foreach($errors->all() as $err)
-                    <li>{{ $err }}</li>
-                @endforeach
-            </ul>
+
+            <!-- Header Right: Global Currency Selector, Search bar, Notification Bell -->
+            <div class="flex items-center gap-3">
+                <!-- Global Currency Switcher Dropdown (Soft Style) -->
+                <form action="{{ route('currency.switch') }}" method="POST" class="inline-flex items-center">
+                    @csrf
+                    <div class="flex items-center bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs text-slate-700 hover:border-slate-300 transition">
+                        <i class="fa-solid fa-coins text-amber-500 mr-1.5 text-xs"></i>
+                        <select name="currency_code" onchange="this.form.submit()" class="bg-transparent text-xs font-semibold focus:outline-none cursor-pointer pr-1 text-slate-800">
+                            @foreach($globalCurrencies ?? [] as $curr)
+                                <option value="{{ $curr->code }}" {{ ($activeCurrencyCode ?? 'USD') === $curr->code ? 'selected' : '' }}>
+                                    {{ $curr->code }} ({{ $curr->symbol }})
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </form>
+
+                <!-- Search Input Shortcut -->
+                <form action="{{ route('shipments.index') }}" method="GET" class="relative hidden sm:block">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-2.5 text-slate-400">
+                        <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                    </span>
+                    <input type="text" name="search" placeholder="Search..."
+                           class="w-48 pl-8 pr-8 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:bg-white transition">
+                    <span class="absolute inset-y-0 right-0 flex items-center pr-2 text-[10px] font-mono text-slate-400">⌘K</span>
+                </form>
+
+                <!-- Header Actions (Notification Bell) -->
+                @auth
+                <a href="{{ route('notifications.index') }}" class="relative p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition" title="Notifications">
+                    <i class="fa-regular fa-bell text-sm"></i>
+                    @if(($unreadNotificationsCount ?? 0) > 0)
+                    <span class="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">
+                        {{ $unreadNotificationsCount }}
+                    </span>
+                    @endif
+                </a>
+                @endauth
+            </div>
+        </header>
+
+        <!-- Flash Messages -->
+        <div class="px-6 sm:px-8 pt-4 w-full">
+            @if(session('success'))
+            <div class="flex items-center gap-3 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs shadow-sm mb-4">
+                <i class="fa-solid fa-circle-check text-emerald-600 text-sm"></i>
+                <span class="font-medium">{{ session('success') }}</span>
+            </div>
+            @endif
+
+            @if(session('info'))
+            <div class="flex items-center gap-3 p-3.5 rounded-xl bg-blue-50 border border-blue-200 text-blue-800 text-xs shadow-sm mb-4">
+                <i class="fa-solid fa-circle-info text-blue-600 text-sm"></i>
+                <span class="font-medium">{{ session('info') }}</span>
+            </div>
+            @endif
+
+            @if($errors->any())
+            <div class="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs shadow-sm mb-4">
+                <div class="flex items-center gap-2 font-bold mb-1 text-red-700">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span>Please review the errors below:</span>
+                </div>
+                <ul class="list-disc list-inside space-y-0.5 text-red-600 ml-4">
+                    @foreach($errors->all() as $err)
+                        <li>{{ $err }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
         </div>
-        @endif
+
+        <!-- Main Page Body -->
+        <main class="flex-1 px-6 sm:px-8 py-6 w-full max-w-7xl">
+            @yield('content')
+        </main>
+
+        <!-- Minimal Footer -->
+        <footer class="mt-auto border-t border-slate-200/80 bg-white py-4 px-6 text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-2">
+            <span>CargoTrace &copy; 2026 • Global Shipment Visibility & Tracking Platform</span>
+            <span>Display Currency: <strong class="text-slate-700 font-mono">{{ $activeCurrencyCode ?? 'USD' }}</strong> • Worldwide Coverage</span>
+        </footer>
     </div>
-
-    <!-- Main Content -->
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        @yield('content')
-    </main>
-
-    <!-- Footer -->
-    <footer class="mt-auto border-t border-slate-800 bg-slate-900/60 py-6 text-xs text-slate-400">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-2">
-                <span class="font-bold text-slate-200">CargoTrace</span>
-                <span>• Global Visibility & Tracking Platform • Web Programming 2</span>
-            </div>
-            <div class="flex items-center gap-4 text-slate-400">
-                <span>Multi-Currency Engine: <strong class="text-brand-400">{{ $activeCurrencyCode ?? 'USD' }}</strong></span>
-                <span>•</span>
-                <span>Active Routing: <strong>Worldwide</strong></span>
-            </div>
-        </div>
-    </footer>
 
     @stack('scripts')
 </body>

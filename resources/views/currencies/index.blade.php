@@ -1,48 +1,43 @@
 @extends('layouts.app')
 
-@section('title', 'Global Currencies & Exchange Rates')
+@section('title', 'Currencies')
 
 @section('content')
 <div class="space-y-6">
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-            <h1 class="text-2xl sm:text-3xl font-extrabold text-white flex items-center gap-3">
-                <i class="fa-solid fa-coins text-amber-400"></i>
-                <span>World Currencies & Multi-Currency Engine</span>
-            </h1>
-            <p class="text-xs sm:text-sm text-slate-400 mt-1">
-                Dynamically switch and calculate transaction values across global currencies: USD, EUR, IDR, GBP, JPY, SGD, AUD, and more.
-            </p>
+            <h1 class="text-2xl font-bold tracking-tight text-slate-900">World Currencies & Exchange Rates</h1>
+            <p class="text-xs text-slate-500 mt-0.5">Global transaction currencies: USD, EUR, IDR, GBP, JPY, SGD, AUD, and more.</p>
         </div>
 
-        <div class="p-2.5 rounded-2xl bg-slate-900 border border-slate-800 text-xs flex items-center gap-2">
-            <span class="text-slate-400">Active Global Currency:</span>
-            <span class="font-bold text-amber-400 font-mono text-sm px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20">
+        <div class="p-2.5 rounded-xl bg-white border border-slate-200 text-xs flex items-center gap-2 shadow-xs">
+            <span class="text-slate-400">Active View:</span>
+            <span class="font-bold text-blue-600 font-mono text-sm px-2 py-0.5 rounded bg-blue-50 border border-blue-200">
                 {{ $activeCurrencyCode }}
             </span>
         </div>
     </div>
 
-    <!-- Live Interactive Global Currency Converter Widget -->
-    <div class="p-6 rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900 to-amber-950/30 border border-slate-800 shadow-xl space-y-4">
+    <!-- Live Interactive Converter Widget (Soft Minimal SaaS Card) -->
+    <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm space-y-4">
         <div class="flex items-center justify-between">
-            <h3 class="text-sm font-bold text-white flex items-center gap-2">
-                <i class="fa-solid fa-calculator text-amber-400"></i>
-                <span>Instant Multi-Currency Freight & Value Converter</span>
+            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+                <i class="fa-solid fa-calculator text-amber-500"></i>
+                <span>Cross-Currency Freight & Value Converter</span>
             </h3>
-            <span class="text-[10px] text-slate-400 font-mono">Real-time Cross Rate Calculation</span>
+            <span class="text-[10px] text-slate-400 font-mono">Live Multi-Currency Calculation</span>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 items-center">
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 items-center">
             <div>
-                <label class="block text-xs font-semibold text-slate-400 mb-1">Amount</label>
+                <label class="block text-[11px] font-semibold text-slate-600 mb-1">Amount</label>
                 <input type="number" id="convertAmount" value="5000" min="0" step="any"
-                       class="w-full px-3 py-2 text-sm bg-slate-950 border border-slate-800 rounded-xl text-white font-mono focus:outline-none focus:border-amber-400">
+                       class="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 font-mono focus:outline-none focus:bg-white focus:border-blue-500">
             </div>
 
             <div>
-                <label class="block text-xs font-semibold text-slate-400 mb-1">From Currency</label>
-                <select id="convertFrom" class="w-full px-3 py-2 text-xs bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-amber-400 font-bold">
+                <label class="block text-[11px] font-semibold text-slate-600 mb-1">From</label>
+                <select id="convertFrom" class="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 font-semibold focus:outline-none focus:bg-white focus:border-blue-500">
                     @foreach($currencies as $c)
                         <option value="{{ $c->code }}" data-rate="{{ $c->exchange_rate_to_usd }}" {{ $c->code === 'USD' ? 'selected' : '' }}>
                             {{ $c->code }} ({{ $c->symbol }}) - {{ $c->name }}
@@ -52,8 +47,8 @@
             </div>
 
             <div>
-                <label class="block text-xs font-semibold text-slate-400 mb-1">To Currency</label>
-                <select id="convertTo" class="w-full px-3 py-2 text-xs bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-amber-400 font-bold">
+                <label class="block text-[11px] font-semibold text-slate-600 mb-1">To</label>
+                <select id="convertTo" class="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 font-semibold focus:outline-none focus:bg-white focus:border-blue-500">
                     @foreach($currencies as $c)
                         <option value="{{ $c->code }}" data-rate="{{ $c->exchange_rate_to_usd }}" {{ $c->code === 'IDR' ? 'selected' : '' }}>
                             {{ $c->code }} ({{ $c->symbol }}) - {{ $c->name }}
@@ -63,74 +58,74 @@
             </div>
 
             <div>
-                <span class="block text-xs font-semibold text-slate-400 mb-1">Converted Value</span>
-                <div id="convertedResult" class="px-3 py-2 text-base font-extrabold text-amber-300 font-mono bg-slate-950/80 rounded-xl border border-amber-500/30">
+                <span class="block text-[11px] font-semibold text-slate-600 mb-1">Result</span>
+                <div id="convertedResult" class="px-3 py-2 text-sm font-bold text-slate-900 font-mono bg-slate-50 rounded-xl border border-slate-200">
                     --
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Currencies Rates Registry Table -->
-    <div class="rounded-3xl bg-slate-900 border border-slate-800 shadow-xl overflow-hidden">
-        <div class="p-6 border-b border-slate-800 flex items-center justify-between">
-            <h3 class="text-sm font-bold text-white">Active Global Currency Rates Table</h3>
-            <span class="text-xs text-slate-500 font-mono">Base Reference: 1.00 USD</span>
+    <!-- Currencies Rates Table (Soft White Style) -->
+    <div class="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden">
+        <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Exchange Rates Table</h3>
+            <span class="text-[11px] text-slate-400 font-mono">Base: 1.00 USD</span>
         </div>
 
         <div class="overflow-x-auto">
             <table class="w-full text-left text-xs">
-                <thead class="bg-slate-950/60 text-slate-400 uppercase text-[10px] tracking-wider font-semibold border-b border-slate-800">
-                    <tr>
-                        <th class="py-3 px-4">Code</th>
+                <thead>
+                    <tr class="border-b border-slate-100 bg-slate-50/50 text-[11px] font-semibold text-slate-500">
+                        <th class="py-3 px-5">Code</th>
                         <th class="py-3 px-4">Currency Name</th>
                         <th class="py-3 px-4">Symbol</th>
                         <th class="py-3 px-4 text-right">Exchange Rate (per 1 USD)</th>
                         <th class="py-3 px-4 text-center">Status</th>
-                        <th class="py-3 px-4 text-center">Set Display</th>
+                        <th class="py-3 px-4 text-center">Display</th>
                         @if(Auth::user()->isAdmin())
                         <th class="py-3 px-4 text-right">Admin Rate Control</th>
                         @endif
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-800/60 text-slate-300">
+                <tbody class="divide-y divide-slate-100 text-slate-600">
                     @foreach($currencies as $curr)
-                    <tr class="hover:bg-slate-800/40 transition">
-                        <td class="py-3.5 px-4 font-mono font-bold text-white text-sm">
+                    <tr class="hover:bg-slate-50/70 transition">
+                        <td class="py-3 px-5 font-mono font-bold text-slate-900">
                             {{ $curr->code }}
                         </td>
-                        <td class="py-3.5 px-4 font-medium text-slate-200">
+                        <td class="py-3 px-4 font-medium text-slate-800">
                             {{ $curr->name }}
                         </td>
-                        <td class="py-3.5 px-4 font-bold text-amber-400 text-sm">
+                        <td class="py-3 px-4 font-bold text-amber-600">
                             {{ $curr->symbol }}
                         </td>
-                        <td class="py-3.5 px-4 text-right font-mono font-bold text-white">
+                        <td class="py-3 px-4 text-right font-mono font-semibold text-slate-900">
                             {{ number_format($curr->exchange_rate_to_usd, 4) }}
                         </td>
-                        <td class="py-3.5 px-4 text-center">
-                            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-emerald-500/20 text-emerald-400">
+                        <td class="py-3 px-4 text-center">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
                                 Active
                             </span>
                         </td>
-                        <td class="py-3.5 px-4 text-center">
+                        <td class="py-3 px-4 text-center">
                             <form action="{{ route('currency.switch') }}" method="POST" class="inline">
                                 @csrf
                                 <input type="hidden" name="currency_code" value="{{ $curr->code }}">
-                                <button type="submit" class="px-3 py-1 rounded-lg text-xs font-semibold transition
-                                    {{ ($activeCurrencyCode ?? 'USD') === $curr->code ? 'bg-amber-500 text-slate-950 shadow-md font-bold' : 'bg-slate-800 hover:bg-slate-700 text-slate-300' }}">
+                                <button type="submit" class="px-2.5 py-0.5 rounded-lg text-xs font-semibold transition
+                                    {{ ($activeCurrencyCode ?? 'USD') === $curr->code ? 'bg-blue-600 text-white shadow-xs' : 'bg-slate-100 hover:bg-slate-200 text-slate-600' }}">
                                     {{ ($activeCurrencyCode ?? 'USD') === $curr->code ? 'Active' : 'Select' }}
                                 </button>
                             </form>
                         </td>
                         @if(Auth::user()->isAdmin())
-                        <td class="py-3.5 px-4 text-right">
+                        <td class="py-3 px-4 text-right">
                             <form action="{{ route('currencies.update-rate', $curr->id) }}" method="POST" class="inline-flex items-center gap-1 justify-end">
                                 @csrf
                                 @method('PATCH')
-                                <input type="number" step="0.0001" name="exchange_rate_to_usd" value="{{ $curr->exchange_rate_to_usd }}" class="w-24 px-2 py-1 text-xs bg-slate-950 border border-slate-700 rounded-lg text-white font-mono text-right">
-                                <button type="submit" class="p-1 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs" title="Update">
-                                    <i class="fa-solid fa-check"></i>
+                                <input type="number" step="0.0001" name="exchange_rate_to_usd" value="{{ $curr->exchange_rate_to_usd }}" class="w-24 px-2 py-1 text-xs bg-slate-50 border border-slate-200 rounded-lg text-slate-800 font-mono text-right">
+                                <button type="submit" class="p-1 px-2 rounded-lg bg-slate-800 text-white text-xs" title="Save">
+                                    <i class="fa-solid fa-check text-[10px]"></i>
                                 </button>
                             </form>
                         </td>
@@ -158,7 +153,6 @@
             const toRate = parseFloat(toEl.selectedOptions[0].getAttribute('data-rate')) || 1;
             const toCode = toEl.value;
 
-            // USD base = amount / fromRate
             const usdBase = amount / fromRate;
             const targetVal = usdBase * toRate;
 
