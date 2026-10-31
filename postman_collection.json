@@ -1,0 +1,306 @@
+{
+	"info": {
+		"_postman_id": "cargotrace-api-v1",
+		"name": "CargoTrace Global Shipment API",
+		"description": "Postman API Collection for CargoTrace - Global Shipment Visibility & Tracking Platform (Web Programming 2 UAS)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Captain Nemo\",\n    \"email\": \"nemo@nautilus.test\",\n    \"password\": \"password123\",\n    \"role\": \"customer\",\n    \"company_name\": \"Nautilus Oceanic Corp\"\n}"
+						},
+						"url": "{{base_url}}/api/register"
+					}
+				},
+				{
+					"name": "Login (Sanctum Token)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.token) {",
+									"    pm.environment.set(\"bearer_token\", jsonData.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"operator@cargotrace.test\",\n    \"password\": \"password\"\n}"
+						},
+						"url": "{{base_url}}/api/login"
+					}
+				},
+				{
+					"name": "Get Authenticated User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{bearer_token}}"}
+						],
+						"url": "{{base_url}}/api/user"
+					}
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{bearer_token}}"}
+						],
+						"url": "{{base_url}}/api/logout"
+					}
+				}
+			]
+		},
+		{
+			"name": "Shipments",
+			"item": [
+				{
+					"name": "List Shipments (Paginated & Filtered)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{bearer_token}}"}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/shipments?status=IN_TRANSIT&per_page=10",
+							"host": ["{{base_url}}"],
+							"path": ["api", "shipments"],
+							"query": [
+								{"key": "status", "value": "IN_TRANSIT"},
+								{"key": "per_page", "value": "10"}
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Shipment (Multi-Currency)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{bearer_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_id\": 3,\n    \"carrier_id\": 1,\n    \"origin_id\": 1,\n    \"destination_id\": 6,\n    \"cargo_type\": \"Optical Transceivers & Microchips\",\n    \"weight_kg\": 3200,\n    \"volume_cbm\": 9.5,\n    \"expected_departure\": \"2026-11-05 10:00:00\",\n    \"expected_arrival\": \"2026-11-20 18:00:00\",\n    \"currency_code\": \"EUR\",\n    \"shipping_cost\": 4200,\n    \"declared_value\": 110000,\n    \"insurance_fee\": 330,\n    \"items\": [\n        {\n            \"item_description\": \"400G QSFP-DD Transceivers\",\n            \"quantity\": 500,\n            \"package_type\": \"Box\",\n            \"weight_kg\": 1200,\n            \"declared_value\": 60000,\n            \"hs_code\": \"8517.62.00\"\n        }\n    ]\n}"
+						},
+						"url": "{{base_url}}/api/shipments"
+					}
+				},
+				{
+					"name": "Get Shipment Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{bearer_token}}"}
+						],
+						"url": "{{base_url}}/api/shipments/1"
+					}
+				},
+				{
+					"name": "Update Shipment",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{bearer_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cargo_type\": \"Updated Cargo Description\",\n    \"weight_kg\": 3400,\n    \"shipping_cost\": 4400\n}"
+						},
+						"url": "{{base_url}}/api/shipments/1"
+					}
+				},
+				{
+					"name": "Delete Shipment",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{bearer_token}}"}
+						],
+						"url": "{{base_url}}/api/shipments/1"
+					}
+				}
+			]
+		},
+		{
+			"name": "Tracking & Geolocation",
+			"item": [
+				{
+					"name": "Get Shipment Tracking Timeline",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{bearer_token}}"}
+						],
+						"url": "{{base_url}}/api/shipments/1/tracking"
+					}
+				},
+				{
+					"name": "Add Tracking Checkpoint (With Weather Integration)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{bearer_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"IN_TRANSIT\",\n    \"location_name\": \"Strait of Gibraltar Transit\",\n    \"latitude\": 35.9500,\n    \"longitude\": -5.5000,\n    \"description\": \"Vessel exited Mediterranean Sea towards Atlantic Ocean.\"\n}"
+						},
+						"url": "{{base_url}}/api/shipments/1/tracking"
+					}
+				}
+			]
+		},
+		{
+			"name": "Exceptions & SLA Incidents",
+			"item": [
+				{
+					"name": "List Shipment Exceptions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{bearer_token}}"}
+						],
+						"url": "{{base_url}}/api/shipments/2/exceptions"
+					}
+				},
+				{
+					"name": "Raise Shipment Exception",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{bearer_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"exception_type\": \"CUSTOMS_HOLD\",\n    \"severity\": \"MEDIUM\",\n    \"delay_impact_hours\": 18,\n    \"root_cause\": \"Additional quarantine health certificate required by biosecurity authority.\",\n    \"action_plan\": \"Emergency certificate expedited via trade attache.\"\n}"
+						},
+						"url": "{{base_url}}/api/shipments/2/exceptions"
+					}
+				},
+				{
+					"name": "Resolve Exception",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{bearer_token}}"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"resolution_notes\": \"Biosecurity certificates verified and approved by authority. Clearance granted.\"\n}"
+						},
+						"url": "{{base_url}}/api/exceptions/1"
+					}
+				}
+			]
+		},
+		{
+			"name": "Currencies & Multi-Currency Engine",
+			"item": [
+				{
+					"name": "Get Active World Currencies & Rates",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"}
+						],
+						"url": "{{base_url}}/api/currencies"
+					}
+				},
+				{
+					"name": "Convert Currency (World Multi-Currency)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Content-Type", "value": "application/json"}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\": 4850,\n    \"from\": \"EUR\",\n    \"to\": \"IDR\"\n}"
+						},
+						"url": "{{base_url}}/api/currencies/convert"
+					}
+				}
+			]
+		},
+		{
+			"name": "Carriers & Worldwide Locations",
+			"item": [
+				{
+					"name": "Get All Carriers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{bearer_token}}"}
+						],
+						"url": "{{base_url}}/api/carriers"
+					}
+				},
+				{
+					"name": "Get All Worldwide Locations",
+					"request": {
+						"method": "GET",
+						"header": [
+							{"key": "Accept", "value": "application/json"},
+							{"key": "Authorization", "value": "Bearer {{bearer_token}}"}
+						],
+						"url": "{{base_url}}/api/locations"
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000"
+		},
+		{
+			"key": "bearer_token",
+			"value": ""
+		}
+	]
+}

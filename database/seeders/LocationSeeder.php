@@ -1,0 +1,261 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Location;
+use Illuminate\Database\Seeder;
+
+class LocationSeeder extends Seeder
+{
+    public function run(): void
+    {
+        $locations = [
+            // Asia
+            [
+                'name' => 'Port of Singapore',
+                'code' => 'SGSIN',
+                'city' => 'Singapore',
+                'country' => 'Singapore',
+                'continent' => 'Asia',
+                'type' => 'SEAPORT',
+                'latitude' => 1.2644000,
+                'longitude' => 103.8222000,
+                'timezone' => 'Asia/Singapore',
+            ],
+            [
+                'name' => 'Port of Shanghai',
+                'code' => 'CNSHA',
+                'city' => 'Shanghai',
+                'country' => 'China',
+                'continent' => 'Asia',
+                'type' => 'SEAPORT',
+                'latitude' => 31.2304000,
+                'longitude' => 121.4737000,
+                'timezone' => 'Asia/Shanghai',
+            ],
+            [
+                'name' => 'Port of Tokyo',
+                'code' => 'JPTYO',
+                'city' => 'Tokyo',
+                'country' => 'Japan',
+                'continent' => 'Asia',
+                'type' => 'SEAPORT',
+                'latitude' => 35.6190000,
+                'longitude' => 139.7900000,
+                'timezone' => 'Asia/Tokyo',
+            ],
+            [
+                'name' => 'Port of Tanjung Priok',
+                'code' => 'IDTPP',
+                'city' => 'Jakarta',
+                'country' => 'Indonesia',
+                'continent' => 'Asia',
+                'type' => 'SEAPORT',
+                'latitude' => -6.1044440,
+                'longitude' => 106.8825000,
+                'timezone' => 'Asia/Jakarta',
+            ],
+            [
+                'name' => 'Jebel Ali Port',
+                'code' => 'AEDXB',
+                'city' => 'Dubai',
+                'country' => 'United Arab Emirates',
+                'continent' => 'Asia',
+                'type' => 'SEAPORT',
+                'latitude' => 25.0113000,
+                'longitude' => 55.0620000,
+                'timezone' => 'Asia/Dubai',
+            ],
+
+            // Europe
+            [
+                'name' => 'Port of Rotterdam',
+                'code' => 'NLRTM',
+                'city' => 'Rotterdam',
+                'country' => 'Netherlands',
+                'continent' => 'Europe',
+                'type' => 'SEAPORT',
+                'latitude' => 51.9500000,
+                'longitude' => 4.1333000,
+                'timezone' => 'Europe/Amsterdam',
+            ],
+            [
+                'name' => 'Port of Hamburg',
+                'code' => 'DEHAM',
+                'city' => 'Hamburg',
+                'country' => 'Germany',
+                'continent' => 'Europe',
+                'type' => 'SEAPORT',
+                'latitude' => 53.5320000,
+                'longitude' => 9.9670000,
+                'timezone' => 'Europe/Berlin',
+            ],
+            [
+                'name' => 'Port of Antwerp',
+                'code' => 'BEANR',
+                'city' => 'Antwerp',
+                'country' => 'Belgium',
+                'continent' => 'Europe',
+                'type' => 'SEAPORT',
+                'latitude' => 51.2700000,
+                'longitude' => 4.3300000,
+                'timezone' => 'Europe/Brussels',
+            ],
+            [
+                'name' => 'Port of Felixstowe',
+                'code' => 'GBFXT',
+                'city' => 'Felixstowe',
+                'country' => 'United Kingdom',
+                'continent' => 'Europe',
+                'type' => 'SEAPORT',
+                'latitude' => 51.9567000,
+                'longitude' => 1.3090000,
+                'timezone' => 'Europe/London',
+            ],
+
+            // North America
+            [
+                'name' => 'Port of Los Angeles',
+                'code' => 'USLAX',
+                'city' => 'Los Angeles',
+                'country' => 'United States',
+                'continent' => 'North America',
+                'type' => 'SEAPORT',
+                'latitude' => 33.7432000,
+                'longitude' => -118.2673000,
+                'timezone' => 'America/Los_Angeles',
+            ],
+            [
+                'name' => 'Port of New York & New Jersey',
+                'code' => 'USNYC',
+                'city' => 'New York',
+                'country' => 'United States',
+                'continent' => 'North America',
+                'type' => 'SEAPORT',
+                'latitude' => 40.6710000,
+                'longitude' => -74.1280000,
+                'timezone' => 'America/New_York',
+            ],
+            [
+                'name' => 'Port of Vancouver',
+                'code' => 'CAVAN',
+                'city' => 'Vancouver',
+                'country' => 'Canada',
+                'continent' => 'North America',
+                'type' => 'SEAPORT',
+                'latitude' => 49.2888000,
+                'longitude' => -123.1111000,
+                'timezone' => 'America/Vancouver',
+            ],
+            [
+                'name' => 'Port of Balboa (Panama Canal)',
+                'code' => 'PABLB',
+                'city' => 'Panama City',
+                'country' => 'Panama',
+                'continent' => 'North America',
+                'type' => 'LOGISTICS_HUB',
+                'latitude' => 8.9553000,
+                'longitude' => -79.5702000,
+                'timezone' => 'America/Panama',
+            ],
+
+            // South America
+            [
+                'name' => 'Port of Santos',
+                'code' => 'BRSSZ',
+                'city' => 'Santos',
+                'country' => 'Brazil',
+                'continent' => 'South America',
+                'type' => 'SEAPORT',
+                'latitude' => -23.9619000,
+                'longitude' => -46.3042000,
+                'timezone' => 'America/Sao_Paulo',
+            ],
+            [
+                'name' => 'Port of Buenos Aires',
+                'code' => 'ARBUE',
+                'city' => 'Buenos Aires',
+                'country' => 'Argentina',
+                'continent' => 'South America',
+                'type' => 'SEAPORT',
+                'latitude' => -34.5800000,
+                'longitude' => -58.3700000,
+                'timezone' => 'America/Argentina/Buenos_Aires',
+            ],
+
+            // Africa
+            [
+                'name' => 'Port Said (Suez Canal)',
+                'code' => 'EGPSD',
+                'city' => 'Port Said',
+                'country' => 'Egypt',
+                'continent' => 'Africa',
+                'type' => 'SEAPORT',
+                'latitude' => 31.2653000,
+                'longitude' => 32.3019000,
+                'timezone' => 'Africa/Cairo',
+            ],
+            [
+                'name' => 'Port of Cape Town',
+                'code' => 'ZACPT',
+                'city' => 'Cape Town',
+                'country' => 'South Africa',
+                'continent' => 'Africa',
+                'type' => 'SEAPORT',
+                'latitude' => -33.9167000,
+                'longitude' => 18.4333000,
+                'timezone' => 'Africa/Johannesburg',
+            ],
+            [
+                'name' => 'Port of Durban',
+                'code' => 'ZADUR',
+                'city' => 'Durban',
+                'country' => 'South Africa',
+                'continent' => 'Africa',
+                'type' => 'SEAPORT',
+                'latitude' => -29.8700000,
+                'longitude' => 31.0200000,
+                'timezone' => 'Africa/Johannesburg',
+            ],
+
+            // Oceania
+            [
+                'name' => 'Port of Sydney',
+                'code' => 'AUMYD',
+                'city' => 'Sydney',
+                'country' => 'Australia',
+                'continent' => 'Oceania',
+                'type' => 'SEAPORT',
+                'latitude' => -33.8600000,
+                'longitude' => 151.2100000,
+                'timezone' => 'Australia/Sydney',
+            ],
+            [
+                'name' => 'Port of Melbourne',
+                'code' => 'AUMEL',
+                'city' => 'Melbourne',
+                'country' => 'Australia',
+                'continent' => 'Oceania',
+                'type' => 'SEAPORT',
+                'latitude' => -37.8300000,
+                'longitude' => 144.9300000,
+                'timezone' => 'Australia/Melbourne',
+            ],
+            [
+                'name' => 'Port of Auckland',
+                'code' => 'NZAKL',
+                'city' => 'Auckland',
+                'country' => 'New Zealand',
+                'continent' => 'Oceania',
+                'type' => 'SEAPORT',
+                'latitude' => -36.8400000,
+                'longitude' => 174.7700000,
+                'timezone' => 'Pacific/Auckland',
+            ],
+        ];
+
+        foreach ($locations as $loc) {
+            Location::updateOrCreate(['code' => $loc['code']], $loc);
+        }
+    }
+}
