@@ -4,7 +4,7 @@
 [![PHP](https://img.shields.io/badge/PHP-8.2%20%7C%208.3-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
 [![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
 [![Leaflet](https://img.shields.io/badge/Leaflet.js-199900?style=for-the-badge&logo=leaflet&logoColor=white)](https://leafletjs.com)
-[![Tests](https://img.shields.io/badge/Tests-21%20Passed%20(110%20Assertions)-success?style=for-the-badge&logo=checkmarx&logoColor=white)](tests)
+[![Tests](https://img.shields.io/badge/Tests-26%20Passed%20(134%20Assertions)-success?style=for-the-badge&logo=checkmarx&logoColor=white)](tests)
 
 > **Web Programming 2 — Final Project (UAS Portfolio)**  
 > **Author:** Software Engineering Portfolio Candidate  
@@ -24,7 +24,7 @@ In modern international supply chains, cargo visibility is fragmented across dis
 - **SLA Incident & Exception Resolution Workflow** (`CUSTOMS_HOLD`, `WEATHER_DELAY`, `PORT_CONGESTION`, etc.).
 - **Interactive Global Map** featuring nautical trade routes, checkpoint pins, pulsing vessel locations, and external Open-Meteo weather telemetry.
 - **Sanctum-Powered REST API** accompanied by an importable Postman collection.
-- **Full Automated Test Suite** boasting **21 Feature/Unit Tests** and **110 Assertions**.
+- **Full Automated Test Suite** boasting **26 Feature/Unit Tests** and **134 Assertions**.
 
 ---
 

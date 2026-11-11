@@ -11,6 +11,10 @@ class LocationController extends Controller
 {
     public function index()
     {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Administrator access required.');
+        }
+
         $locations = Location::withCount(['originShipments', 'destinationShipments'])
             ->orderBy('continent')
             ->orderBy('country')
@@ -20,8 +24,8 @@ class LocationController extends Controller
 
     public function store(Request $request)
     {
-        if (!Auth::user()->canManageShipments()) {
-            abort(403);
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Administrator access required.');
         }
 
         $validated = $request->validate([

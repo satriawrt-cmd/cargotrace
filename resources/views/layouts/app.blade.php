@@ -92,13 +92,13 @@
                 <!-- Group 1: OVERVIEW -->
                 <div class="space-y-1">
                     <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Overview</p>
-                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('dashboard') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
+                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('dashboard') && !request()->has('track') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
                         <i class="fa-solid fa-grip text-sm w-4"></i>
                         <span>Dashboard</span>
                     </a>
-                    <a href="{{ route('public.track') }}" target="_blank" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition">
-                        <i class="fa-solid fa-earth-americas text-sm w-4"></i>
-                        <span>Public Tracker</span>
+                    <a href="{{ route('dashboard') }}#live-tracker" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition">
+                        <i class="fa-solid fa-earth-americas text-sm w-4 text-blue-500"></i>
+                        <span>Live Tracker</span>
                     </a>
                     @auth
                     <a href="{{ route('notifications.index') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('notifications.*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
@@ -115,41 +115,45 @@
                     @endauth
                 </div>
 
-                <!-- Group 2: INVENTORY & OPERATIONS -->
+                <!-- Group 2: LOGISTICS & OPERATIONS -->
                 <div class="space-y-1">
                     <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Logistics</p>
                     <a href="{{ route('shipments.index') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('shipments.*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
                         <i class="fa-solid fa-box-archive text-sm w-4"></i>
-                        <span>Shipments</span>
+                        <span>{{ Auth::check() && Auth::user()->isCustomer() ? 'My Shipments' : 'Shipments' }}</span>
                     </a>
-                    <a href="{{ route('locations.index') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('locations.*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                        <i class="fa-solid fa-location-dot text-sm w-4"></i>
-                        <span>World Ports</span>
+                </div>
+
+                <!-- Group 3: MASTER DATA (Administrator only) -->
+                @if(Auth::check() && Auth::user()->isAdmin())
+                <div class="space-y-1">
+                    <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Master Data</p>
+                    <a href="{{ route('users.index') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('users.*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
+                        <i class="fa-solid fa-users-gear text-sm w-4"></i>
+                        <span>Users Management</span>
                     </a>
                     <a href="{{ route('carriers.index') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('carriers.*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
                         <i class="fa-solid fa-truck-fast text-sm w-4"></i>
                         <span>Carriers</span>
                     </a>
+                    <a href="{{ route('locations.index') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('locations.*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
+                        <i class="fa-solid fa-location-dot text-sm w-4"></i>
+                        <span>World Ports</span>
+                    </a>
                 </div>
 
-                <!-- Group 3: FINANCIALS & MULTI-CURRENCY -->
+                <!-- Group 4: CONFIGURATION & SYSTEM (Administrator only) -->
                 <div class="space-y-1">
-                    <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Financials</p>
+                    <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">System & Config</p>
                     <a href="{{ route('currencies.index') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('currencies.*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
                         <div class="flex items-center gap-3">
                             <i class="fa-solid fa-coins text-sm w-4 text-amber-500"></i>
-                            <span>Multi-Currency</span>
+                            <span>Currency Rates</span>
                         </div>
                         <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
                             {{ $activeCurrencyCode ?? 'USD' }}
                         </span>
                     </a>
-                </div>
-
-                <!-- Group 4: SYSTEM (Admin only) -->
-                @if(Auth::check() && Auth::user()->isAdmin())
-                <div class="space-y-1">
-                    <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">System</p>
                     <a href="{{ route('audit-logs.index') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('audit-logs.*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
                         <i class="fa-solid fa-shield text-sm w-4"></i>
                         <span>Audit Logs</span>

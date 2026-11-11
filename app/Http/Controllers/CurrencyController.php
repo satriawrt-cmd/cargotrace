@@ -16,6 +16,10 @@ class CurrencyController extends Controller
 
     public function index()
     {
+        if (!Auth::user() || !Auth::user()->isAdmin()) {
+            abort(403, 'Administrator access required.');
+        }
+
         $currencies = Currency::orderBy('code')->get();
         return view('currencies.index', compact('currencies'));
     }

@@ -7,24 +7,28 @@ use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\PublicTrackingController;
 use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\ShipmentExceptionController;
 use App\Http\Controllers\TrackingController;
+use App\Http\Controllers\UserController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Public Routes
+| Public & Tracking Routes
 |--------------------------------------------------------------------------
 */
 Route::get('/', function () {
     return Auth::check() ? redirect()->route('dashboard') : redirect()->route('public.track');
-});
+})->name('home');
 
-Route::get('/track', [PublicTrackingController::class, 'index'])->name('public.track');
-Route::get('/track/{number}', [PublicTrackingController::class, 'show'])->name('public.track.show');
+// Public tracker renders the dashboard with live tracker (accessible without login)
+Route::get('/track', [DashboardController::class, 'index'])->name('public.track');
+Route::get('/track/{number}', function (string $number) {
+    return redirect()->route('public.track', ['track' => $number])->withFragment('live-tracker');
+})->name('public.track.show');
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
@@ -45,14 +49,16 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Shipments & Operations
+    // Shipments & Operations (Operator & Admin manage; Customer views own)
     Route::resource('shipments', ShipmentController::class);
     Route::post('/shipments/{shipment}/status', [ShipmentController::class, 'updateStatus'])->name('shipments.status');
     Route::post('/shipments/{shipment}/tracking', [TrackingController::class, 'store'])->name('shipments.tracking.store');
     Route::post('/shipments/{shipment}/exceptions', [ShipmentExceptionController::class, 'store'])->name('shipments.exceptions.store');
     Route::patch('/exceptions/{exception}/resolve', [ShipmentExceptionController::class, 'resolve'])->name('exceptions.resolve');
 
-    // Carriers & Locations
+    // Master Data: Users, Carriers & Locations (Administrator only)
+    Route::resource('users', UserController::class)->except(['create', 'show', 'edit']);
+
     Route::get('/carriers', [CarrierController::class, 'index'])->name('carriers.index');
     Route::post('/carriers', [CarrierController::class, 'store'])->name('carriers.store');
     Route::put('/carriers/{carrier}', [CarrierController::class, 'update'])->name('carriers.update');
@@ -60,7 +66,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/locations', [LocationController::class, 'index'])->name('locations.index');
     Route::post('/locations', [LocationController::class, 'store'])->name('locations.store');
 
-    // Currencies & Exchange Rates
+    // Configuration: Currencies & Exchange Rates (Administrator only)
     Route::get('/currencies', [CurrencyController::class, 'index'])->name('currencies.index');
     Route::patch('/currencies/{currency}', [CurrencyController::class, 'updateRate'])->name('currencies.update-rate');
 
@@ -69,6 +75,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
     Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.read-all');
 
-    // Audit Logs (Admin)
+    // Audit Logs (Administrator only)
     Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('audit-logs.index');
 });

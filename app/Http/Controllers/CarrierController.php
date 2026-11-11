@@ -11,14 +11,18 @@ class CarrierController extends Controller
 {
     public function index()
     {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Administrator access required.');
+        }
+
         $carriers = Carrier::withCount('shipments')->orderBy('name')->get();
         return view('carriers.index', compact('carriers'));
     }
 
     public function store(Request $request)
     {
-        if (!Auth::user()->canManageShipments()) {
-            abort(403);
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Administrator access required.');
         }
 
         $validated = $request->validate([
@@ -47,8 +51,8 @@ class CarrierController extends Controller
 
     public function update(Request $request, Carrier $carrier)
     {
-        if (!Auth::user()->canManageShipments()) {
-            abort(403);
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Administrator access required.');
         }
 
         $validated = $request->validate([
