@@ -142,17 +142,17 @@ class UserManagementAndRoleAccessTest extends TestCase
         }
     }
 
-    public function test_public_tracker_is_integrated_seamlessly_with_dashboard(): void
+    public function test_live_tracker_has_dedicated_page_within_same_application(): void
     {
-        // Accessing public tracker displays dashboard with live tracker
+        // Accessing public tracker displays the dedicated Live Tracker page inside same app layout
         $response = $this->get(route('public.track'));
         $response->assertStatus(200);
-        $response->assertSee('Live Global Consignment Tracker');
-        $response->assertSee('dashboardTrackerMap');
+        $response->assertSee('Track Global Consignments');
+        $response->assertSee('publicWorldMap');
 
-        // Accessing with track query loads specific consignment
+        // Accessing with tracking number loads specific consignment
         $shipment = Shipment::first();
-        $trackedResponse = $this->get(route('public.track', ['track' => $shipment->shipment_number]));
+        $trackedResponse = $this->get(route('public.track', ['shipment_number' => $shipment->shipment_number]));
         $trackedResponse->assertStatus(200);
         $trackedResponse->assertSee($shipment->shipment_number);
     }

@@ -14,11 +14,8 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        // Base query respecting user role (if not logged in, show all public consignments)
-        $baseQuery = Shipment::query();
-        if ($user) {
-            $baseQuery->forUser($user);
-        }
+        // Base query respecting user role
+        $baseQuery = Shipment::query()->forUser($user);
 
         $totalShipments = (clone $baseQuery)->count();
         $inTransitCount = (clone $baseQuery)->where('current_status', Shipment::STATUS_IN_TRANSIT)->count();
@@ -87,100 +84,6 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
-        // -------------------------------------------------------------------
-        // Integrated Live Tracker directly within Dashboard
-        // -------------------------------------------------------------------
-        $trackedNumber = trim($request->input('track', $request->input('shipment_number', '')));
-        $trackedShipment = null;
-
-        if ($trackedNumber) {
-            $findQuery = Shipment::query();
-            if ($user && $user->isCustomer()) {
-                $findQuery->where('customer_id', $user->id);
-            }
-            $trackedShipment = $findQuery->where('shipment_number', $trackedNumber)
-                ->with(['carrier', 'origin', 'destination', 'customer', 'trackingEvents', 'exceptions'])
-                ->first();
-        }
-
-        // Default to a representative active consignment if none specified
-        if (!$trackedShipment) {
-            $defaultQuery = Shipment::query();
-            if ($user && $user->isCustomer()) {
-                $defaultQuery->where('customer_id', $user->id);
-            }
-
-            // Prefer IN_TRANSIT shipment, otherwise latest
-            $trackedShipment = (clone $defaultQuery)->where('current_status', Shipment::STATUS_IN_TRANSIT)
-                ->with(['carrier', 'origin', 'destination', 'customer', 'trackingEvents', 'exceptions'])
-                ->latest()
-                ->first();
-
-            if (!$trackedShipment) {
-                $trackedShipment = (clone $defaultQuery)
-                    ->with(['carrier', 'origin', 'destination', 'customer', 'trackingEvents', 'exceptions'])
-                    ->latest()
-                    ->first();
-            }
-        }
-
-        // Prepare map coordinates sequence for Leaflet inside Dashboard
-        $mapPoints = [];
-        if ($trackedShipment) {
-            if ($trackedShipment->origin) {
-                $mapPoints[] = [
-                    'type' => 'origin',
-                    'title' => 'Pelabuhan Asal: ' . $trackedShipment->origin->name,
-                    'location' => $trackedShipment->origin->city . ', ' . $trackedShipment->origin->country,
-                    'time' => $trackedShipment->expected_departure?->format('M d, Y H:i'),
-                    'lat' => (float) $trackedShipment->origin->latitude,
-                    'lng' => (float) $trackedShipment->origin->longitude,
-                ];
-            }
-
-            foreach ($trackedShipment->trackingEvents as $ev) {
-                if ($ev->latitude && $ev->longitude) {
-                    $mapPoints[] = [
-                        'type' => $ev->is_exception ? 'exception' : 'checkpoint',
-                        'title' => $ev->status . ' - ' . $ev->location_name,
-                        'location' => $ev->location_name,
-                        'time' => $ev->event_time->format('M d, Y H:i'),
-                        'description' => $ev->description,
-                        'weather' => $ev->weather_summary,
-                        'lat' => (float) $ev->latitude,
-                        'lng' => (float) $ev->longitude,
-                    ];
-                }
-            }
-
-            if ($trackedShipment->current_latitude && $trackedShipment->current_longitude) {
-                $mapPoints[] = [
-                    'type' => 'current',
-                    'title' => 'Posisi Kargo: ' . ($trackedShipment->current_location_name ?: 'En Route'),
-                    'location' => $trackedShipment->current_location_name,
-                    'lat' => (float) $trackedShipment->current_latitude,
-                    'lng' => (float) $trackedShipment->current_longitude,
-                ];
-            }
-
-            if ($trackedShipment->destination) {
-                $mapPoints[] = [
-                    'type' => 'destination',
-                    'title' => 'Pelabuhan Tujuan: ' . $trackedShipment->destination->name,
-                    'location' => $trackedShipment->destination->city . ', ' . $trackedShipment->destination->country,
-                    'lat' => (float) $trackedShipment->destination->latitude,
-                    'lng' => (float) $trackedShipment->destination->longitude,
-                ];
-            }
-        }
-
-        // Demo chips for quick tracking
-        $demoShipmentsQuery = Shipment::query();
-        if ($user && $user->isCustomer()) {
-            $demoShipmentsQuery->where('customer_id', $user->id);
-        }
-        $quickDemoShipments = $demoShipmentsQuery->latest()->take(5)->get();
-
         return view('dashboard.index', compact(
             'totalShipments',
             'inTransitCount',
@@ -193,11 +96,7 @@ class DashboardController extends Controller
             'carrierCounts',
             'delaySeverityCounts',
             'recentShipments',
-            'activeExceptions',
-            'trackedShipment',
-            'mapPoints',
-            'trackedNumber',
-            'quickDemoShipments'
+            'activeExceptions'
         ));
     }
 }

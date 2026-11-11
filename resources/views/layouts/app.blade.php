@@ -92,11 +92,11 @@
                 <!-- Group 1: OVERVIEW -->
                 <div class="space-y-1">
                     <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Overview</p>
-                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('dashboard') && !request()->has('track') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
+                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('dashboard') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
                         <i class="fa-solid fa-grip text-sm w-4"></i>
                         <span>Dashboard</span>
                     </a>
-                    <a href="{{ route('dashboard') }}#live-tracker" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition">
+                    <a href="{{ route('public.track') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('public.track*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
                         <i class="fa-solid fa-earth-americas text-sm w-4 text-blue-500"></i>
                         <span>Live Tracker</span>
                     </a>

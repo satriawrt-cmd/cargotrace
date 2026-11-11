@@ -7,6 +7,7 @@ use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PublicTrackingController;
 use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\ShipmentExceptionController;
 use App\Http\Controllers\TrackingController;
@@ -24,11 +25,9 @@ Route::get('/', function () {
     return Auth::check() ? redirect()->route('dashboard') : redirect()->route('public.track');
 })->name('home');
 
-// Public tracker renders the dashboard with live tracker (accessible without login)
-Route::get('/track', [DashboardController::class, 'index'])->name('public.track');
-Route::get('/track/{number}', function (string $number) {
-    return redirect()->route('public.track', ['track' => $number])->withFragment('live-tracker');
-})->name('public.track.show');
+// Dedicated Live Tracker (Inside the same web console, accessible with or without login)
+Route::get('/track', [PublicTrackingController::class, 'index'])->name('public.track');
+Route::get('/track/{number}', [PublicTrackingController::class, 'show'])->name('public.track.show');
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');

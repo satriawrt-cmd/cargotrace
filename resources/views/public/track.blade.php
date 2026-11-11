@@ -35,16 +35,14 @@
 
         <!-- Quick Demo Tracker Pills (Soft Calm Badges) -->
         <div class="flex flex-wrap items-center justify-center gap-2 text-xs pt-1">
-            <span class="text-slate-400 text-[11px]">Sample Shipments:</span>
-            <a href="{{ route('public.track', ['shipment_number' => 'CT-2026-EU4091']) }}" class="px-2.5 py-1 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 font-mono text-[11px] transition">
-                CT-2026-EU4091 (Asia → Europe)
+            <span class="text-slate-400 text-[11px]">Quick Select:</span>
+            @foreach($quickDemoShipments ?? [] as $qs)
+            <a href="{{ route('public.track', ['shipment_number' => $qs->shipment_number]) }}"
+               class="px-2.5 py-1 rounded-lg border text-[11px] font-mono transition
+               {{ ($shipment && $shipment->id === $qs->id) ? 'bg-blue-600 text-white border-blue-600 font-bold shadow-2xs' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200' }}">
+                {{ $qs->shipment_number }} ({{ $qs->origin->code }} &rarr; {{ $qs->destination->code }})
             </a>
-            <a href="{{ route('public.track', ['shipment_number' => 'CT-2026-OC8821']) }}" class="px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-800 font-mono text-[11px] transition">
-                CT-2026-OC8821 (Delayed)
-            </a>
-            <a href="{{ route('public.track', ['shipment_number' => 'CT-2026-SA1029']) }}" class="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 font-mono text-[11px] transition">
-                CT-2026-SA1029 (Delivered)
-            </a>
+            @endforeach
         </div>
     </div>
 
@@ -179,11 +177,11 @@
             </div>
 
             <!-- Shopee / SPX Delivery Status Card Banner (Under Map) -->
-            <div class="p-5 bg-white border-t border-slate-200/90 space-y-4">
+            <div class="p-5 bg-white border-t border-slate-200/90 space-y-5">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
                     <div>
                         <span class="text-[11px] font-bold uppercase tracking-wider text-teal-600 block mb-0.5">
-                            <i class="fa-regular fa-calendar-check mr-1"></i> Estimasi Pengiriman
+                            <i class="fa-regular fa-calendar-check mr-1"></i> Estimasi Pengiriman Global
                         </span>
                         <h2 class="text-lg sm:text-xl font-extrabold text-slate-800">
                             Estimasi tiba: {{ $shipment->estimated_arrival->format('d M') }} – {{ $shipment->estimated_arrival->copy()->addDays(2)->format('d M Y') }}
@@ -204,6 +202,60 @@
                     </div>
                 </div>
 
+                <!-- Shopee 3-Step Milestone Stepper -->
+                <div class="py-2">
+                    <div class="relative flex items-center justify-between max-w-2xl mx-auto px-4 sm:px-10">
+                        <div class="absolute left-10 right-10 top-5 h-0.5 bg-slate-200 -z-0"></div>
+                        @php
+                            $stepperPct = '15%';
+                            if ($shipment->current_status === 'DELIVERED') {
+                                $stepperPct = '100%';
+                            } elseif ($shipment->current_status === 'IN_TRANSIT') {
+                                $stepperPct = '50%';
+                            } elseif (in_array($shipment->current_status, ['PICKED_UP', 'BOOKED'])) {
+                                $stepperPct = '25%';
+                            }
+                        @endphp
+                        <div class="absolute left-10 top-5 h-0.5 bg-emerald-500 -z-0 transition-all duration-500" style="width: {{ $stepperPct }};"></div>
+
+                        <!-- Step 1: Sedang Dikirim -->
+                        <div class="flex flex-col items-center z-10 text-center">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm shadow-sm transition
+                                {{ in_array($shipment->current_status, ['BOOKED', 'PICKED_UP', 'IN_TRANSIT', 'DELIVERED']) ? 'bg-emerald-500 text-white ring-4 ring-emerald-100' : 'bg-slate-100 text-slate-400' }}">
+                                <i class="fa-solid fa-box-archive"></i>
+                            </div>
+                            <span class="text-xs font-bold mt-2 {{ in_array($shipment->current_status, ['BOOKED', 'PICKED_UP', 'IN_TRANSIT', 'DELIVERED']) ? 'text-emerald-700' : 'text-slate-400' }}">
+                                Sedang Dikirim
+                            </span>
+                            <span class="text-[10px] text-slate-400 max-w-[90px] truncate">{{ $shipment->origin->city }}</span>
+                        </div>
+
+                        <!-- Step 2: Menuju Tujuan -->
+                        <div class="flex flex-col items-center z-10 text-center">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm shadow-sm transition
+                                {{ in_array($shipment->current_status, ['IN_TRANSIT', 'DELIVERED']) ? 'bg-emerald-500 text-white ring-4 ring-emerald-100' : 'bg-slate-100 text-slate-400' }}">
+                                <i class="fa-solid fa-ship"></i>
+                            </div>
+                            <span class="text-xs font-bold mt-2 {{ in_array($shipment->current_status, ['IN_TRANSIT', 'DELIVERED']) ? 'text-emerald-700' : 'text-slate-400' }}">
+                                Menuju Tujuan
+                            </span>
+                            <span class="text-[10px] text-slate-400">Dalam Pelayaran</span>
+                        </div>
+
+                        <!-- Step 3: Pesanan Tiba -->
+                        <div class="flex flex-col items-center z-10 text-center">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm shadow-sm transition
+                                {{ $shipment->current_status === 'DELIVERED' ? 'bg-emerald-500 text-white ring-4 ring-emerald-100' : 'bg-slate-100 text-slate-400' }}">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <span class="text-xs font-bold mt-2 {{ $shipment->current_status === 'DELIVERED' ? 'text-emerald-700' : 'text-slate-400' }}">
+                                Pesanan Tiba
+                            </span>
+                            <span class="text-[10px] text-slate-400 max-w-[90px] truncate">{{ $shipment->destination->city }}</span>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Shopee Garansi Tiba Banner -->
                 <div class="p-3.5 rounded-xl bg-teal-50/80 border border-teal-200/90 text-xs text-teal-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div class="flex items-center gap-2.5">
@@ -217,6 +269,39 @@
                     <span class="text-[11px] font-bold text-teal-700 bg-white px-2.5 py-1 rounded-md border border-teal-200 shadow-2xs whitespace-nowrap self-start sm:self-auto">
                         Verified SLA
                     </span>
+                </div>
+
+                <!-- Kurir & Resi Card with 1-Click Copy -->
+                <div class="p-4 rounded-xl bg-slate-50/80 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-xl bg-white border border-slate-200 shadow-2xs flex items-center justify-center text-blue-600 text-xl">
+                            <i class="fa-solid fa-boxes-packing"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-bold text-slate-900">{{ $shipment->carrier->name }}</span>
+                                <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 font-semibold uppercase">{{ $shipment->carrier->service_type }}</span>
+                            </div>
+                            <div class="flex items-center gap-2 mt-0.5">
+                                <span class="font-mono text-xs font-bold text-slate-700" id="publicResiSpan">{{ $shipment->shipment_number }}</span>
+                                <button type="button" onclick="navigator.clipboard.writeText('{{ $shipment->shipment_number }}'); this.querySelector('span').innerText='Tersalin!'; setTimeout(() => this.querySelector('span').innerText='Salin', 2000);"
+                                        class="text-[11px] text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 transition">
+                                    <i class="fa-regular fa-copy"></i>
+                                    <span>Salin</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs text-slate-500">Rute: <strong class="text-slate-800">{{ $shipment->origin->city }} &rarr; {{ $shipment->destination->city }}</strong></span>
+                        @auth
+                        <a href="{{ route('shipments.show', $shipment->id) }}" class="px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-blue-600 text-xs font-semibold shadow-2xs transition flex items-center gap-1">
+                            <span>Console Details</span>
+                            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </a>
+                        @endauth
+                    </div>
                 </div>
             </div>
         </div>
