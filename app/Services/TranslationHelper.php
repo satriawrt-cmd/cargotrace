@@ -17,6 +17,15 @@ class TranslationHelper
             'IN_TRANSIT' => 'Dalam Perjalanan',
             'DELIVERED' => 'Terkirim',
             'CANCELLED' => 'Dibatalkan',
+            'CUSTOMS_CLEARANCE' => 'Pemeriksaan Bea Cukai',
+            'PORT_ARRIVAL' => 'Tiba di Pelabuhan',
+            'DEPARTED' => 'Berangkat dari Pelabuhan',
+            'EXCEPTION' => 'Kendala Operasional',
+            'EXCEPTION_RESOLVED' => 'Kendala Diselesaikan',
+            'LOADED' => 'Kargo Dimuat',
+            'DISCHARGED' => 'Kargo Dibongkar',
+            'GATE_IN' => 'Masuk Gerbang Pelabuhan',
+            'GATE_OUT' => 'Keluar Gerbang Pelabuhan',
         ],
         'en' => [
             'CREATED' => 'Created',
@@ -25,6 +34,15 @@ class TranslationHelper
             'IN_TRANSIT' => 'In Transit',
             'DELIVERED' => 'Delivered',
             'CANCELLED' => 'Cancelled',
+            'CUSTOMS_CLEARANCE' => 'Customs Clearance',
+            'PORT_ARRIVAL' => 'Port Arrival',
+            'DEPARTED' => 'Departed',
+            'EXCEPTION' => 'Operational Exception',
+            'EXCEPTION_RESOLVED' => 'Exception Resolved',
+            'LOADED' => 'Loaded',
+            'DISCHARGED' => 'Discharged',
+            'GATE_IN' => 'Gate In',
+            'GATE_OUT' => 'Gate Out',
         ],
     ];
 
@@ -87,7 +105,7 @@ class TranslationHelper
     ];
 
     /**
-     * Map of phrases and descriptions to Indonesian.
+     * Exact dictionary phrases mapped to Indonesian.
      */
     protected static array $textMap = [
         // Event descriptions
@@ -106,11 +124,24 @@ class TranslationHelper
         '[EXCEPTION: PORT_CONGESTION] Berth queue congested due to prior typhoon backlog.' => '[KENDALA: KEPADATAN PELABUHAN] Antrean dermaga padat akibat penumpukan pasca badai topan.',
         'Transit resumed on schedule after terminal clearance.' => 'Perjalanan dilanjutkan sesuai jadwal setelah penyelesaian izin terminal.',
 
+        // User and seeded resolution notes
+        'Verified and submitted revised biosecurity immport declaration certificate from singapore export authority; cleared by Australian customs' => 'Telah diverifikasi dan diserahkan revisi sertifikat deklarasi impor biosekuriti dari otoritas ekspor Singapura; disetujui oleh bea cukai Australia.',
+        'Verified and submitted revised biosecurity import declaration certificate from singapore export authority; cleared by Australian customs' => 'Telah diverifikasi dan diserahkan revisi sertifikat deklarasi impor biosekuriti dari otoritas ekspor Singapura; disetujui oleh bea cukai Australia.',
+        'Biosecurity customs cleared and vessel berthed at Sydney' => 'Pemeriksaan bea cukai biosekuriti selesai dan kapal telah bersandar di Pelabuhan Sydney.',
+        'Discrepancy in biosecurity import declaration certificate from export authority.' => 'Ketidaksesuaian pada sertifikat deklarasi impor biosekuriti dari otoritas ekspor.',
+        'Submitting revised batch serial certificates to Department of Agriculture portal.' => 'Menyerahkan revisi sertifikat nomor seri batch ke portal Departemen Pertanian.',
+        'Shipment subject to biosecurity verification at Sydney Port. Estimated delay: 18 hours.' => 'Pengiriman harus melalui verifikasi biosekuriti di Pelabuhan Sydney. Perkiraan keterlambatan: 18 jam.',
+        'Desiccant bags inserted inside container to prevent moisture sweating during Pacific crossing.' => 'Kantong desikan dimasukkan ke dalam kontainer untuk mencegah kelembapan selama penyeberangan Pasifik.',
+
         // Locations
         'Atlantic Ocean Crossing' => 'Penyeberangan Samudra Atlantik',
         'South China Sea / Singapore Strait' => 'Laut Cina Selatan / Selat Singapura',
         'Coral Sea Approach / Port of Sydney outer anchorage' => 'Pendekatan Laut Koral / Dermaga Luar Pelabuhan Sydney',
+        'Coral Sea Outer Anchorage' => 'Dermaga Luar Laut Koral',
         'Shanghai Waigaoqiao Terminal' => 'Terminal Waigaoqiao Shanghai',
+        'port of Sydney Terminaal' => 'Terminal Pelabuhan Sydney',
+        'port of Sydney Terminal' => 'Terminal Pelabuhan Sydney',
+        'Port of Sydney' => 'Pelabuhan Sydney',
 
         // Cargo Types
         'Consumer Electronics & Solar Panels' => 'Elektronik Konsumen & Panel Surya',
@@ -147,6 +178,26 @@ class TranslationHelper
     ];
 
     /**
+     * Substring replacements for custom notes and mixed strings
+     */
+    protected static array $phraseReplacements = [
+        'Verified and submitted revised' => 'Telah diverifikasi dan diserahkan revisi',
+        'biosecurity immport declaration certificate' => 'sertifikat deklarasi impor biosekuriti',
+        'biosecurity import declaration certificate' => 'sertifikat deklarasi impor biosekuriti',
+        'from singapore export authority' => 'dari otoritas ekspor Singapura',
+        'cleared by Australian customs' => 'disetujui oleh bea cukai Australia',
+        'Biosecurity customs cleared and vessel berthed at Sydney' => 'Pemeriksaan bea cukai biosekuriti selesai dan kapal telah bersandar di Pelabuhan Sydney',
+        'vessel berthed at' => 'kapal telah bersandar di',
+        'customs cleared' => 'lolos pemeriksaan bea cukai',
+        'port of Sydney Terminaal' => 'Terminal Pelabuhan Sydney',
+        'port of Sydney Terminal' => 'Terminal Pelabuhan Sydney',
+        'Port of Sydney' => 'Pelabuhan Sydney',
+        'port of Sydney' => 'Pelabuhan Sydney',
+        'Port of' => 'Pelabuhan',
+        'port of' => 'Pelabuhan',
+    ];
+
+    /**
      * Weather translations
      */
     protected static array $weatherMap = [
@@ -154,6 +205,8 @@ class TranslationHelper
         'Clear Sky' => 'Langit Cerah',
         'Tropical Fair' => 'Cerah Tropis',
         'Overcast' => 'Mendung',
+        'Thunderstorm' => 'Badai Petir',
+        'Moderate Rain Showers' => 'Hujan Sedang',
         'Rain' => 'Hujan',
         'Light Rain' => 'Hujan Ringan',
         'Passing Showers' => 'Hujan Lokal',
@@ -165,28 +218,32 @@ class TranslationHelper
     {
         if (!$status) return '';
         $locale = App::getLocale() ?: session('locale', 'id');
-        return self::$statusMap[$locale][$status] ?? str_replace('_', ' ', $status);
+        $clean = strtoupper(trim($status));
+        return self::$statusMap[$locale][$clean] ?? ucwords(strtolower(str_replace('_', ' ', $status)));
     }
 
     public static function translateDelayStatus(?string $status): string
     {
         if (!$status) return '';
         $locale = App::getLocale() ?: session('locale', 'id');
-        return self::$delayStatusMap[$locale][$status] ?? str_replace('_', ' ', $status);
+        $clean = strtoupper(trim($status));
+        return self::$delayStatusMap[$locale][$clean] ?? str_replace('_', ' ', $status);
     }
 
     public static function translateExceptionType(?string $type): string
     {
         if (!$type) return '';
         $locale = App::getLocale() ?: session('locale', 'id');
-        return self::$exceptionTypeMap[$locale][$type] ?? str_replace('_', ' ', $type);
+        $clean = strtoupper(trim($type));
+        return self::$exceptionTypeMap[$locale][$clean] ?? str_replace('_', ' ', $type);
     }
 
     public static function translateSeverity(?string $sev): string
     {
         if (!$sev) return '';
         $locale = App::getLocale() ?: session('locale', 'id');
-        return self::$severityMap[$locale][$sev] ?? $sev;
+        $clean = strtoupper(trim($sev));
+        return self::$severityMap[$locale][$clean] ?? $sev;
     }
 
     public static function translateText(?string $text): string
@@ -197,13 +254,38 @@ class TranslationHelper
             return $text;
         }
 
-        // Direct match
-        if (isset(self::$textMap[$text])) {
-            return self::$textMap[$text];
+        $trimmed = trim($text);
+
+        // 1. Direct match in text dictionary
+        if (isset(self::$textMap[$trimmed])) {
+            return self::$textMap[$trimmed];
         }
 
-        // Partial match / weather replacement
+        // 2. Exception Resolved prefix handling: [EXCEPTION RESOLVED: CUSTOMS_HOLD] ...
+        if (preg_match('/^\[EXCEPTION\s+RESOLVED:\s*([^\]]+)\]\s*(.*)$/i', $trimmed, $m)) {
+            $rawType = trim($m[1]);
+            $rawRest = trim($m[2]);
+            $transType = self::$exceptionTypeMap['id'][strtoupper($rawType)] ?? self::translateText($rawType);
+            $transRest = self::translateText($rawRest);
+            return "[KENDALA DISELESAIKAN: " . strtoupper($transType) . "] " . $transRest;
+        }
+
+        // 3. Exception Raised prefix handling: [EXCEPTION: CUSTOMS_HOLD] ...
+        if (preg_match('/^\[EXCEPTION:\s*([^\]]+)\]\s*(.*)$/i', $trimmed, $m)) {
+            $rawType = trim($m[1]);
+            $rawRest = trim($m[2]);
+            $transType = self::$exceptionTypeMap['id'][strtoupper($rawType)] ?? self::translateText($rawType);
+            $transRest = self::translateText($rawRest);
+            return "[KENDALA: " . strtoupper($transType) . "] " . $transRest;
+        }
+
+        // 4. Substring phrase replacements
         $result = $text;
+        foreach (self::$phraseReplacements as $en => $id) {
+            $result = str_ireplace($en, $id, $result);
+        }
+
+        // 5. Weather translations
         foreach (self::$weatherMap as $en => $id) {
             $result = str_ireplace($en, $id, $result);
         }

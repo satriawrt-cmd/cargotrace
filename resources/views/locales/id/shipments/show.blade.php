@@ -374,7 +374,7 @@
                     <label class="block text-[11px] font-semibold text-slate-600 mb-1">Target Status Berikutnya</label>
                     <select name="status" required class="w-full px-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-blue-500">
                         @foreach(\App\Models\Shipment::VALID_TRANSITIONS[$shipment->current_status] ?? [] as $next)
-                            <option value="{{ $next }}">{{ $next }}</option>
+                            <option value="{{ $next }}">{{ \App\Services\TranslationHelper::translateStatus($next) }} ({{ $next }})</option>
                         @endforeach
                     </select>
                 </div>
