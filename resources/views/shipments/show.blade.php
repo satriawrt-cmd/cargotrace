@@ -20,11 +20,6 @@
         </div>
 
         <div class="flex items-center gap-2">
-            <a href="{{ route('public.track.show', $shipment->shipment_number) }}" target="_blank" class="px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs font-semibold shadow-xs transition flex items-center gap-1.5">
-                <i class="fa-solid fa-arrow-up-right-from-square text-blue-600 text-[11px]"></i>
-                <span>Public URL</span>
-            </a>
-
             @can('update', $shipment)
             <a href="{{ route('shipments.edit', $shipment->id) }}" class="px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs font-semibold shadow-xs transition flex items-center gap-1.5">
                 <i class="fa-solid fa-pen-to-square text-slate-500 text-[11px]"></i>
