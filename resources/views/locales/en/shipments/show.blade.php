@@ -7,22 +7,22 @@
     <!-- Top Action Bar -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div class="flex items-center gap-3">
-            <a href="{{ route('shipments.index') }}" class="p-2 rounded-xl bg-white hover:bg-[#FAF5EE] text-[#664930] border border-[#EDE4DC] shadow-2xs transition">
+            <a href="{{ route('shipments.index') }}" class="p-2 rounded-xl bg-white hover:bg-[#F8FAFC] text-[#1E3A8A] border border-[#E2E8F0] shadow-2xs transition">
                 <i class="fa-solid fa-arrow-left text-xs"></i>
             </a>
             <div>
                 <div class="flex items-center gap-2">
-                    <span class="text-[10px] font-bold uppercase tracking-wider text-[#997E67]">Consignment</span>
-                    <span class="text-[10px] px-2 py-0.5 rounded bg-[#FFDBBB]/70 text-[#664930] font-mono font-bold border border-[#F0CCAC]">VERIFIED</span>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-[#64748B]">Consignment</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded bg-[#38BDF8]/70 text-[#1E3A8A] font-mono font-bold border border-[#7DD3FC]">VERIFIED</span>
                 </div>
-                <h1 class="text-xl sm:text-2xl font-bold text-[#3D2A1A] font-mono mt-0.5">{{ $shipment->shipment_number }}</h1>
+                <h1 class="text-xl sm:text-2xl font-bold text-[#0F172A] font-mono mt-0.5">{{ $shipment->shipment_number }}</h1>
             </div>
         </div>
 
         <div class="flex items-center gap-2">
             @can('update', $shipment)
-            <a href="{{ route('shipments.edit', $shipment->id) }}" class="px-3 py-1.5 rounded-xl bg-white hover:bg-[#FAF5EE] text-[#664930] border border-[#EDE4DC] text-xs font-semibold shadow-2xs transition flex items-center gap-1.5">
-                <i class="fa-solid fa-pen-to-square text-[#997E67] text-[11px]"></i>
+            <a href="{{ route('shipments.edit', $shipment->id) }}" class="px-3 py-1.5 rounded-xl bg-white hover:bg-[#F8FAFC] text-[#1E3A8A] border border-[#E2E8F0] text-xs font-semibold shadow-2xs transition flex items-center gap-1.5">
+                <i class="fa-solid fa-pen-to-square text-[#64748B] text-[11px]"></i>
                 <span>Edit</span>
             </a>
             @endcan
@@ -31,7 +31,7 @@
             <form action="{{ route('shipments.destroy', $shipment->id) }}" method="POST" onsubmit="return confirm('Permanently delete this shipment?');" class="inline">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="px-3 py-1.5 rounded-xl bg-[#FDF2F0] hover:bg-[#FCE7E4] text-[#8C3A30] text-xs font-semibold transition border border-[#F5D2CC]">
+                <button type="submit" class="px-3 py-1.5 rounded-xl bg-[#FEF2F2] hover:bg-[#FCE7E4] text-[#DC2626] text-xs font-semibold transition border border-[#FECACA]">
                     <i class="fa-solid fa-trash-can text-xs"></i>
                 </button>
             </form>
@@ -39,57 +39,57 @@
         </div>
     </div>
 
-    <!-- Main Overview Card (Neutral Elegance Style) -->
-    <div class="p-6 sm:p-7 rounded-3xl bg-white/95 border border-[#EDE4DC] shadow-sm space-y-6">
+    <!-- Main Overview Card (Ocean Maritime Style) -->
+    <div class="p-6 sm:p-7 rounded-3xl bg-white/95 border border-[#E2E8F0] shadow-sm space-y-6">
         <!-- Route Banner & Status -->
-        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-[#EDE4DC]">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-[#E2E8F0]">
             <!-- Origin -> Destination -->
             <div class="flex items-center gap-6">
                 <div>
-                    <span class="text-[10px] font-bold uppercase tracking-wider text-[#997E67]">Origin</span>
-                    <h3 class="text-base sm:text-lg font-bold text-[#3D2A1A]">{{ $shipment->origin->city }}</h3>
-                    <p class="text-xs text-[#7A6350]">{{ $shipment->origin->country }} ({{ $shipment->origin->code }})</p>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-[#64748B]">Origin</span>
+                    <h3 class="text-base sm:text-lg font-bold text-[#0F172A]">{{ $shipment->origin->city }}</h3>
+                    <p class="text-xs text-[#64748B]">{{ $shipment->origin->country }} ({{ $shipment->origin->code }})</p>
                 </div>
 
                 <div class="flex flex-col items-center px-2">
-                    <span class="text-[10px] text-[#997E67] mb-0.5">{{ $shipment->carrier->service_type }}</span>
+                    <span class="text-[10px] text-[#64748B] mb-0.5">{{ $shipment->carrier->service_type }}</span>
                     <div class="w-20 sm:w-28 flex items-center">
-                        <div class="h-0.5 bg-[#EDE4DC] flex-1"></div>
-                        <i class="fa-solid fa-ship text-[#664930] text-xs mx-2"></i>
-                        <div class="h-0.5 bg-[#EDE4DC] flex-1"></div>
+                        <div class="h-0.5 bg-[#E2E8F0] flex-1"></div>
+                        <i class="fa-solid fa-ship text-[#1E3A8A] text-xs mx-2"></i>
+                        <div class="h-0.5 bg-[#E2E8F0] flex-1"></div>
                     </div>
-                    <span class="text-[11px] font-semibold text-[#6E5947] mt-0.5">{{ $shipment->carrier->name }}</span>
+                    <span class="text-[11px] font-semibold text-[#475569] mt-0.5">{{ $shipment->carrier->name }}</span>
                 </div>
 
                 <div>
-                    <span class="text-[10px] font-bold uppercase tracking-wider text-[#997E67]">Destination</span>
-                    <h3 class="text-base sm:text-lg font-bold text-[#3D2A1A]">{{ $shipment->destination->city }}</h3>
-                    <p class="text-xs text-[#7A6350]">{{ $shipment->destination->country }} ({{ $shipment->destination->code }})</p>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-[#64748B]">Destination</span>
+                    <h3 class="text-base sm:text-lg font-bold text-[#0F172A]">{{ $shipment->destination->city }}</h3>
+                    <p class="text-xs text-[#64748B]">{{ $shipment->destination->country }} ({{ $shipment->destination->code }})</p>
                 </div>
             </div>
 
             <!-- Status & Delay Badge -->
             <div class="flex items-center gap-2">
                 @if($shipment->current_status === 'DELIVERED')
-                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-[#EDF5EC] text-[#345937] border border-[#CCE2CB]">
+                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-[#ECFDF5] text-[#047857] border border-[#A7F3D0]">
                         Delivered
                     </span>
                 @elseif($shipment->current_status === 'IN_TRANSIT')
-                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-[#F5EDE3] text-[#72543B] border border-[#E2D2C0]">
+                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-[#E0F2FE] text-[#1E3A8A] border border-[#E2D2C0]">
                         In Transit
                     </span>
                 @else
-                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-[#FAF4ED] text-[#6E5947] border border-[#E8DCCF]">
+                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-[#FAF4ED] text-[#475569] border border-[#E2E8F0]">
                         {{ str_replace('_', ' ', $shipment->current_status) }}
                     </span>
                 @endif
 
                 @if($shipment->delay_status === 'DELAYED')
-                    <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-[#FFF5EC] text-[#8C4626] border border-[#F2DAC4]">
+                    <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-[#FFF5EC] text-[#D97706] border border-[#F2DAC4]">
                         Delayed (+{{ $shipment->delay_hours }}h)
                     </span>
                 @else
-                    <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-[#EDF5EC] text-[#345937] border border-[#CCE2CB]">
+                    <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-[#ECFDF5] text-[#047857] border border-[#A7F3D0]">
                         On Schedule
                     </span>
                 @endif
@@ -98,36 +98,36 @@
 
         <!-- Details Grid -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
-            <div class="p-3.5 rounded-2xl bg-[#FAF6F1] border border-[#EDE4DC]">
-                <span class="text-[#997E67] font-semibold uppercase text-[10px] block mb-1">Departure Schedule</span>
-                <span class="font-bold text-[#3D2A1A] font-mono">{{ $shipment->expected_departure->format('d M Y H:i') }}</span>
+            <div class="p-3.5 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0]">
+                <span class="text-[#64748B] font-semibold uppercase text-[10px] block mb-1">Departure Schedule</span>
+                <span class="font-bold text-[#0F172A] font-mono">{{ $shipment->expected_departure->format('d M Y H:i') }}</span>
                 @if($shipment->actual_departure)
-                <p class="text-[10px] text-[#345937] mt-1">Actual: {{ $shipment->actual_departure->format('d M, H:i') }}</p>
+                <p class="text-[10px] text-[#047857] mt-1">Actual: {{ $shipment->actual_departure->format('d M, H:i') }}</p>
                 @endif
             </div>
 
-            <div class="p-3.5 rounded-2xl bg-[#FAF6F1] border border-[#EDE4DC]">
-                <span class="text-[#997E67] font-semibold uppercase text-[10px] block mb-1">Estimated Arrival (ETA)</span>
-                <span class="font-bold text-[#3D2A1A] font-mono">{{ $shipment->estimated_arrival->format('d M Y H:i') }}</span>
-                <p class="text-[10px] text-[#997E67] mt-1">Expected: {{ $shipment->expected_arrival->format('d M, H:i') }}</p>
+            <div class="p-3.5 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0]">
+                <span class="text-[#64748B] font-semibold uppercase text-[10px] block mb-1">Estimated Arrival (ETA)</span>
+                <span class="font-bold text-[#0F172A] font-mono">{{ $shipment->estimated_arrival->format('d M Y H:i') }}</span>
+                <p class="text-[10px] text-[#64748B] mt-1">Expected: {{ $shipment->expected_arrival->format('d M, H:i') }}</p>
             </div>
 
-            <div class="p-3.5 rounded-2xl bg-[#FAF6F1] border border-[#EDE4DC]">
-                <span class="text-[#997E67] font-semibold uppercase text-[10px] block mb-1">Cargo & Weight</span>
-                <span class="font-bold text-[#3D2A1A] line-clamp-1">{{ $shipment->cargo_type }}</span>
-                <p class="text-[10px] text-[#997E67] mt-1">{{ number_format($shipment->weight_kg, 1) }} kg • {{ number_format($shipment->volume_cbm, 1) }} CBM</p>
+            <div class="p-3.5 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0]">
+                <span class="text-[#64748B] font-semibold uppercase text-[10px] block mb-1">Cargo & Weight</span>
+                <span class="font-bold text-[#0F172A] line-clamp-1">{{ $shipment->cargo_type }}</span>
+                <p class="text-[10px] text-[#64748B] mt-1">{{ number_format($shipment->weight_kg, 1) }} kg • {{ number_format($shipment->volume_cbm, 1) }} CBM</p>
             </div>
 
-            <div class="p-3.5 rounded-2xl bg-[#FAF6F1] border border-[#EDE4DC]">
-                <span class="text-[#997E67] font-semibold uppercase text-[10px] block mb-1">Consignee</span>
-                <span class="font-bold text-[#3D2A1A]">{{ $shipment->customer->name }}</span>
-                <p class="text-[10px] text-[#997E67] mt-1">{{ $shipment->customer->company_name ?? $shipment->customer->email }}</p>
+            <div class="p-3.5 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0]">
+                <span class="text-[#64748B] font-semibold uppercase text-[10px] block mb-1">Consignee</span>
+                <span class="font-bold text-[#0F172A]">{{ $shipment->customer->name }}</span>
+                <p class="text-[10px] text-[#64748B] mt-1">{{ $shipment->customer->company_name ?? $shipment->customer->email }}</p>
             </div>
         </div>
 
         @if($shipment->delay_reason)
-        <div class="p-3 rounded-2xl bg-[#FFF6ED] border border-[#F3DAC5] text-xs text-[#8C4626] flex items-start gap-2">
-            <i class="fa-solid fa-triangle-exclamation text-[#8C4626] mt-0.5"></i>
+        <div class="p-3 rounded-2xl bg-[#FFF6ED] border border-[#F3DAC5] text-xs text-[#D97706] flex items-start gap-2">
+            <i class="fa-solid fa-triangle-exclamation text-[#D97706] mt-0.5"></i>
             <div>
                 <strong>Delay Advisory:</strong> {{ $shipment->delay_reason }}
             </div>
@@ -135,48 +135,48 @@
         @endif
     </div>
 
-    <!-- Multi-Currency Financial Ledger Card (Neutral Elegance Style) -->
-    <div class="p-5 sm:p-6 rounded-3xl bg-white/95 border border-[#EDE4DC] shadow-sm space-y-4">
+    <!-- Multi-Currency Financial Ledger Card (Ocean Maritime Style) -->
+    <div class="p-5 sm:p-6 rounded-3xl bg-white/95 border border-[#E2E8F0] shadow-sm space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-                <h3 class="text-sm font-bold text-[#3D2A1A]">Multi-Currency Financial Ledger</h3>
-                <p class="text-[11px] text-[#997E67]">
-                    Base currency: <span class="font-bold text-[#3D2A1A] font-mono">{{ $shipment->currency_code }}</span> • Active view: <span class="font-bold text-[#664930] font-mono">{{ $activeCurrencyCode }}</span>
+                <h3 class="text-sm font-bold text-[#0F172A]">Multi-Currency Financial Ledger</h3>
+                <p class="text-[11px] text-[#64748B]">
+                    Base currency: <span class="font-bold text-[#0F172A] font-mono">{{ $shipment->currency_code }}</span> • Active view: <span class="font-bold text-[#1E3A8A] font-mono">{{ $activeCurrencyCode }}</span>
                 </p>
             </div>
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#FAF5EE] text-[#664930] border border-[#EDE4DC]">
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#F8FAFC] text-[#1E3A8A] border border-[#E2E8F0]">
                 1 USD = {{ $currencyService->getCurrency($activeCurrencyCode)?->exchange_rate_to_usd ?? 1 }} {{ $activeCurrencyCode }}
             </span>
         </div>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
-            <div class="p-3 rounded-2xl bg-[#FAF6F1] border border-[#EDE4DC]">
-                <span class="text-[10px] uppercase font-bold text-[#997E67] block mb-0.5">Freight Cost</span>
-                <span class="font-bold text-[#3D2A1A] font-mono text-sm">
+            <div class="p-3 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0]">
+                <span class="text-[10px] uppercase font-bold text-[#64748B] block mb-0.5">Freight Cost</span>
+                <span class="font-bold text-[#0F172A] font-mono text-sm">
                     {{ $currencyService->convertAndFormat($shipment->shipping_cost, $shipment->currency_code, $activeCurrencyCode) }}
                 </span>
-                <span class="block text-[10px] text-[#997E67] font-mono mt-0.5">Base: {{ $currencyService->format($shipment->shipping_cost, $shipment->currency_code) }}</span>
+                <span class="block text-[10px] text-[#64748B] font-mono mt-0.5">Base: {{ $currencyService->format($shipment->shipping_cost, $shipment->currency_code) }}</span>
             </div>
 
-            <div class="p-3 rounded-2xl bg-[#FAF6F1] border border-[#EDE4DC]">
-                <span class="text-[10px] uppercase font-bold text-[#997E67] block mb-0.5">Declared Cargo Value</span>
-                <span class="font-bold text-[#3D2A1A] font-mono text-sm">
+            <div class="p-3 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0]">
+                <span class="text-[10px] uppercase font-bold text-[#64748B] block mb-0.5">Declared Cargo Value</span>
+                <span class="font-bold text-[#0F172A] font-mono text-sm">
                     {{ $currencyService->convertAndFormat($shipment->declared_value, $shipment->currency_code, $activeCurrencyCode) }}
                 </span>
-                <span class="block text-[10px] text-[#997E67] font-mono mt-0.5">Base: {{ $currencyService->format($shipment->declared_value, $shipment->currency_code) }}</span>
+                <span class="block text-[10px] text-[#64748B] font-mono mt-0.5">Base: {{ $currencyService->format($shipment->declared_value, $shipment->currency_code) }}</span>
             </div>
 
-            <div class="p-3 rounded-2xl bg-[#FAF6F1] border border-[#EDE4DC]">
-                <span class="text-[10px] uppercase font-bold text-[#997E67] block mb-0.5">Insurance Premium</span>
-                <span class="font-bold text-[#3D2A1A] font-mono text-sm">
+            <div class="p-3 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0]">
+                <span class="text-[10px] uppercase font-bold text-[#64748B] block mb-0.5">Insurance Premium</span>
+                <span class="font-bold text-[#0F172A] font-mono text-sm">
                     {{ $currencyService->convertAndFormat($shipment->insurance_fee, $shipment->currency_code, $activeCurrencyCode) }}
                 </span>
-                <span class="block text-[10px] text-[#997E67] font-mono mt-0.5">Base: {{ $currencyService->format($shipment->insurance_fee, $shipment->currency_code) }}</span>
+                <span class="block text-[10px] text-[#64748B] font-mono mt-0.5">Base: {{ $currencyService->format($shipment->insurance_fee, $shipment->currency_code) }}</span>
             </div>
 
-            <div class="p-3 rounded-2xl bg-[#FFDBBB]/40 border border-[#F0CCAC]">
-                <span class="text-[10px] uppercase font-bold text-[#664930] block mb-0.5">Total Payable</span>
-                <span class="font-extrabold text-[#664930] font-mono text-sm">
+            <div class="p-3 rounded-2xl bg-[#38BDF8]/40 border border-[#7DD3FC]">
+                <span class="text-[10px] uppercase font-bold text-[#1E3A8A] block mb-0.5">Total Payable</span>
+                <span class="font-extrabold text-[#1E3A8A] font-mono text-sm">
                     {{ $currencyService->convertAndFormat($shipment->total_cost, $shipment->currency_code, $activeCurrencyCode) }}
                 </span>
                 <span class="block text-[10px] text-[#8C7664] font-mono mt-0.5">Base: {{ $currencyService->format($shipment->total_cost, $shipment->currency_code) }}</span>
@@ -184,43 +184,43 @@
         </div>
     </div>
 
-    <!-- Map & Tracking Container (Neutral Elegance Style) -->
-    <div class="rounded-3xl bg-white border border-[#EDE4DC] shadow-sm overflow-hidden space-y-0">
+    <!-- Map & Tracking Container (Ocean Maritime Style) -->
+    <div class="rounded-3xl bg-white border border-[#E2E8F0] shadow-sm overflow-hidden space-y-0">
         <!-- Map Header Bar with Legend -->
-        <div class="px-5 py-3.5 bg-[#FAF5EE]/90 border-b border-[#EDE4DC] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div class="px-5 py-3.5 bg-[#F8FAFC]/90 border-b border-[#E2E8F0] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div class="flex items-center gap-2.5">
-                <span class="w-8 h-8 rounded-xl bg-[#FFDBBB] text-[#664930] border border-[#F0CCAC] flex items-center justify-center text-sm shadow-2xs">
+                <span class="w-8 h-8 rounded-xl bg-[#38BDF8] text-[#1E3A8A] border border-[#7DD3FC] flex items-center justify-center text-sm shadow-2xs">
                     <i class="fa-solid fa-map-location-dot"></i>
                 </span>
                 <div>
-                    <h3 class="text-xs font-bold text-[#443224] uppercase tracking-wider">Route Tracking & Position</h3>
-                    <p class="text-[11px] text-[#997E67]">
-                        Current Location: <strong class="text-[#3D2A1A]">{{ $shipment->current_location_name ?: 'En Route' }}</strong>
+                    <h3 class="text-xs font-bold text-[#0F172A] uppercase tracking-wider">Route Tracking & Position</h3>
+                    <p class="text-[11px] text-[#64748B]">
+                        Current Location: <strong class="text-[#0F172A]">{{ $shipment->current_location_name ?: 'En Route' }}</strong>
                     </p>
                 </div>
             </div>
 
             <!-- Legend Pills -->
             <div class="flex items-center gap-3 text-xs">
-                <span class="flex items-center gap-1.5 text-[#6E5947]"><span class="w-2.5 h-2.5 rounded-full bg-[#664930] ring-2 ring-[#FFDBBB]"></span> Origin</span>
-                <span class="flex items-center gap-1.5 text-[#6E5947]"><span class="w-2.5 h-2.5 rounded-full bg-[#997E67] ring-2 ring-[#CCBEB1]"></span> Destination</span>
-                <span class="flex items-center gap-1.5 text-[#6E5947]"><span class="w-2.5 h-2.5 rounded-full bg-[#8C4626] ring-2 ring-[#FFDBBB]"></span> Vessel Position</span>
+                <span class="flex items-center gap-1.5 text-[#475569]"><span class="w-2.5 h-2.5 rounded-full bg-[#1E3A8A] ring-2 ring-[#38BDF8]"></span> Origin</span>
+                <span class="flex items-center gap-1.5 text-[#475569]"><span class="w-2.5 h-2.5 rounded-full bg-[#64748B] ring-2 ring-[#94A3B8]"></span> Destination</span>
+                <span class="flex items-center gap-1.5 text-[#475569]"><span class="w-2.5 h-2.5 rounded-full bg-[#D97706] ring-2 ring-[#38BDF8]"></span> Vessel Position</span>
             </div>
         </div>
 
         <!-- Relative Map Frame with Compass & GPS Locate Button Overlay -->
         <div class="relative w-full h-[440px] z-0">
             <!-- Compass North Overlay -->
-            <div class="absolute top-3 left-3 z-[400] bg-white/95 backdrop-blur-xs p-1.5 rounded-full shadow-md border border-[#EDE4DC] flex items-center justify-center w-10 h-10 select-none hover:bg-[#FAF5EE] transition cursor-pointer" title="North">
+            <div class="absolute top-3 left-3 z-[400] bg-white/95 backdrop-blur-xs p-1.5 rounded-full shadow-md border border-[#E2E8F0] flex items-center justify-center w-10 h-10 select-none hover:bg-[#F8FAFC] transition cursor-pointer" title="North">
                 <div class="relative w-6 h-6 flex items-center justify-center">
-                    <div class="w-1 h-3 bg-[#8C4626] rounded-t-sm absolute top-0"></div>
-                    <div class="w-1 h-3 bg-[#CCBEB1] rounded-b-sm absolute bottom-0"></div>
-                    <span class="text-[8px] font-black text-[#8C4626] absolute -top-1">N</span>
+                    <div class="w-1 h-3 bg-[#D97706] rounded-t-sm absolute top-0"></div>
+                    <div class="w-1 h-3 bg-[#94A3B8] rounded-b-sm absolute bottom-0"></div>
+                    <span class="text-[8px] font-black text-[#D97706] absolute -top-1">N</span>
                 </div>
             </div>
 
             <!-- GPS Re-Center Target Button -->
-            <button type="button" id="recenterMapBtn" class="absolute bottom-4 right-4 z-[400] bg-white/95 backdrop-blur-xs w-11 h-11 rounded-full shadow-lg border border-[#EDE4DC] flex items-center justify-center text-[#664930] hover:text-[#3D2A1A] hover:scale-105 active:scale-95 transition" title="Center to Vessel">
+            <button type="button" id="recenterMapBtn" class="absolute bottom-4 right-4 z-[400] bg-white/95 backdrop-blur-xs w-11 h-11 rounded-full shadow-lg border border-[#E2E8F0] flex items-center justify-center text-[#1E3A8A] hover:text-[#0F172A] hover:scale-105 active:scale-95 transition" title="Center to Vessel">
                 <i class="fa-solid fa-crosshairs text-lg"></i>
             </button>
 
@@ -229,26 +229,26 @@
         </div>
 
         <!-- Integrated Delivery Status Card (Bottom of Map) -->
-        <div class="p-5 sm:p-6 bg-white border-t border-[#EDE4DC] space-y-5">
+        <div class="p-5 sm:p-6 bg-white border-t border-[#E2E8F0] space-y-5">
             <!-- Estimasi Tiba Header -->
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#EDE4DC]">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#E2E8F0]">
                 <div>
-                    <span class="text-[11px] font-bold uppercase tracking-wider text-[#997E67] block mb-0.5">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-[#64748B] block mb-0.5">
                         <i class="fa-regular fa-calendar-check mr-1"></i> Estimated Global Delivery
                     </span>
-                    <h2 class="text-lg sm:text-xl font-extrabold text-[#3D2A1A]">
+                    <h2 class="text-lg sm:text-xl font-extrabold text-[#0F172A]">
                         Estimated arrival: {{ $shipment->estimated_arrival->format('d M') }} – {{ $shipment->estimated_arrival->copy()->addDays(2)->format('d M Y') }}
                     </h2>
                 </div>
                 <div class="flex items-center gap-2">
                     @if($shipment->delay_status === 'DELAYED')
-                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-[#FFF5EC] text-[#8C4626] border border-[#F2DAC4] flex items-center gap-1.5">
-                            <span class="w-2 h-2 rounded-full bg-[#8C4626]"></span>
+                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-[#FFF5EC] text-[#D97706] border border-[#F2DAC4] flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-[#D97706]"></span>
                             Delayed (+{{ $shipment->delay_hours }}h)
                         </span>
                     @else
-                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-[#EDF5EC] text-[#345937] border border-[#CCE2CB] flex items-center gap-1.5">
-                            <span class="w-2 h-2 rounded-full bg-[#345937]"></span>
+                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-[#ECFDF5] text-[#047857] border border-[#A7F3D0] flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-[#047857]"></span>
                             On Schedule
                         </span>
                     @endif
@@ -258,7 +258,7 @@
             <!-- 3-Step Milestone Stepper -->
             <div class="py-2">
                 <div class="relative flex items-center justify-between max-w-2xl mx-auto px-4 sm:px-10">
-                    <div class="absolute left-10 right-10 top-5 h-0.5 bg-[#EDE4DC] -z-0"></div>
+                    <div class="absolute left-10 right-10 top-5 h-0.5 bg-[#E2E8F0] -z-0"></div>
                     @php
                         $stepperPct = '15%';
                         if ($shipment->current_status === 'DELIVERED') {
@@ -269,76 +269,76 @@
                             $stepperPct = '25%';
                         }
                     @endphp
-                    <div class="absolute left-10 top-5 h-0.5 bg-[#664930] -z-0 transition-all duration-500" style="width: {{ $stepperPct }};"></div>
+                    <div class="absolute left-10 top-5 h-0.5 bg-[#1E3A8A] -z-0 transition-all duration-500" style="width: {{ $stepperPct }};"></div>
 
                     <!-- Step 1: Dispatched -->
                     <div class="flex flex-col items-center z-10 text-center">
                         <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm shadow-sm transition
-                            {{ in_array($shipment->current_status, ['BOOKED', 'PICKED_UP', 'IN_TRANSIT', 'DELIVERED']) ? 'bg-[#664930] text-[#FFF8F2] ring-4 ring-[#FFDBBB]' : 'bg-[#FAF5EE] text-[#997E67]' }}">
+                            {{ in_array($shipment->current_status, ['BOOKED', 'PICKED_UP', 'IN_TRANSIT', 'DELIVERED']) ? 'bg-[#1E3A8A] text-[#FFF8F2] ring-4 ring-[#38BDF8]' : 'bg-[#F8FAFC] text-[#64748B]' }}">
                             <i class="fa-solid fa-box-archive"></i>
                         </div>
-                        <span class="text-xs font-bold mt-2 {{ in_array($shipment->current_status, ['BOOKED', 'PICKED_UP', 'IN_TRANSIT', 'DELIVERED']) ? 'text-[#3D2A1A]' : 'text-[#997E67]' }}">
+                        <span class="text-xs font-bold mt-2 {{ in_array($shipment->current_status, ['BOOKED', 'PICKED_UP', 'IN_TRANSIT', 'DELIVERED']) ? 'text-[#0F172A]' : 'text-[#64748B]' }}">
                             Dispatched
                         </span>
-                        <span class="text-[10px] text-[#997E67] max-w-[90px] truncate">{{ $shipment->origin->city }}</span>
+                        <span class="text-[10px] text-[#64748B] max-w-[90px] truncate">{{ $shipment->origin->city }}</span>
                     </div>
 
                     <!-- Step 2: En Route -->
                     <div class="flex flex-col items-center z-10 text-center">
                         <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm shadow-sm transition
-                            {{ in_array($shipment->current_status, ['IN_TRANSIT', 'DELIVERED']) ? 'bg-[#664930] text-[#FFF8F2] ring-4 ring-[#FFDBBB]' : 'bg-[#FAF5EE] text-[#997E67]' }}">
+                            {{ in_array($shipment->current_status, ['IN_TRANSIT', 'DELIVERED']) ? 'bg-[#1E3A8A] text-[#FFF8F2] ring-4 ring-[#38BDF8]' : 'bg-[#F8FAFC] text-[#64748B]' }}">
                             <i class="fa-solid fa-ship"></i>
                         </div>
-                        <span class="text-xs font-bold mt-2 {{ in_array($shipment->current_status, ['IN_TRANSIT', 'DELIVERED']) ? 'text-[#3D2A1A]' : 'text-[#997E67]' }}">
+                        <span class="text-xs font-bold mt-2 {{ in_array($shipment->current_status, ['IN_TRANSIT', 'DELIVERED']) ? 'text-[#0F172A]' : 'text-[#64748B]' }}">
                             In Transit
                         </span>
-                        <span class="text-[10px] text-[#997E67]">Ocean Voyage</span>
+                        <span class="text-[10px] text-[#64748B]">Ocean Voyage</span>
                     </div>
 
                     <!-- Step 3: Delivered -->
                     <div class="flex flex-col items-center z-10 text-center">
                         <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm shadow-sm transition
-                            {{ $shipment->current_status === 'DELIVERED' ? 'bg-[#664930] text-[#FFF8F2] ring-4 ring-[#FFDBBB]' : 'bg-[#FAF5EE] text-[#997E67]' }}">
+                            {{ $shipment->current_status === 'DELIVERED' ? 'bg-[#1E3A8A] text-[#FFF8F2] ring-4 ring-[#38BDF8]' : 'bg-[#F8FAFC] text-[#64748B]' }}">
                             <i class="fa-solid fa-check"></i>
                         </div>
-                        <span class="text-xs font-bold mt-2 {{ $shipment->current_status === 'DELIVERED' ? 'text-[#3D2A1A]' : 'text-[#997E67]' }}">
+                        <span class="text-xs font-bold mt-2 {{ $shipment->current_status === 'DELIVERED' ? 'text-[#0F172A]' : 'text-[#64748B]' }}">
                             Delivered
                         </span>
-                        <span class="text-[10px] text-[#997E67] max-w-[90px] truncate">{{ $shipment->destination->city }}</span>
+                        <span class="text-[10px] text-[#64748B] max-w-[90px] truncate">{{ $shipment->destination->city }}</span>
                     </div>
                 </div>
             </div>
 
             <!-- Guarantee Badge -->
-            <div class="p-3.5 rounded-2xl bg-[#FAF6F1] border border-[#EDE4DC] text-xs text-[#523A25] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="p-3.5 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs text-[#1D4ED8] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div class="flex items-center gap-2.5">
-                    <div class="w-7 h-7 rounded-lg bg-[#FFDBBB] text-[#664930] flex items-center justify-center text-xs flex-shrink-0 shadow-2xs">
+                    <div class="w-7 h-7 rounded-lg bg-[#38BDF8] text-[#1E3A8A] flex items-center justify-center text-xs flex-shrink-0 shadow-2xs">
                         <i class="fa-solid fa-clock-rotate-left"></i>
                     </div>
                     <div>
-                        <strong class="font-semibold text-[#3D2A1A]">Delivery Guarantee:</strong> Verified international SLA coverage by CargoTrace.
+                        <strong class="font-semibold text-[#0F172A]">Delivery Guarantee:</strong> Verified international SLA coverage by CargoTrace.
                     </div>
                 </div>
-                <span class="text-[11px] font-bold text-[#664930] bg-[#FFDBBB]/70 px-2.5 py-1 rounded-md border border-[#F0CCAC] shadow-2xs whitespace-nowrap self-start sm:self-auto">
+                <span class="text-[11px] font-bold text-[#1E3A8A] bg-[#38BDF8]/70 px-2.5 py-1 rounded-md border border-[#7DD3FC] shadow-2xs whitespace-nowrap self-start sm:self-auto">
                     Verified Service
                 </span>
             </div>
 
             <!-- Courier & Tracking Card -->
-            <div class="p-4 rounded-2xl bg-[#FAF6F1] border border-[#EDE4DC] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="p-4 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div class="flex items-center gap-3">
-                    <div class="w-11 h-11 rounded-xl bg-white border border-[#EDE4DC] shadow-2xs flex items-center justify-center text-[#664930] text-xl">
+                    <div class="w-11 h-11 rounded-xl bg-white border border-[#E2E8F0] shadow-2xs flex items-center justify-center text-[#1E3A8A] text-xl">
                         <i class="fa-solid fa-boxes-packing"></i>
                     </div>
                     <div>
                         <div class="flex items-center gap-2">
-                            <span class="text-xs font-bold text-[#3D2A1A]">{{ $shipment->carrier->name }}</span>
-                            <span class="text-[10px] px-1.5 py-0.5 rounded bg-[#FFDBBB]/50 text-[#664930] font-semibold uppercase">{{ $shipment->carrier->service_type }}</span>
+                            <span class="text-xs font-bold text-[#0F172A]">{{ $shipment->carrier->name }}</span>
+                            <span class="text-[10px] px-1.5 py-0.5 rounded bg-[#38BDF8]/50 text-[#1E3A8A] font-semibold uppercase">{{ $shipment->carrier->service_type }}</span>
                         </div>
                         <div class="flex items-center gap-2 mt-0.5">
-                            <span class="font-mono text-xs font-bold text-[#523A25]" id="trackingNumSpan">{{ $shipment->shipment_number }}</span>
+                            <span class="font-mono text-xs font-bold text-[#1D4ED8]" id="trackingNumSpan">{{ $shipment->shipment_number }}</span>
                             <button type="button" onclick="navigator.clipboard.writeText('{{ $shipment->shipment_number }}'); this.querySelector('span').innerText='Copied!'; setTimeout(() => this.querySelector('span').innerText='Copy', 2000);"
-                                    class="text-[11px] text-[#664930] hover:text-[#3D2A1A] font-semibold flex items-center gap-1 transition">
+                                    class="text-[11px] text-[#1E3A8A] hover:text-[#0F172A] font-semibold flex items-center gap-1 transition">
                                 <i class="fa-regular fa-copy"></i>
                                 <span>Copy</span>
                             </button>
@@ -347,7 +347,7 @@
                 </div>
 
                 <div class="flex items-center gap-2">
-                    <span class="text-xs text-[#7A6350]">Route: <strong class="text-[#3D2A1A]">{{ $shipment->origin->city }} ({{ $shipment->origin->code }}) → {{ $shipment->destination->city }} ({{ $shipment->destination->code }})</strong></span>
+                    <span class="text-xs text-[#64748B]">Route: <strong class="text-[#0F172A]">{{ $shipment->origin->city }} ({{ $shipment->origin->code }}) → {{ $shipment->destination->city }} ({{ $shipment->destination->code }})</strong></span>
                 </div>
             </div>
         </div>
@@ -357,30 +357,30 @@
     @can('update', $shipment)
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- Milestone Transition Form -->
-        <div class="p-5 sm:p-6 rounded-3xl bg-white/95 border border-[#EDE4DC] shadow-sm space-y-3">
-            <h3 class="text-xs font-bold text-[#443224] uppercase tracking-wider">Lifecycle Progression</h3>
-            <p class="text-[11px] text-[#997E67]">Transition shipment status. Current status: <strong>{{ $shipment->current_status }}</strong></p>
+        <div class="p-5 sm:p-6 rounded-3xl bg-white/95 border border-[#E2E8F0] shadow-sm space-y-3">
+            <h3 class="text-xs font-bold text-[#0F172A] uppercase tracking-wider">Lifecycle Progression</h3>
+            <p class="text-[11px] text-[#64748B]">Transition shipment status. Current status: <strong>{{ $shipment->current_status }}</strong></p>
 
             @if($shipment->isTerminal())
-            <div class="p-3 rounded-2xl bg-[#FAF5EE] text-xs text-[#997E67] border border-[#EDE4DC]">
+            <div class="p-3 rounded-2xl bg-[#F8FAFC] text-xs text-[#64748B] border border-[#E2E8F0]">
                 Consignment is in a terminal status ({{ $shipment->current_status }}) and cannot be changed.
             </div>
             @else
             <form action="{{ route('shipments.status', $shipment->id) }}" method="POST" class="space-y-3">
                 @csrf
                 <div>
-                    <label class="block text-[11px] font-semibold text-[#6E5947] mb-1">Target Next Status</label>
-                    <select name="status" required class="w-full px-3 py-2 text-xs bg-[#FAF5EE] border border-[#EDE4DC] rounded-xl text-[#3D2A1A] focus:outline-none focus:border-[#997E67]">
+                    <label class="block text-[11px] font-semibold text-[#475569] mb-1">Target Next Status</label>
+                    <select name="status" required class="w-full px-3 py-2 text-xs bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-[#0F172A] focus:outline-none focus:border-[#64748B]">
                         @foreach(\App\Models\Shipment::VALID_TRANSITIONS[$shipment->current_status] ?? [] as $next)
                             <option value="{{ $next }}">{{ str_replace('_', ' ', $next) }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div>
-                    <label class="block text-[11px] font-semibold text-[#6E5947] mb-1">Notes</label>
-                    <input type="text" name="notes" placeholder="Transition notes..." class="w-full px-3 py-2 text-xs bg-[#FAF5EE] border border-[#EDE4DC] rounded-xl text-[#3D2A1A] focus:outline-none focus:border-[#997E67]">
+                    <label class="block text-[11px] font-semibold text-[#475569] mb-1">Notes</label>
+                    <input type="text" name="notes" placeholder="Transition notes..." class="w-full px-3 py-2 text-xs bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-[#0F172A] focus:outline-none focus:border-[#64748B]">
                 </div>
-                <button type="submit" class="w-full py-2.5 px-3 rounded-xl bg-[#664930] hover:bg-[#523A25] text-[#FFF8F2] font-semibold text-xs shadow-sm transition border border-[#523A25]">
+                <button type="submit" class="w-full py-2.5 px-3 rounded-xl bg-[#1E3A8A] hover:bg-[#1D4ED8] text-[#FFF8F2] font-semibold text-xs shadow-sm transition border border-[#1D4ED8]">
                     Update Status
                 </button>
             </form>
@@ -388,16 +388,16 @@
         </div>
 
         <!-- Add Checkpoint Form -->
-        <div class="p-5 sm:p-6 rounded-3xl bg-white/95 border border-[#EDE4DC] shadow-sm space-y-3">
-            <h3 class="text-xs font-bold text-[#443224] uppercase tracking-wider">Add Telemetry Waypoint</h3>
-            <p class="text-[11px] text-[#997E67]">Record verified location coordinates and integrated live weather.</p>
+        <div class="p-5 sm:p-6 rounded-3xl bg-white/95 border border-[#E2E8F0] shadow-sm space-y-3">
+            <h3 class="text-xs font-bold text-[#0F172A] uppercase tracking-wider">Add Telemetry Waypoint</h3>
+            <p class="text-[11px] text-[#64748B]">Record verified location coordinates and integrated live weather.</p>
 
             <form action="{{ route('shipments.tracking.store', $shipment->id) }}" method="POST" class="space-y-3">
                 @csrf
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block text-[11px] font-semibold text-[#6E5947] mb-1">Status</label>
-                        <select name="status" required class="w-full px-3 py-2 text-xs bg-[#FAF5EE] border border-[#EDE4DC] rounded-xl text-[#3D2A1A] focus:outline-none focus:border-[#997E67]">
+                        <label class="block text-[11px] font-semibold text-[#475569] mb-1">Status</label>
+                        <select name="status" required class="w-full px-3 py-2 text-xs bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-[#0F172A] focus:outline-none focus:border-[#64748B]">
                             <option value="IN_TRANSIT">In Transit</option>
                             <option value="PORT_ARRIVAL">Port Arrival</option>
                             <option value="CUSTOMS_CLEARANCE">Customs Clearance</option>
@@ -406,28 +406,28 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-[11px] font-semibold text-[#6E5947] mb-1">Location Name</label>
-                        <input type="text" name="location_name" required placeholder="Port or oceanic coordinate" class="w-full px-3 py-2 text-xs bg-[#FAF5EE] border border-[#EDE4DC] rounded-xl text-[#3D2A1A] focus:outline-none focus:border-[#997E67]">
+                        <label class="block text-[11px] font-semibold text-[#475569] mb-1">Location Name</label>
+                        <input type="text" name="location_name" required placeholder="Port or oceanic coordinate" class="w-full px-3 py-2 text-xs bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-[#0F172A] focus:outline-none focus:border-[#64748B]">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block text-[11px] font-semibold text-[#6E5947] mb-1">Latitude</label>
-                        <input type="number" step="any" name="latitude" placeholder="e.g. 1.2902" class="w-full px-3 py-2 text-xs bg-[#FAF5EE] border border-[#EDE4DC] rounded-xl text-[#3D2A1A] focus:outline-none">
+                        <label class="block text-[11px] font-semibold text-[#475569] mb-1">Latitude</label>
+                        <input type="number" step="any" name="latitude" placeholder="e.g. 1.2902" class="w-full px-3 py-2 text-xs bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-[#0F172A] focus:outline-none">
                     </div>
                     <div>
-                        <label class="block text-[11px] font-semibold text-[#6E5947] mb-1">Longitude</label>
-                        <input type="number" step="any" name="longitude" placeholder="e.g. 103.8519" class="w-full px-3 py-2 text-xs bg-[#FAF5EE] border border-[#EDE4DC] rounded-xl text-[#3D2A1A] focus:outline-none">
+                        <label class="block text-[11px] font-semibold text-[#475569] mb-1">Longitude</label>
+                        <input type="number" step="any" name="longitude" placeholder="e.g. 103.8519" class="w-full px-3 py-2 text-xs bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-[#0F172A] focus:outline-none">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-[11px] font-semibold text-[#6E5947] mb-1">Description / Notes</label>
-                    <input type="text" name="description" required placeholder="Waypoint log details..." class="w-full px-3 py-2 text-xs bg-[#FAF5EE] border border-[#EDE4DC] rounded-xl text-[#3D2A1A] focus:outline-none">
+                    <label class="block text-[11px] font-semibold text-[#475569] mb-1">Description / Notes</label>
+                    <input type="text" name="description" required placeholder="Waypoint log details..." class="w-full px-3 py-2 text-xs bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-[#0F172A] focus:outline-none">
                 </div>
 
-                <button type="submit" class="w-full py-2.5 px-3 rounded-xl bg-[#523A25] hover:bg-[#3D2A1A] text-[#FFF8F2] font-semibold text-xs shadow-sm transition">
+                <button type="submit" class="w-full py-2.5 px-3 rounded-xl bg-[#1D4ED8] hover:bg-[#0F172A] text-[#FFF8F2] font-semibold text-xs shadow-sm transition">
                     Save Checkpoint
                 </button>
             </form>
@@ -436,15 +436,15 @@
     @endcan
 
     <!-- Exceptions SLA Center -->
-    <div class="p-5 sm:p-6 rounded-3xl bg-white/95 border border-[#EDE4DC] shadow-sm space-y-4">
+    <div class="p-5 sm:p-6 rounded-3xl bg-white/95 border border-[#E2E8F0] shadow-sm space-y-4">
         <div class="flex items-center justify-between">
             <div>
-                <h3 class="text-sm font-bold text-[#3D2A1A]">SLA Incidents & Exceptions Management</h3>
-                <p class="text-[11px] text-[#997E67]">Customs inspections, weather storms, and biosecurity protocols</p>
+                <h3 class="text-sm font-bold text-[#0F172A]">SLA Incidents & Exceptions Management</h3>
+                <p class="text-[11px] text-[#64748B]">Customs inspections, weather storms, and biosecurity protocols</p>
             </div>
 
             @can('update', $shipment)
-            <button type="button" onclick="document.getElementById('raiseExceptionDrawer').classList.toggle('hidden')" class="px-3 py-1.5 rounded-xl bg-[#FFF5EC] hover:bg-[#FDEBD9] text-[#8C4626] border border-[#F2DAC4] text-xs font-semibold transition">
+            <button type="button" onclick="document.getElementById('raiseExceptionDrawer').classList.toggle('hidden')" class="px-3 py-1.5 rounded-xl bg-[#FFF5EC] hover:bg-[#FDEBD9] text-[#D97706] border border-[#F2DAC4] text-xs font-semibold transition">
                 + Report New Incident
             </button>
             @endcan
@@ -452,13 +452,13 @@
 
         <!-- Hidden Drawer to Raise Exception -->
         <div id="raiseExceptionDrawer" class="hidden p-4 rounded-2xl bg-[#FFF6ED] border border-[#F2DAC4] space-y-3">
-            <h4 class="text-xs font-bold uppercase text-[#8C4626]">Record Incident</h4>
+            <h4 class="text-xs font-bold uppercase text-[#D97706]">Record Incident</h4>
             <form action="{{ route('shipments.exceptions.store', $shipment->id) }}" method="POST" class="space-y-3">
                 @csrf
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div>
-                        <label class="block text-[11px] font-semibold text-[#6E5947] mb-1">Incident Type</label>
-                        <select name="exception_type" required class="w-full px-3 py-1.5 text-xs bg-white border border-[#EDE4DC] rounded-xl">
+                        <label class="block text-[11px] font-semibold text-[#475569] mb-1">Incident Type</label>
+                        <select name="exception_type" required class="w-full px-3 py-1.5 text-xs bg-white border border-[#E2E8F0] rounded-xl">
                             <option value="CUSTOMS_HOLD">Customs Hold</option>
                             <option value="WEATHER_DELAY">Weather Delay</option>
                             <option value="PORT_CONGESTION">Port Congestion</option>
@@ -469,8 +469,8 @@
                     </div>
 
                     <div>
-                        <label class="block text-[11px] font-semibold text-[#6E5947] mb-1">Severity</label>
-                        <select name="severity" required class="w-full px-3 py-1.5 text-xs bg-white border border-[#EDE4DC] rounded-xl">
+                        <label class="block text-[11px] font-semibold text-[#475569] mb-1">Severity</label>
+                        <select name="severity" required class="w-full px-3 py-1.5 text-xs bg-white border border-[#E2E8F0] rounded-xl">
                             <option value="LOW">Low (0 - 6 hours)</option>
                             <option value="MEDIUM" selected>Medium (6 - 24 hours)</option>
                             <option value="HIGH">High (> 24 hours)</option>
@@ -479,19 +479,19 @@
                     </div>
 
                     <div>
-                        <label class="block text-[11px] font-semibold text-[#6E5947] mb-1">Delay Impact (Hours)</label>
-                        <input type="number" name="delay_impact_hours" min="0" value="12" class="w-full px-3 py-1.5 text-xs bg-white border border-[#EDE4DC] rounded-xl">
+                        <label class="block text-[11px] font-semibold text-[#475569] mb-1">Delay Impact (Hours)</label>
+                        <input type="number" name="delay_impact_hours" min="0" value="12" class="w-full px-3 py-1.5 text-xs bg-white border border-[#E2E8F0] rounded-xl">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-[11px] font-semibold text-[#6E5947] mb-1">Root Cause</label>
-                    <textarea name="root_cause" required rows="2" placeholder="Description of the incident..." class="w-full px-3 py-1.5 text-xs bg-white border border-[#EDE4DC] rounded-xl"></textarea>
+                    <label class="block text-[11px] font-semibold text-[#475569] mb-1">Root Cause</label>
+                    <textarea name="root_cause" required rows="2" placeholder="Description of the incident..." class="w-full px-3 py-1.5 text-xs bg-white border border-[#E2E8F0] rounded-xl"></textarea>
                 </div>
 
                 <div class="flex justify-end gap-2">
-                    <button type="button" onclick="document.getElementById('raiseExceptionDrawer').classList.add('hidden')" class="px-3 py-1 text-xs text-[#997E67]">Cancel</button>
-                    <button type="submit" class="px-4 py-1.5 rounded-xl bg-[#8C4626] text-white font-semibold text-xs">Save Incident</button>
+                    <button type="button" onclick="document.getElementById('raiseExceptionDrawer').classList.add('hidden')" class="px-3 py-1 text-xs text-[#64748B]">Cancel</button>
+                    <button type="submit" class="px-4 py-1.5 rounded-xl bg-[#D97706] text-white font-semibold text-xs">Save Incident</button>
                 </div>
             </form>
         </div>
@@ -499,18 +499,18 @@
         <!-- Exceptions List -->
         <div class="space-y-2">
             @forelse($shipment->exceptions as $exc)
-            <div class="p-3.5 rounded-2xl {{ $exc->isOpen() ? 'bg-[#FFF5EC] border border-[#F2DAC4]' : 'bg-[#FAF6F1] border border-[#EDE4DC]' }} flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+            <div class="p-3.5 rounded-2xl {{ $exc->isOpen() ? 'bg-[#FFF5EC] border border-[#F2DAC4]' : 'bg-[#F8FAFC] border border-[#E2E8F0]' }} flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
                 <div>
                     <div class="flex items-center gap-2">
-                        <span class="font-bold text-[#3D2A1A]">{{ $exc->exception_type }}</span>
-                        <span class="px-2 py-0.2 rounded-full text-[10px] font-semibold {{ $exc->isOpen() ? 'bg-[#FDE7E3] text-[#963E32]' : 'bg-[#EDF5EC] text-[#345937]' }}">
+                        <span class="font-bold text-[#0F172A]">{{ $exc->exception_type }}</span>
+                        <span class="px-2 py-0.2 rounded-full text-[10px] font-semibold {{ $exc->isOpen() ? 'bg-[#FDE7E3] text-[#963E32]' : 'bg-[#ECFDF5] text-[#047857]' }}">
                             {{ $exc->isOpen() ? 'OPEN' : 'RESOLVED' }}
                         </span>
-                        <span class="text-[10px] text-[#997E67] font-mono">{{ $exc->severity }}</span>
+                        <span class="text-[10px] text-[#64748B] font-mono">{{ $exc->severity }}</span>
                     </div>
-                    <p class="text-[#6E5947] mt-1">{{ $exc->root_cause }}</p>
+                    <p class="text-[#475569] mt-1">{{ $exc->root_cause }}</p>
                     @if($exc->resolution_notes)
-                    <p class="text-[11px] text-[#345937] mt-1">Resolution: {{ $exc->resolution_notes }}</p>
+                    <p class="text-[11px] text-[#047857] mt-1">Resolution: {{ $exc->resolution_notes }}</p>
                     @endif
                 </div>
 
@@ -518,15 +518,15 @@
                 <form action="{{ route('exceptions.resolve', $exc->id) }}" method="POST" class="flex items-center gap-2 shrink-0">
                     @csrf
                     @method('PATCH')
-                    <input type="text" name="resolution_notes" required placeholder="Resolution summary..." class="px-2.5 py-1 text-xs bg-white border border-[#EDE4DC] rounded-lg">
-                    <button type="submit" class="px-3 py-1 rounded-lg bg-[#345937] text-white font-semibold text-xs">
+                    <input type="text" name="resolution_notes" required placeholder="Resolution summary..." class="px-2.5 py-1 text-xs bg-white border border-[#E2E8F0] rounded-lg">
+                    <button type="submit" class="px-3 py-1 rounded-lg bg-[#047857] text-white font-semibold text-xs">
                         Resolve
                     </button>
                 </form>
                 @endif
             </div>
             @empty
-            <p class="text-xs text-[#997E67] text-center py-2">No active exceptions for this shipment.</p>
+            <p class="text-xs text-[#64748B] text-center py-2">No active exceptions for this shipment.</p>
             @endforelse
         </div>
     </div>
@@ -534,45 +534,45 @@
     <!-- Timeline & Manifest -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- Checkpoint Timeline -->
-        <div class="p-5 sm:p-6 rounded-3xl bg-white/95 border border-[#EDE4DC] shadow-sm lg:col-span-2 space-y-4">
-            <h3 class="text-xs font-bold text-[#443224] uppercase tracking-wider">Tracking Timeline</h3>
+        <div class="p-5 sm:p-6 rounded-3xl bg-white/95 border border-[#E2E8F0] shadow-sm lg:col-span-2 space-y-4">
+            <h3 class="text-xs font-bold text-[#0F172A] uppercase tracking-wider">Tracking Timeline</h3>
 
-            <div class="relative pl-6 space-y-4 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-[#EDE4DC]">
+            <div class="relative pl-6 space-y-4 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-[#E2E8F0]">
                 @forelse($shipment->trackingEvents as $ev)
                 <div class="relative">
                     <div class="absolute -left-6 top-1 w-5 h-5 rounded-full flex items-center justify-center text-[10px]
-                        {{ $ev->is_exception ? 'bg-[#8C4626] text-white' : 'bg-[#664930] text-[#FFF8F2]' }}">
+                        {{ $ev->is_exception ? 'bg-[#D97706] text-white' : 'bg-[#1E3A8A] text-[#FFF8F2]' }}">
                         <i class="fa-solid fa-check text-[9px]"></i>
                     </div>
 
-                    <div class="p-3.5 rounded-2xl {{ $ev->is_exception ? 'bg-[#FFF5EC] border border-[#F2DAC4]' : 'bg-[#FAF6F1] border border-[#EDE4DC]' }}">
+                    <div class="p-3.5 rounded-2xl {{ $ev->is_exception ? 'bg-[#FFF5EC] border border-[#F2DAC4]' : 'bg-[#F8FAFC] border border-[#E2E8F0]' }}">
                         <div class="flex items-center justify-between gap-1 mb-1">
-                            <span class="text-xs font-bold text-[#3D2A1A]">{{ $ev->status }} • {{ $ev->location_name }}</span>
-                            <span class="text-[10px] font-mono text-[#997E67]">{{ $ev->event_time->format('d M, H:i') }}</span>
+                            <span class="text-xs font-bold text-[#0F172A]">{{ $ev->status }} • {{ $ev->location_name }}</span>
+                            <span class="text-[10px] font-mono text-[#64748B]">{{ $ev->event_time->format('d M, H:i') }}</span>
                         </div>
-                        <p class="text-xs text-[#6E5947]">{{ $ev->description }}</p>
+                        <p class="text-xs text-[#475569]">{{ $ev->description }}</p>
                         @if($ev->weather_summary)
-                        <span class="inline-block mt-1 text-[10px] text-[#664930] bg-[#FFDBBB]/50 px-2 py-0.5 rounded border border-[#F0CCAC]">
+                        <span class="inline-block mt-1 text-[10px] text-[#1E3A8A] bg-[#38BDF8]/50 px-2 py-0.5 rounded border border-[#7DD3FC]">
                             {{ $ev->weather_summary }}
                         </span>
                         @endif
                     </div>
                 </div>
                 @empty
-                <p class="text-xs text-[#997E67]">No checkpoint milestones recorded.</p>
+                <p class="text-xs text-[#64748B]">No checkpoint milestones recorded.</p>
                 @endforelse
             </div>
         </div>
 
         <!-- Manifest Items -->
-        <div class="p-5 sm:p-6 rounded-3xl bg-white/95 border border-[#EDE4DC] shadow-sm space-y-3">
-            <h3 class="text-xs font-bold text-[#443224] uppercase tracking-wider">Manifest Items</h3>
+        <div class="p-5 sm:p-6 rounded-3xl bg-white/95 border border-[#E2E8F0] shadow-sm space-y-3">
+            <h3 class="text-xs font-bold text-[#0F172A] uppercase tracking-wider">Manifest Items</h3>
 
             <div class="space-y-2">
                 @forelse($shipment->items as $item)
-                <div class="p-3 rounded-2xl bg-[#FAF6F1] border border-[#EDE4DC] text-xs">
-                    <div class="font-bold text-[#3D2A1A]">{{ $item->description }}</div>
-                    <div class="grid grid-cols-2 gap-1 mt-1 text-[11px] text-[#7A6350]">
+                <div class="p-3 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs">
+                    <div class="font-bold text-[#0F172A]">{{ $item->description }}</div>
+                    <div class="grid grid-cols-2 gap-1 mt-1 text-[11px] text-[#64748B]">
                         <div>Qty: <strong>{{ $item->quantity }}</strong></div>
                         <div>Weight: <strong>{{ number_format($item->weight_kg, 1) }} kg</strong></div>
                         <div>Package: {{ $item->package_type }}</div>
@@ -580,7 +580,7 @@
                     </div>
                 </div>
                 @empty
-                <p class="text-xs text-[#997E67]">Consolidated cargo container.</p>
+                <p class="text-xs text-[#64748B]">Consolidated cargo container.</p>
                 @endforelse
             </div>
         </div>
@@ -590,7 +590,7 @@
 
 @push('scripts')
 <style>
-    /* Neutral Elegance Style Callout Bubble & Pin styles */
+    /* Ocean Maritime Style Callout Bubble & Pin styles */
     .vehicle-callout-wrapper {
         display: flex;
         flex-direction: column;
@@ -602,13 +602,13 @@
     .shopee-bubble {
         position: relative;
         background: #ffffff;
-        color: #664930;
+        color: #1E3A8A;
         font-size: 11px;
         font-weight: 700;
         padding: 4px 10px;
         border-radius: 8px;
         box-shadow: 0 4px 12px rgba(102, 73, 48, 0.15);
-        border: 1px solid #CCBEB1;
+        border: 1px solid #94A3B8;
         white-space: nowrap;
         margin-bottom: 6px;
         display: flex;
@@ -631,13 +631,13 @@
         position: relative;
         width: 44px;
         height: 44px;
-        background: linear-gradient(135deg, #664930 0%, #3D2A1A 100%);
-        border: 2.5px solid #FFDBBB;
+        background: linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%);
+        border: 2.5px solid #38BDF8;
         border-radius: 14px;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #FFDBBB;
+        color: #38BDF8;
         font-size: 18px;
         box-shadow: 0 8px 18px rgba(102, 73, 48, 0.35);
         transition: transform 0.2s ease;
@@ -718,7 +718,7 @@
                 const vehicleHtml = `
                     <div class="vehicle-callout-wrapper">
                         <div class="shopee-bubble">
-                            <span class="w-1.5 h-1.5 rounded-full bg-[#8C4626] inline-block animate-ping"></span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#D97706] inline-block animate-ping"></span>
                             <span>${calloutStatus}</span>
                         </div>
                         <div class="vehicle-badge">
@@ -739,9 +739,9 @@
 
                 let popupContent = `
                     <div style="font-family: inherit; font-size: 12px; padding: 2px;">
-                        <strong style="color: #3D2A1A; font-size: 13px;">${pt.title}</strong><br>
-                        <span style="color: #7A6350;">${pt.location || ''}</span>
-                        ${pt.weather ? `<br><span style="color: #664930; font-weight: 600; font-size: 11px;">☀️ Weather: ${pt.weather}</span>` : ''}
+                        <strong style="color: #0F172A; font-size: 13px;">${pt.title}</strong><br>
+                        <span style="color: #64748B;">${pt.location || ''}</span>
+                        ${pt.weather ? `<br><span style="color: #1E3A8A; font-weight: 600; font-size: 11px;">☀️ Weather: ${pt.weather}</span>` : ''}
                     </div>
                 `;
                 vehicleMarker.bindPopup(popupContent);
@@ -749,17 +749,17 @@
             } else if (pt.type === 'origin') {
                 const originIcon = L.divIcon({
                     className: 'custom-origin-div',
-                    html: `<div class="port-pin bg-[#664930]"><i class="fa-solid fa-anchor"></i></div>`,
+                    html: `<div class="port-pin bg-[#1E3A8A]"><i class="fa-solid fa-anchor"></i></div>`,
                     iconSize: [28, 28],
                     iconAnchor: [14, 14]
                 });
                 const m = L.marker([pt.lat, pt.lng], { icon: originIcon }).addTo(map);
-                m.bindPopup(`<b>Port of Origin:</b> ${pt.location}<br><span style="font-size:11px;color:#7A6350;">Time: ${pt.time || '-'}</span>`);
+                m.bindPopup(`<b>Port of Origin:</b> ${pt.location}<br><span style="font-size:11px;color:#64748B;">Time: ${pt.time || '-'}</span>`);
 
             } else if (pt.type === 'destination') {
                 const destIcon = L.divIcon({
                     className: 'custom-dest-div',
-                    html: `<div class="port-pin bg-[#997E67]"><i class="fa-solid fa-location-dot"></i></div>`,
+                    html: `<div class="port-pin bg-[#64748B]"><i class="fa-solid fa-location-dot"></i></div>`,
                     iconSize: [28, 28],
                     iconAnchor: [14, 14]
                 });
@@ -771,29 +771,29 @@
                 const isExc = pt.type === 'exception';
                 const wpIcon = L.circleMarker([pt.lat, pt.lng], {
                     radius: isExc ? 7 : 5,
-                    fillColor: isExc ? '#8C4626' : '#997E67',
+                    fillColor: isExc ? '#D97706' : '#64748B',
                     color: '#ffffff',
                     weight: 2,
                     fillOpacity: 0.95
                 }).addTo(map);
 
                 let popupContent = `<b>${pt.title}</b><br>${pt.location}`;
-                if (pt.time) popupContent += `<br><span style="color:#7A6350;font-size:11px;">Time: ${pt.time}</span>`;
-                if (pt.weather) popupContent += `<br><span style="color:#664930;font-size:11px;">Weather: ${pt.weather}</span>`;
+                if (pt.time) popupContent += `<br><span style="color:#64748B;font-size:11px;">Time: ${pt.time}</span>`;
+                if (pt.weather) popupContent += `<br><span style="color:#1E3A8A;font-size:11px;">Weather: ${pt.weather}</span>`;
                 wpIcon.bindPopup(popupContent);
             }
         });
 
-        // Neutral Elegance Polyline
+        // Ocean Maritime Polyline
         if (latLngs.length > 1) {
             L.polyline(latLngs, {
-                color: '#664930',
+                color: '#1E3A8A',
                 weight: 5,
                 opacity: 0.85
             }).addTo(map);
 
             L.polyline(latLngs, {
-                color: '#FFDBBB',
+                color: '#38BDF8',
                 weight: 2,
                 opacity: 0.95,
                 dashArray: '6, 8'

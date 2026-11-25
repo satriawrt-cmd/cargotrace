@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-[#FAF6F0] text-[#423225]">
+<html lang="en" class="h-full bg-[#F8FAFC] text-[#0F172A]">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,31 +22,25 @@
                         mono: ['"JetBrains Mono"', 'monospace'],
                     },
                     colors: {
-                        elegance: {
-                            peach: '#FFDBBB',
-                            'peach-light': '#FFF5EC',
-                            'peach-subtle': '#FFFBF6',
-                            sand: '#CCBEB1',
-                            'sand-light': '#F4EFEA',
-                            'sand-subtle': '#FAF7F4',
-                            taupe: '#997E67',
-                            'taupe-light': '#B59E8B',
-                            'taupe-dark': '#7F654F',
-                            espresso: '#664930',
-                            'espresso-hover': '#523A25',
-                            'espresso-dark': '#3D2A1A',
+                        ocean: {
+                            50: '#F0F7FF',
+                            100: '#E0F2FE',
+                            200: '#BAE6FD',
+                            300: '#7DD3FC',
+                            400: '#38BDF8',
+                            500: '#0EA5E9',
+                            600: '#0284C7',
+                            700: '#1D4ED8',
+                            800: '#1E40AF',
+                            900: '#163B65',
+                            950: '#0B132B',
                         },
-                        warm: {
-                            50: '#FDFBF7',
-                            100: '#FAF5EE',
-                            200: '#F4ECE1',
-                            300: '#EDE0D0',
-                            400: '#CCBEB1',
-                            500: '#997E67',
-                            600: '#806550',
-                            700: '#664930',
-                            800: '#523A25',
-                            900: '#3D2A1A',
+                        navy: {
+                            800: '#1E293B',
+                            850: '#15253E',
+                            900: '#0F172A',
+                            950: '#0B132B',
+                            dark: '#080E1A',
                         }
                     }
                 }
@@ -67,44 +61,44 @@
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #FAF6F0;
-            color: #423225;
+            background-color: #F8FAFC;
+            color: #0F172A;
         }
         .font-mono { font-family: 'JetBrains Mono', monospace; }
         .leaflet-popup-content-wrapper {
-            background-color: #FFFDFB !important;
-            color: #423225 !important;
+            background-color: #0B132B !important;
+            color: #FFFFFF !important;
             border-radius: 0.75rem !important;
-            border: 1px solid #EDE4DC !important;
-            box-shadow: 0 10px 20px -3px rgba(102, 73, 48, 0.08) !important;
+            border: 1px solid #1E3A8A !important;
+            box-shadow: 0 10px 25px -3px rgba(11, 19, 43, 0.4) !important;
         }
         .leaflet-popup-tip {
-            background-color: #FFFDFB !important;
+            background-color: #0B132B !important;
         }
         .leaflet-container {
             font-family: 'Plus Jakarta Sans', sans-serif !important;
         }
-        /* Custom scrollbar in warm elegance tones */
+        /* Custom scrollbar in Ocean Maritime tones */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #FAF5EE; }
-        ::-webkit-scrollbar-thumb { background: #CCBEB1; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #997E67; }
+        ::-webkit-scrollbar-track { background: #0B132B; }
+        ::-webkit-scrollbar-thumb { background: #1E3A8A; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #38BDF8; }
     </style>
     @stack('styles')
 </head>
-<body class="h-full bg-[#FAF6F0] text-[#423225] antialiased flex flex-col md:flex-row">
+<body class="h-full bg-[#F8FAFC] text-[#0F172A] antialiased flex flex-col md:flex-row">
 
-    <!-- Sidebar Navigation (Neutral Elegance Style) -->
-    <aside class="w-full md:w-64 bg-[#FDFBF7] border-r border-[#EDE4DC] shrink-0 flex flex-col justify-between h-auto md:min-h-screen">
+    <!-- Sidebar Navigation (Ocean Maritime Style) -->
+    <aside class="w-full md:w-64 bg-[#0B132B] border-r border-[#1E293B] shrink-0 flex flex-col justify-between h-auto md:min-h-screen text-slate-300">
         <div class="p-5">
             <!-- App Brand Header -->
             <div class="flex items-center gap-3 mb-6">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#664930] via-[#85654B] to-[#997E67] flex items-center justify-center text-[#FFDBBB] shadow-md shadow-[#664930]/15">
+                <div class="w-10 h-10 rounded-xl bg-[#1E3A8A] border border-[#38BDF8]/40 flex items-center justify-center text-white shadow-lg shadow-[#1E3A8A]/40">
                     <i class="fa-solid fa-ship text-base"></i>
                 </div>
                 <div>
-                    <h1 class="text-base font-bold text-[#3D2A1A] leading-tight">CargoTrace</h1>
-                    <p class="text-[11px] text-[#997E67] font-medium">Shipment Visibility</p>
+                    <h1 class="text-base font-bold text-white leading-tight">CargoTrace</h1>
+                    <p class="text-[11px] text-slate-400 font-medium">Shipment Visibility</p>
                 </div>
             </div>
 
@@ -112,44 +106,53 @@
             <nav class="space-y-5">
                 <!-- Group 1: OVERVIEW -->
                 <div class="space-y-1">
-                    <p class="px-2.5 text-[10px] font-bold uppercase tracking-wider text-[#997E67] flex items-center gap-1.5 mb-1.5">
-                        <span class="w-1.5 h-1.5 rounded-full bg-[#997E67]"></span>
+                    <p class="px-2.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5 mb-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
                         <span>Overview</span>
                     </p>
                     
                     <!-- Dashboard -->
-                    <a href="{{ route('dashboard') }}" class="group relative flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-semibold transition-all duration-150 {{ request()->routeIs('dashboard') ? 'bg-gradient-to-r from-[#FFDBBB]/45 to-[#F5ECE1]/40 text-[#423225] font-bold border border-[#E8D4C2] shadow-2xs' : 'text-[#6E5947] hover:bg-[#F6EFE8]/70 hover:text-[#3D2A1A]' }}">
-                        <div class="w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-transform group-hover:scale-105 shrink-0 {{ request()->routeIs('dashboard') ? 'bg-[#664930] text-[#FFDBBB] shadow-xs' : 'bg-[#FFDBBB]/50 text-[#664930] border border-[#F0CCAC]/60 group-hover:bg-[#FFDBBB]' }}">
-                            <i class="fa-solid fa-grip"></i>
+                    <a href="{{ route('dashboard') }}" class="group relative flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-all duration-150 {{ request()->routeIs('dashboard') ? 'bg-[#1E293B] text-white font-bold border border-slate-700/60 shadow-xs' : 'text-slate-400 hover:bg-white/5 hover:text-white' }}">
+                        <div class="flex items-center gap-3">
+                            <div class="w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-transform group-hover:scale-105 shrink-0 {{ request()->routeIs('dashboard') ? 'bg-[#1E3A8A] text-white shadow-xs' : 'bg-white/5 text-slate-400 group-hover:bg-white/10 group-hover:text-white' }}">
+                                <i class="fa-solid fa-grip"></i>
+                            </div>
+                            <span>Dashboard</span>
                         </div>
-                        <span>Dashboard</span>
+                        @if(request()->routeIs('dashboard'))
+                        <span class="w-2 h-2 rounded-full bg-[#38BDF8] shadow-xs shadow-sky-400/50"></span>
+                        @endif
                     </a>
 
                     <!-- Live Tracker -->
-                    <a href="{{ route('public.track') }}" class="group relative flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-all duration-150 {{ request()->routeIs('public.track*') ? 'bg-gradient-to-r from-[#FFDBBB]/45 to-[#F5ECE1]/40 text-[#423225] font-bold border border-[#E8D4C2] shadow-2xs' : 'text-[#6E5947] hover:bg-[#F6EFE8]/70 hover:text-[#3D2A1A]' }}">
+                    <a href="{{ route('public.track') }}" class="group relative flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-all duration-150 {{ request()->routeIs('public.track*') ? 'bg-[#1E293B] text-white font-bold border border-slate-700/60 shadow-xs' : 'text-slate-400 hover:bg-white/5 hover:text-white' }}">
                         <div class="flex items-center gap-3">
-                            <div class="w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-transform group-hover:scale-105 shrink-0 {{ request()->routeIs('public.track*') ? 'bg-[#997E67] text-white shadow-xs' : 'bg-[#F4E9DE] text-[#7D5A3C] border border-[#E2D0BF] group-hover:bg-[#EAD9C8]' }}">
+                            <div class="w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-transform group-hover:scale-105 shrink-0 {{ request()->routeIs('public.track*') ? 'bg-[#1E3A8A] text-white shadow-xs' : 'bg-white/5 text-slate-400 group-hover:bg-white/10 group-hover:text-white' }}">
                                 <i class="fa-solid fa-earth-americas"></i>
                             </div>
                             <span>Live Tracker</span>
                         </div>
+                        @if(request()->routeIs('public.track*'))
+                        <span class="w-2 h-2 rounded-full bg-[#38BDF8] shadow-xs shadow-sky-400/50"></span>
+                        @else
                         <span class="relative flex h-2 w-2 mr-1">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FFDBBB] opacity-80"></span>
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-[#997E67]"></span>
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-[#38BDF8]"></span>
                         </span>
+                        @endif
                     </a>
 
                     @auth
                     <!-- Notifications -->
-                    <a href="{{ route('notifications.index') }}" class="group relative flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-all duration-150 {{ request()->routeIs('notifications.*') ? 'bg-gradient-to-r from-[#FFDBBB]/45 to-[#F5ECE1]/40 text-[#423225] font-bold border border-[#E8D4C2] shadow-2xs' : 'text-[#6E5947] hover:bg-[#F6EFE8]/70 hover:text-[#3D2A1A]' }}">
+                    <a href="{{ route('notifications.index') }}" class="group relative flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-all duration-150 {{ request()->routeIs('notifications.*') ? 'bg-[#1E293B] text-white font-bold border border-slate-700/60 shadow-xs' : 'text-slate-400 hover:bg-white/5 hover:text-white' }}">
                         <div class="flex items-center gap-3">
-                            <div class="w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-transform group-hover:scale-105 shrink-0 {{ request()->routeIs('notifications.*') ? 'bg-[#8C4626] text-white shadow-xs' : 'bg-[#FCECE4] text-[#8C4626] border border-[#F5D4C3] group-hover:bg-[#F7DDD0]' }}">
+                            <div class="w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-transform group-hover:scale-105 shrink-0 {{ request()->routeIs('notifications.*') ? 'bg-[#1E3A8A] text-white shadow-xs' : 'bg-white/5 text-slate-400 group-hover:bg-white/10 group-hover:text-white' }}">
                                 <i class="fa-regular fa-bell"></i>
                             </div>
                             <span>Notifications</span>
                         </div>
                         @if(($unreadNotificationsCount ?? 0) > 0)
-                        <span class="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-[#8C4626] text-white shadow-2xs">
+                        <span class="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-[#EF4444] text-white shadow-xs">
                             {{ $unreadNotificationsCount }}
                         </span>
                         @endif
@@ -159,67 +162,92 @@
 
                 <!-- Group 2: LOGISTICS & OPERATIONS -->
                 <div class="space-y-1">
-                    <p class="px-2.5 text-[10px] font-bold uppercase tracking-wider text-[#997E67] flex items-center gap-1.5 mb-1.5">
-                        <span class="w-1.5 h-1.5 rounded-full bg-[#CCBEB1]"></span>
+                    <p class="px-2.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5 mb-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
                         <span>Logistics</span>
                     </p>
-                    <a href="{{ route('shipments.index') }}" class="group relative flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-semibold transition-all duration-150 {{ request()->routeIs('shipments.*') ? 'bg-gradient-to-r from-[#FFDBBB]/45 to-[#F5ECE1]/40 text-[#423225] font-bold border border-[#E8D4C2] shadow-2xs' : 'text-[#6E5947] hover:bg-[#F6EFE8]/70 hover:text-[#3D2A1A]' }}">
-                        <div class="w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-transform group-hover:scale-105 shrink-0 {{ request()->routeIs('shipments.*') ? 'bg-[#664930] text-[#FFDBBB] shadow-xs' : 'bg-[#EFE8DF] text-[#63503F] border border-[#DDD0C2] group-hover:bg-[#E3D9CD]' }}">
-                            <i class="fa-solid fa-box-archive"></i>
+                    <a href="{{ route('shipments.index') }}" class="group relative flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-all duration-150 {{ request()->routeIs('shipments.*') ? 'bg-[#1E293B] text-white font-bold border border-slate-700/60 shadow-xs' : 'text-slate-400 hover:bg-white/5 hover:text-white' }}">
+                        <div class="flex items-center gap-3">
+                            <div class="w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-transform group-hover:scale-105 shrink-0 {{ request()->routeIs('shipments.*') ? 'bg-[#1E3A8A] text-white shadow-xs' : 'bg-white/5 text-slate-400 group-hover:bg-white/10 group-hover:text-white' }}">
+                                <i class="fa-solid fa-box-archive"></i>
+                            </div>
+                            <span>{{ Auth::check() && Auth::user()->isCustomer() ? 'My Shipments' : 'Shipments' }}</span>
                         </div>
-                        <span>{{ Auth::check() && Auth::user()->isCustomer() ? 'My Shipments' : 'Shipments' }}</span>
+                        @if(request()->routeIs('shipments.*'))
+                        <span class="w-2 h-2 rounded-full bg-[#38BDF8] shadow-xs shadow-sky-400/50"></span>
+                        @endif
                     </a>
                 </div>
 
                 <!-- Group 3: MASTER DATA (Administrator only) -->
                 @if(Auth::check() && Auth::user()->isAdmin())
                 <div class="space-y-1">
-                    <p class="px-2.5 text-[10px] font-bold uppercase tracking-wider text-[#997E67] flex items-center gap-1.5 mb-1.5">
-                        <span class="w-1.5 h-1.5 rounded-full bg-[#997E67]"></span>
+                    <p class="px-2.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5 mb-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
                         <span>Master Data</span>
                     </p>
-                    <a href="{{ route('users.index') }}" class="group relative flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-semibold transition-all duration-150 {{ request()->routeIs('users.*') ? 'bg-gradient-to-r from-[#FFDBBB]/45 to-[#F5ECE1]/40 text-[#423225] font-bold border border-[#E8D4C2] shadow-2xs' : 'text-[#6E5947] hover:bg-[#F6EFE8]/70 hover:text-[#3D2A1A]' }}">
-                        <div class="w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-transform group-hover:scale-105 shrink-0 {{ request()->routeIs('users.*') ? 'bg-[#7A5A41] text-white shadow-xs' : 'bg-[#F2EAE1] text-[#72543B] border border-[#DFD1C4] group-hover:bg-[#E6DACF]' }}">
-                            <i class="fa-solid fa-users-gear"></i>
+                    <a href="{{ route('users.index') }}" class="group relative flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-all duration-150 {{ request()->routeIs('users.*') ? 'bg-[#1E293B] text-white font-bold border border-slate-700/60 shadow-xs' : 'text-slate-400 hover:bg-white/5 hover:text-white' }}">
+                        <div class="flex items-center gap-3">
+                            <div class="w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-transform group-hover:scale-105 shrink-0 {{ request()->routeIs('users.*') ? 'bg-[#1E3A8A] text-white shadow-xs' : 'bg-white/5 text-slate-400 group-hover:bg-white/10 group-hover:text-white' }}">
+                                <i class="fa-solid fa-users-gear"></i>
+                            </div>
+                            <span>User Management</span>
                         </div>
-                        <span>User Management</span>
+                        @if(request()->routeIs('users.*'))
+                        <span class="w-2 h-2 rounded-full bg-[#38BDF8] shadow-xs shadow-sky-400/50"></span>
+                        @endif
                     </a>
-                    <a href="{{ route('carriers.index') }}" class="group relative flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-semibold transition-all duration-150 {{ request()->routeIs('carriers.*') ? 'bg-gradient-to-r from-[#FFDBBB]/45 to-[#F5ECE1]/40 text-[#423225] font-bold border border-[#E8D4C2] shadow-2xs' : 'text-[#6E5947] hover:bg-[#F6EFE8]/70 hover:text-[#3D2A1A]' }}">
-                        <div class="w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-transform group-hover:scale-105 shrink-0 {{ request()->routeIs('carriers.*') ? 'bg-[#997E67] text-white shadow-xs' : 'bg-[#FCEAD8] text-[#8A562B] border border-[#F4D2B6] group-hover:bg-[#F7DFCA]' }}">
-                            <i class="fa-solid fa-truck-fast"></i>
+                    <a href="{{ route('carriers.index') }}" class="group relative flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-all duration-150 {{ request()->routeIs('carriers.*') ? 'bg-[#1E293B] text-white font-bold border border-slate-700/60 shadow-xs' : 'text-slate-400 hover:bg-white/5 hover:text-white' }}">
+                        <div class="flex items-center gap-3">
+                            <div class="w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-transform group-hover:scale-105 shrink-0 {{ request()->routeIs('carriers.*') ? 'bg-[#1E3A8A] text-white shadow-xs' : 'bg-white/5 text-slate-400 group-hover:bg-white/10 group-hover:text-white' }}">
+                                <i class="fa-solid fa-truck-fast"></i>
+                            </div>
+                            <span>Freight Carriers</span>
                         </div>
-                        <span>Carriers</span>
+                        @if(request()->routeIs('carriers.*'))
+                        <span class="w-2 h-2 rounded-full bg-[#38BDF8] shadow-xs shadow-sky-400/50"></span>
+                        @endif
                     </a>
-                    <a href="{{ route('locations.index') }}" class="group relative flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-semibold transition-all duration-150 {{ request()->routeIs('locations.*') ? 'bg-gradient-to-r from-[#FFDBBB]/45 to-[#F5ECE1]/40 text-[#423225] font-bold border border-[#E8D4C2] shadow-2xs' : 'text-[#6E5947] hover:bg-[#F6EFE8]/70 hover:text-[#3D2A1A]' }}">
-                        <div class="w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-transform group-hover:scale-105 shrink-0 {{ request()->routeIs('locations.*') ? 'bg-[#664930] text-[#FFDBBB] shadow-xs' : 'bg-[#EAE4DC] text-[#594838] border border-[#D7CFC5] group-hover:bg-[#DDD5CA]' }}">
-                            <i class="fa-solid fa-location-dot"></i>
+                    <a href="{{ route('locations.index') }}" class="group relative flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-all duration-150 {{ request()->routeIs('locations.*') ? 'bg-[#1E293B] text-white font-bold border border-slate-700/60 shadow-xs' : 'text-slate-400 hover:bg-white/5 hover:text-white' }}">
+                        <div class="flex items-center gap-3">
+                            <div class="w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-transform group-hover:scale-105 shrink-0 {{ request()->routeIs('locations.*') ? 'bg-[#1E3A8A] text-white shadow-xs' : 'bg-white/5 text-slate-400 group-hover:bg-white/10 group-hover:text-white' }}">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <span>World Ports</span>
                         </div>
-                        <span>World Ports</span>
+                        @if(request()->routeIs('locations.*'))
+                        <span class="w-2 h-2 rounded-full bg-[#38BDF8] shadow-xs shadow-sky-400/50"></span>
+                        @endif
                     </a>
                 </div>
 
                 <!-- Group 4: CONFIGURATION & SYSTEM (Administrator only) -->
                 <div class="space-y-1">
-                    <p class="px-2.5 text-[10px] font-bold uppercase tracking-wider text-[#997E67] flex items-center gap-1.5 mb-1.5">
-                        <span class="w-1.5 h-1.5 rounded-full bg-[#FFDBBB]"></span>
-                        <span>System & Setup</span>
+                    <p class="px-2.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5 mb-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
+                        <span>System & Config</span>
                     </p>
-                    <a href="{{ route('currencies.index') }}" class="group relative flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-all duration-150 {{ request()->routeIs('currencies.*') ? 'bg-gradient-to-r from-[#FFDBBB]/45 to-[#F5ECE1]/40 text-[#423225] font-bold border border-[#E8D4C2] shadow-2xs' : 'text-[#6E5947] hover:bg-[#F6EFE8]/70 hover:text-[#3D2A1A]' }}">
+                    <a href="{{ route('currencies.index') }}" class="group relative flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-all duration-150 {{ request()->routeIs('currencies.*') ? 'bg-[#1E293B] text-white font-bold border border-slate-700/60 shadow-xs' : 'text-slate-400 hover:bg-white/5 hover:text-white' }}">
                         <div class="flex items-center gap-3">
-                            <div class="w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-transform group-hover:scale-105 shrink-0 {{ request()->routeIs('currencies.*') ? 'bg-[#664930] text-[#FFDBBB] shadow-xs' : 'bg-[#FFDBBB] text-[#664930] border border-[#F0CCAC] group-hover:bg-[#F8CEAA]' }}">
+                            <div class="w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-transform group-hover:scale-105 shrink-0 {{ request()->routeIs('currencies.*') ? 'bg-[#1E3A8A] text-white shadow-xs' : 'bg-white/5 text-slate-400 group-hover:bg-white/10 group-hover:text-white' }}">
                                 <i class="fa-solid fa-coins"></i>
                             </div>
-                            <span>Exchange Rates</span>
+                            <span>Currency Rates</span>
                         </div>
-                        <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FFDBBB]/40 text-[#664930] border border-[#E8D4C2]">
+                        <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#1E293B] text-sky-300 border border-slate-700">
                             {{ $activeCurrencyCode ?? 'USD' }}
                         </span>
                     </a>
-                    <a href="{{ route('audit-logs.index') }}" class="group relative flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs font-semibold transition-all duration-150 {{ request()->routeIs('audit-logs.*') ? 'bg-gradient-to-r from-[#FFDBBB]/45 to-[#F5ECE1]/40 text-[#423225] font-bold border border-[#E8D4C2] shadow-2xs' : 'text-[#6E5947] hover:bg-[#F6EFE8]/70 hover:text-[#3D2A1A]' }}">
-                        <div class="w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-transform group-hover:scale-105 shrink-0 {{ request()->routeIs('audit-logs.*') ? 'bg-[#664930] text-white shadow-xs' : 'bg-[#E8E1D9] text-[#5C493B] border border-[#D5CABE] group-hover:bg-[#DDD4C9]' }}">
-                            <i class="fa-solid fa-shield"></i>
+                    <a href="{{ route('audit-logs.index') }}" class="group relative flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-all duration-150 {{ request()->routeIs('audit-logs.*') ? 'bg-[#1E293B] text-white font-bold border border-slate-700/60 shadow-xs' : 'text-slate-400 hover:bg-white/5 hover:text-white' }}">
+                        <div class="flex items-center gap-3">
+                            <div class="w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-transform group-hover:scale-105 shrink-0 {{ request()->routeIs('audit-logs.*') ? 'bg-[#1E3A8A] text-white shadow-xs' : 'bg-white/5 text-slate-400 group-hover:bg-white/10 group-hover:text-white' }}">
+                                <i class="fa-solid fa-shield"></i>
+                            </div>
+                            <span>Audit Logs</span>
                         </div>
-                        <span>Audit Logs</span>
+                        @if(request()->routeIs('audit-logs.*'))
+                        <span class="w-2 h-2 rounded-full bg-[#38BDF8] shadow-xs shadow-sky-400/50"></span>
+                        @endif
                     </a>
                 </div>
                 @endif
@@ -227,16 +255,16 @@
         </div>
 
         <!-- User Profile Card at bottom of Sidebar -->
-        <div class="p-4 border-t border-[#EDE4DC] bg-[#FAF5EE]/70">
+        <div class="p-4 border-t border-[#1E293B] bg-[#080E1A]">
             @auth
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2.5 min-w-0">
-                    <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-[#664930] via-[#85654B] to-[#997E67] text-[#FFDBBB] flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
+                    <div class="w-8 h-8 rounded-full bg-[#1E3A8A] text-white border border-sky-400/30 flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
                         {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
                     </div>
                     <div class="min-w-0">
-                        <p class="text-xs font-semibold text-[#3D2A1A] truncate leading-tight">{{ Auth::user()->name }}</p>
-                        <span class="inline-block text-[9.5px] font-bold text-[#664930] bg-[#FFDBBB]/50 px-1.5 py-0.2 rounded border border-[#EED0B5] uppercase tracking-wide">
+                        <p class="text-xs font-semibold text-white truncate leading-tight">{{ Auth::user()->name }}</p>
+                        <span class="inline-block text-[9.5px] font-bold text-sky-300 bg-[#15253E] px-1.5 py-0.2 rounded border border-sky-500/30 uppercase tracking-wide">
                             {{ Auth::user()->role === 'admin' ? 'Administrator' : (Auth::user()->role === 'operator' ? 'Logistics Operator' : 'Customer') }}
                         </span>
                     </div>
@@ -244,14 +272,14 @@
 
                 <form action="{{ route('logout') }}" method="POST" class="inline">
                     @csrf
-                    <button type="submit" title="Logout" class="p-1.5 text-[#997E67] hover:text-[#8C4626] rounded-lg hover:bg-[#FBE9DC] transition">
+                    <button type="submit" title="Sign Out" class="p-1.5 text-slate-400 hover:text-rose-400 rounded-lg hover:bg-white/5 transition">
                         <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
                     </button>
                 </form>
             </div>
             @else
-            <a href="{{ route('login') }}" class="w-full flex items-center justify-center py-2 px-3 text-xs font-semibold text-[#FFF8F2] bg-[#664930] hover:bg-[#523A25] rounded-xl transition shadow-sm">
-                Sign in to Console
+            <a href="{{ route('login') }}" class="w-full flex items-center justify-center py-2 px-3 text-xs font-semibold text-white bg-[#1E3A8A] hover:bg-[#1D4ED8] rounded-xl transition shadow-sm border border-sky-400/30">
+                Sign In to Console
             </a>
             @endauth
         </div>
@@ -260,37 +288,37 @@
     <!-- Main Content Area with Top Header Bar -->
     <div class="flex-1 flex flex-col min-w-0 min-h-screen">
         <!-- Top Header Bar -->
-        <header class="bg-[#FDFBF7]/90 backdrop-blur-md border-b border-[#EDE4DC] px-6 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 sticky top-0 z-30">
+        <header class="bg-white/95 backdrop-blur-md border-b border-slate-200 px-6 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 sticky top-0 z-30">
             <!-- Breadcrumbs / Title Context -->
-            <div class="flex items-center gap-2 text-xs text-[#997E67] font-medium">
-                <i class="fa-regular fa-compass text-[#CCBEB1]"></i>
-                <a href="{{ route('dashboard') }}" class="hover:text-[#664930] transition">Dashboard</a>
-                <span class="text-[#CCBEB1]">&gt;</span>
-                <span class="text-[#423225] font-semibold">@yield('title', 'Overview')</span>
+            <div class="flex items-center gap-2 text-xs text-slate-500 font-medium">
+                <i class="fa-regular fa-compass text-slate-400"></i>
+                <a href="{{ route('dashboard') }}" class="hover:text-blue-900 transition">Dashboard</a>
+                <span class="text-slate-300">&gt;</span>
+                <span class="text-[#0F172A] font-semibold">@yield('title', 'Overview')</span>
             </div>
 
             <!-- Header Right: Language, Global Currency Selector, Search bar, Notification Bell -->
             <div class="flex items-center gap-3">
-                <!-- Global Language Switcher Dropdown (Neutral Elegance Style) -->
+                <!-- Global Language Switcher Dropdown (Ocean Maritime Dark Pill) -->
                 <form action="{{ route('language.switch') }}" method="POST" class="inline-flex items-center">
                     @csrf
-                    <div class="flex items-center bg-[#FAF5EE] border border-[#EDE4DC] rounded-xl px-2.5 py-1.5 text-xs text-[#423225] hover:border-[#CCBEB1] transition shadow-2xs">
-                        <i class="fa-solid fa-globe text-[#997E67] mr-1.5 text-xs"></i>
-                        <select name="locale" onchange="this.form.submit()" class="bg-transparent text-xs font-semibold focus:outline-none cursor-pointer pr-1 text-[#423225]">
-                            <option value="id" {{ ($currentLocale ?? 'id') === 'id' ? 'selected' : '' }}>🇮🇩 ID</option>
-                            <option value="en" {{ ($currentLocale ?? 'id') === 'en' ? 'selected' : '' }}>🇬🇧 EN</option>
+                    <div class="flex items-center bg-[#0B132B] hover:bg-[#15253E] border border-[#1E293B] rounded-xl px-2.5 py-1.5 text-xs text-white transition shadow-xs">
+                        <i class="fa-solid fa-globe text-[#38BDF8] mr-1.5 text-xs"></i>
+                        <select name="locale" onchange="this.form.submit()" class="bg-transparent text-xs font-semibold focus:outline-none cursor-pointer pr-1 text-white">
+                            <option value="id" {{ ($currentLocale ?? 'en') === 'id' ? 'selected' : '' }} class="bg-[#0B132B] text-white">🇮🇩 ID</option>
+                            <option value="en" {{ ($currentLocale ?? 'en') === 'en' ? 'selected' : '' }} class="bg-[#0B132B] text-white">🇬🇧 EN</option>
                         </select>
                     </div>
                 </form>
 
-                <!-- Global Currency Switcher Dropdown (Neutral Elegance Style) -->
+                <!-- Global Currency Switcher Dropdown (Ocean Maritime Dark Pill) -->
                 <form action="{{ route('currency.switch') }}" method="POST" class="inline-flex items-center">
                     @csrf
-                    <div class="flex items-center bg-[#FAF5EE] border border-[#EDE4DC] rounded-xl px-2.5 py-1.5 text-xs text-[#423225] hover:border-[#CCBEB1] transition shadow-2xs">
-                        <i class="fa-solid fa-coins text-[#997E67] mr-1.5 text-xs"></i>
-                        <select name="currency_code" onchange="this.form.submit()" class="bg-transparent text-xs font-semibold focus:outline-none cursor-pointer pr-1 text-[#423225]">
+                    <div class="flex items-center bg-[#0B132B] hover:bg-[#15253E] border border-[#1E293B] rounded-xl px-2.5 py-1.5 text-xs text-white transition shadow-xs">
+                        <i class="fa-solid fa-coins text-[#38BDF8] mr-1.5 text-xs"></i>
+                        <select name="currency_code" onchange="this.form.submit()" class="bg-transparent text-xs font-semibold focus:outline-none cursor-pointer pr-1 text-white">
                             @foreach($globalCurrencies ?? [] as $curr)
-                                <option value="{{ $curr->code }}" {{ ($activeCurrencyCode ?? 'USD') === $curr->code ? 'selected' : '' }}>
+                                <option value="{{ $curr->code }}" {{ ($activeCurrencyCode ?? 'USD') === $curr->code ? 'selected' : '' }} class="bg-[#0B132B] text-white">
                                     {{ $curr->code }} ({{ $curr->symbol }})
                                 </option>
                             @endforeach
@@ -298,22 +326,22 @@
                     </div>
                 </form>
 
-                <!-- Search Input Shortcut -->
+                <!-- Search Input Shortcut (Ocean Maritime Dark Style) -->
                 <form action="{{ route('shipments.index') }}" method="GET" class="relative hidden sm:block">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-2.5 text-[#997E67]">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-2.5 text-slate-400">
                         <i class="fa-solid fa-magnifying-glass text-xs"></i>
                     </span>
                     <input type="text" name="search" placeholder="Search shipments..."
-                           class="w-48 pl-8 pr-8 py-1.5 text-xs bg-[#FAF5EE] border border-[#EDE4DC] rounded-xl text-[#423225] placeholder-[#B5A190] focus:outline-none focus:border-[#997E67] focus:bg-white transition shadow-2xs">
-                    <span class="absolute inset-y-0 right-0 flex items-center pr-2 text-[10px] font-mono text-[#B5A190]">⌘K</span>
+                           class="w-48 pl-8 pr-8 py-1.5 text-xs bg-[#0B132B] border border-[#1E293B] rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-[#38BDF8] transition shadow-xs">
+                    <span class="absolute inset-y-0 right-0 flex items-center pr-2 text-[10px] font-mono text-slate-400">⌘K</span>
                 </form>
 
                 <!-- Header Actions (Notification Bell) -->
                 @auth
-                <a href="{{ route('notifications.index') }}" class="relative p-2 text-[#7D6450] hover:text-[#3D2A1A] hover:bg-[#FAF5EE] rounded-xl border border-transparent hover:border-[#EDE4DC] transition" title="Notifications">
+                <a href="{{ route('notifications.index') }}" class="relative p-2 text-slate-600 hover:text-[#0F172A] hover:bg-slate-100 rounded-xl border border-transparent hover:border-slate-200 transition" title="Notifications">
                     <i class="fa-regular fa-bell text-sm"></i>
                     @if(($unreadNotificationsCount ?? 0) > 0)
-                    <span class="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#8C4626] text-[10px] font-bold text-white shadow-xs">
+                    <span class="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#EF4444] text-[10px] font-bold text-white shadow-xs">
                         {{ $unreadNotificationsCount }}
                     </span>
                     @endif
@@ -325,26 +353,26 @@
         <!-- Flash Messages -->
         <div class="px-6 sm:px-8 pt-4 w-full">
             @if(session('success'))
-            <div class="flex items-center gap-3 p-3.5 rounded-xl bg-[#F0F6F0] border border-[#CDE2CD] text-[#2F5831] text-xs shadow-2xs mb-4">
-                <i class="fa-solid fa-circle-check text-[#3B663E] text-sm"></i>
+            <div class="flex items-center gap-3 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs shadow-xs mb-4">
+                <i class="fa-solid fa-circle-check text-emerald-600 text-sm"></i>
                 <span class="font-medium">{{ session('success') }}</span>
             </div>
             @endif
 
             @if(session('info'))
-            <div class="flex items-center gap-3 p-3.5 rounded-xl bg-[#FAF5EE] border border-[#EDE4DC] text-[#664930] text-xs shadow-2xs mb-4">
-                <i class="fa-solid fa-circle-info text-[#997E67] text-sm"></i>
+            <div class="flex items-center gap-3 p-3.5 rounded-xl bg-sky-50 border border-sky-200 text-sky-800 text-xs shadow-xs mb-4">
+                <i class="fa-solid fa-circle-info text-sky-600 text-sm"></i>
                 <span class="font-medium">{{ session('info') }}</span>
             </div>
             @endif
 
             @if($errors->any())
-            <div class="p-3.5 rounded-xl bg-[#FDF2F0] border border-[#F5D2CC] text-[#8C3A30] text-xs shadow-2xs mb-4">
-                <div class="flex items-center gap-2 font-bold mb-1 text-[#8C3A30]">
+            <div class="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs shadow-xs mb-4">
+                <div class="flex items-center gap-2 font-bold mb-1 text-rose-900">
                     <i class="fa-solid fa-triangle-exclamation"></i>
-                    <span>Please review the errors below:</span>
+                    <span>Please check the errors below:</span>
                 </div>
-                <ul class="list-disc list-inside space-y-0.5 text-[#963E32] ml-4">
+                <ul class="list-disc list-inside space-y-0.5 text-rose-800 ml-4">
                     @foreach($errors->all() as $err)
                         <li>{{ $err }}</li>
                     @endforeach
@@ -359,9 +387,9 @@
         </main>
 
         <!-- Minimal Footer -->
-        <footer class="mt-auto border-t border-[#EDE4DC] bg-[#FDFBF7] py-4 px-6 text-xs text-[#997E67] flex flex-col sm:flex-row items-center justify-between gap-2">
+        <footer class="mt-auto border-t border-slate-200 bg-white py-4 px-6 text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-2">
             <span>CargoTrace &copy; 2026 • Global Shipment Visibility & Tracking Platform</span>
-            <span>Active Currency: <strong class="text-[#664930] font-mono">{{ $activeCurrencyCode ?? 'USD' }}</strong> • 6 Continent Coverage</span>
+            <span>Display Currency: <strong class="text-[#0F172A] font-mono">{{ $activeCurrencyCode ?? 'USD' }}</strong> • Coverage Across 6 Continents</span>
         </footer>
     </div>
 
