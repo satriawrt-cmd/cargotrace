@@ -65,12 +65,13 @@ class ShipmentController extends Controller
 
         // Prepare map coordinates sequence for Leaflet.js
         $mapPoints = [];
+        $isId = \Illuminate\Support\Facades\App::getLocale() === 'id' || session('locale') === 'id';
 
         // Origin
         if ($shipment->origin) {
             $mapPoints[] = [
                 'type' => 'origin',
-                'title' => 'Origin: ' . $shipment->origin->name,
+                'title' => ($isId ? 'Asal: ' : 'Origin: ') . $shipment->origin->name,
                 'location' => $shipment->origin->city . ', ' . $shipment->origin->country,
                 'lat' => (float) $shipment->origin->latitude,
                 'lng' => (float) $shipment->origin->longitude,
@@ -82,11 +83,11 @@ class ShipmentController extends Controller
             if ($ev->latitude && $ev->longitude) {
                 $mapPoints[] = [
                     'type' => $ev->is_exception ? 'exception' : 'checkpoint',
-                    'title' => $ev->status . ' - ' . $ev->location_name,
-                    'location' => $ev->location_name,
-                    'time' => $ev->event_time->format('M d, Y H:i'),
-                    'description' => $ev->description,
-                    'weather' => $ev->weather_summary,
+                    'title' => $ev->localized_status . ' - ' . $ev->localized_location_name,
+                    'location' => $ev->localized_location_name,
+                    'time' => $ev->event_time->format('d M Y H:i'),
+                    'description' => $ev->localized_description,
+                    'weather' => $ev->localized_weather,
                     'lat' => (float) $ev->latitude,
                     'lng' => (float) $ev->longitude,
                 ];
@@ -97,8 +98,8 @@ class ShipmentController extends Controller
         if ($shipment->current_latitude && $shipment->current_longitude) {
             $mapPoints[] = [
                 'type' => 'current',
-                'title' => 'Current Position: ' . ($shipment->current_location_name ?: 'En Route'),
-                'location' => $shipment->current_location_name,
+                'title' => ($isId ? 'Posisi Terkini: ' : 'Current Position: ') . \App\Services\TranslationHelper::translateText($shipment->current_location_name ?: 'Dalam Pelayaran'),
+                'location' => \App\Services\TranslationHelper::translateText($shipment->current_location_name),
                 'lat' => (float) $shipment->current_latitude,
                 'lng' => (float) $shipment->current_longitude,
             ];
@@ -108,7 +109,7 @@ class ShipmentController extends Controller
         if ($shipment->destination) {
             $mapPoints[] = [
                 'type' => 'destination',
-                'title' => 'Destination: ' . $shipment->destination->name,
+                'title' => ($isId ? 'Tujuan: ' : 'Destination: ') . $shipment->destination->name,
                 'location' => $shipment->destination->city . ', ' . $shipment->destination->country,
                 'lat' => (float) $shipment->destination->latitude,
                 'lng' => (float) $shipment->destination->longitude,

@@ -30,4 +30,14 @@ class ShipmentItem extends Model
     {
         return $this->belongsTo(Shipment::class);
     }
+
+    public function getLocalizedDescriptionAttribute(): string
+    {
+        return \App\Services\TranslationHelper::translateText($this->item_description);
+    }
+
+    public function getLocalizedPackageTypeAttribute(): string
+    {
+        return \App\Services\TranslationHelper::translateText($this->package_type);
+    }
 }

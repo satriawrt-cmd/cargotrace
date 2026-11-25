@@ -114,7 +114,7 @@
 
             <div class="p-3.5 rounded-xl bg-slate-50/70 border border-slate-100">
                 <span class="text-slate-400 font-semibold uppercase text-[10px] block mb-1">Kargo & Berat</span>
-                <span class="font-bold text-slate-800 line-clamp-1">{{ $shipment->cargo_type }}</span>
+                <span class="font-bold text-slate-800 line-clamp-1">{{ $shipment->localized_cargo_type }}</span>
                 <p class="text-[10px] text-slate-400 mt-1">{{ number_format($shipment->weight_kg, 1) }} kg • {{ number_format($shipment->volume_cbm, 1) }} CBM</p>
             </div>
 
@@ -504,13 +504,13 @@
             <div class="p-3.5 rounded-xl {{ $exc->isOpen() ? 'bg-red-50/60 border border-red-200' : 'bg-slate-50 border border-slate-200' }} flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
                 <div>
                     <div class="flex items-center gap-2">
-                        <span class="font-bold text-slate-900">{{ $exc->exception_type }}</span>
+                        <span class="font-bold text-slate-900">{{ $exc->localized_type }}</span>
                         <span class="px-2 py-0.2 rounded-full text-[10px] font-semibold {{ $exc->isOpen() ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700' }}">
                             {{ $exc->isOpen() ? 'DIPROSES' : 'SELESAI' }}
                         </span>
-                        <span class="text-[10px] text-slate-500 font-mono">{{ $exc->severity }}</span>
+                        <span class="text-[10px] text-slate-500 font-mono">{{ $exc->localized_severity }}</span>
                     </div>
-                    <p class="text-slate-700 mt-1">{{ $exc->root_cause }}</p>
+                    <p class="text-slate-700 mt-1">{{ \App\Services\TranslationHelper::translateText($exc->root_cause) }}</p>
                     @if($exc->resolution_notes)
                     <p class="text-[11px] text-emerald-700 mt-1">Solusi Penyelesaian: {{ $exc->resolution_notes }}</p>
                     @endif
@@ -549,13 +549,13 @@
 
                     <div class="p-3.5 rounded-xl {{ $ev->is_exception ? 'bg-red-50/50 border border-red-200' : 'bg-slate-50 border border-slate-100' }}">
                         <div class="flex items-center justify-between gap-1 mb-1">
-                            <span class="text-xs font-bold text-slate-900">{{ $ev->status }} • {{ $ev->location_name }}</span>
+                            <span class="text-xs font-bold text-slate-900">{{ $ev->localized_status }} • {{ $ev->localized_location_name }}</span>
                             <span class="text-[10px] font-mono text-slate-400">{{ $ev->event_time->format('d M, H:i') }}</span>
                         </div>
-                        <p class="text-xs text-slate-600">{{ $ev->description }}</p>
+                        <p class="text-xs text-slate-600">{{ $ev->localized_description }}</p>
                         @if($ev->weather_summary)
                         <span class="inline-block mt-1 text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
-                            {{ $ev->weather_summary }}
+                            {{ $ev->localized_weather }}
                         </span>
                         @endif
                     </div>
@@ -573,11 +573,11 @@
             <div class="space-y-2">
                 @forelse($shipment->items as $item)
                 <div class="p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs">
-                    <div class="font-bold text-slate-800">{{ $item->item_description }}</div>
+                    <div class="font-bold text-slate-800">{{ $item->localized_description }}</div>
                     <div class="grid grid-cols-2 gap-1 mt-1 text-[11px] text-slate-500">
                         <div>Jml: <strong>{{ $item->quantity }}</strong></div>
                         <div>Berat: <strong>{{ number_format($item->weight_kg, 1) }} kg</strong></div>
-                        <div>Kemasan: {{ $item->package_type }}</div>
+                        <div>Kemasan: {{ $item->localized_package_type }}</div>
                         <div>Nilai: {{ $currencyService->format($item->declared_value, $shipment->currency_code) }}</div>
                     </div>
                 </div>
@@ -704,7 +704,7 @@
         const shipmentStatus = "{{ $shipment->current_status }}";
         let calloutStatus = "Memproses pesanan";
         if (shipmentStatus === 'IN_TRANSIT') {
-            calloutStatus = "Sedang Berlayar (In Transit)";
+            calloutStatus = "Sedang Berlayar";
         } else if (shipmentStatus === 'DELIVERED') {
             calloutStatus = "Pesanan Tiba";
         } else if (shipmentStatus === 'PICKED_UP') {

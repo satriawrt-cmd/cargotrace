@@ -55,7 +55,7 @@
                 <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Nomor Konsinyasi</span>
                 <h2 class="text-xl sm:text-2xl font-bold text-slate-900 font-mono mt-0.5">{{ $shipment->shipment_number }}</h2>
                 <p class="text-xs text-slate-500 mt-0.5">
-                    Operator: <strong class="text-slate-800">{{ $shipment->carrier->name }}</strong> • Kargo: {{ $shipment->cargo_type }}
+                    Operator: <strong class="text-slate-800">{{ $shipment->carrier->name }}</strong> • Kargo: {{ $shipment->localized_cargo_type }}
                 </p>
             </div>
 
@@ -327,13 +327,13 @@
 
                     <div class="p-3 rounded-xl {{ $ev->is_exception ? 'bg-red-50/60 border border-red-200' : 'bg-slate-50 border border-slate-100' }} text-xs">
                         <div class="flex items-center justify-between gap-1 mb-0.5">
-                            <span class="font-bold text-slate-900">{{ $ev->status }} • {{ $ev->location_name }}</span>
+                            <span class="font-bold text-slate-900">{{ $ev->localized_status }} • {{ $ev->localized_location_name }}</span>
                             <span class="text-[10px] text-slate-400 font-mono">{{ $ev->event_time->format('d M, H:i') }}</span>
                         </div>
-                        <p class="text-slate-600">{{ $ev->description }}</p>
+                        <p class="text-slate-600">{{ $ev->localized_description }}</p>
                         @if($ev->weather_summary)
                         <span class="inline-block mt-1 text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
-                            {{ $ev->weather_summary }}
+                            {{ $ev->localized_weather }}
                         </span>
                         @endif
                     </div>
@@ -507,7 +507,7 @@
         const shipmentStatus = "{{ $shipment->current_status }}";
         let calloutText = "Memproses pesanan";
         if (shipmentStatus === 'IN_TRANSIT') {
-            calloutText = "Sedang Berlayar (In Transit)";
+            calloutText = "Sedang Berlayar";
         } else if (shipmentStatus === 'DELIVERED') {
             calloutText = "Pesanan Tiba";
         } else if (shipmentStatus === 'PICKED_UP') {

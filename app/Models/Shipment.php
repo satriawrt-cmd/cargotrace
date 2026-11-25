@@ -203,4 +203,29 @@ class Shipment extends Model
 
         return $query;
     }
+
+    public function getLocalizedStatusAttribute(): string
+    {
+        return \App\Services\TranslationHelper::translateStatus($this->current_status);
+    }
+
+    public function getLocalizedDelayStatusAttribute(): string
+    {
+        return \App\Services\TranslationHelper::translateDelayStatus($this->delay_status);
+    }
+
+    public function getLocalizedCargoTypeAttribute(): string
+    {
+        return \App\Services\TranslationHelper::translateText($this->cargo_type);
+    }
+
+    public function getLocalizedDelayReasonAttribute(): string
+    {
+        return \App\Services\TranslationHelper::translateText($this->delay_reason);
+    }
+
+    public function getLocalizedSpecialInstructionsAttribute(): string
+    {
+        return \App\Services\TranslationHelper::translateText($this->special_instructions);
+    }
 }

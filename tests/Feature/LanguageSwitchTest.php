@@ -57,6 +57,17 @@ class LanguageSwitchTest extends TestCase
 
         $shipmentsResponse->assertStatus(200);
         $shipmentsResponse->assertSee('Shipments');
+
+        // 6. Visit shipment show with English session
+        $santosShipment = \App\Models\Shipment::where('shipment_number', 'CT-2026-SA1029')->first();
+        if ($santosShipment) {
+            $showResponse = $this->actingAs($admin)
+                ->withSession(['locale' => 'en'])
+                ->get(route('shipments.show', $santosShipment->id));
+
+            $showResponse->assertStatus(200);
+            $showResponse->assertSee('Cargo loaded onboard Hapag-Lloyd vessel at Santos terminal.');
+        }
     }
 
     public function test_can_switch_language_to_indonesian_and_render_indonesian_views(): void
@@ -99,6 +110,19 @@ class LanguageSwitchTest extends TestCase
 
         $shipmentsResponse->assertStatus(200);
         $shipmentsResponse->assertSee('Daftar Pengiriman');
+
+        // 6. Visit shipment show with Indonesian session
+        $santosShipment = \App\Models\Shipment::where('shipment_number', 'CT-2026-SA1029')->first();
+        if ($santosShipment) {
+            $showResponse = $this->actingAs($admin)
+                ->withSession(['locale' => 'id'])
+                ->get(route('shipments.show', $santosShipment->id));
+
+            $showResponse->assertStatus(200);
+            $showResponse->assertSee('Kargo dimuat ke atas kapal Hapag-Lloyd di terminal Santos.');
+            $showResponse->assertSee('Pulp Kayu Putih Dikelantang Bersertifikat FSC');
+            $showResponse->assertSee('Kargo Diambil');
+        }
     }
 
     public function test_get_language_switcher_route(): void

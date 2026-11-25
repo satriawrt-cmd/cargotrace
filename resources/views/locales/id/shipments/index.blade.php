@@ -128,7 +128,7 @@
 
                         <!-- Cargo -->
                         <td class="py-3.5 px-4">
-                            <span class="font-medium text-slate-800 line-clamp-1 max-w-xs">{{ $shipment->cargo_type }}</span>
+                            <span class="font-medium text-slate-800 line-clamp-1 max-w-xs">{{ $shipment->localized_cargo_type }}</span>
                             <span class="text-[10px] text-slate-400">{{ number_format($shipment->weight_kg, 0) }} kg</span>
                         </td>
 

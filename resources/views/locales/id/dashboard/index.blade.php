@@ -7,7 +7,7 @@
     <!-- Dashboard Header -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 shrink-0">
                 <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Konsol Kontrol</span>
                 <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 font-bold border border-blue-200 uppercase">
                     {{ Auth::check() ? (Auth::user()->role === 'admin' ? 'Administrator' : (Auth::user()->role === 'operator' ? 'Operator Logistik' : 'Pelanggan')) : 'Publik' }}
@@ -29,7 +29,7 @@
             </p>
         </div>
 
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 shrink-0">
             @if(Auth::check() && Auth::user()->canManageShipments())
             <a href="{{ route('shipments.create') }}" class="inline-flex items-center gap-2 px-3.5 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs rounded-xl shadow-xs transition">
                 <i class="fa-solid fa-plus text-xs"></i>
@@ -133,7 +133,7 @@
             @foreach($activeExceptions as $exc)
             <div class="p-3 bg-white rounded-xl border border-amber-200/70 flex items-center justify-between gap-3 shadow-xs">
                 <div>
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-2 shrink-0">
                         <span class="font-bold text-slate-900 font-mono">{{ $exc->shipment->shipment_number }}</span>
                         <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-red-100 text-red-700">
                             {{ $exc->exception_type }}
@@ -224,7 +224,7 @@
                             {{ $s->carrier->name }}
                         </td>
                         <td class="py-3.5 px-4 line-clamp-1 max-w-xs">
-                            {{ $s->cargo_type }}
+                            {{ $s->localized_cargo_type }}
                         </td>
                         <td class="py-3.5 px-4 text-center">
                             @if($s->current_status === 'DELIVERED')
@@ -277,7 +277,7 @@
             new Chart(statusCanvas.getContext('2d'), {
                 type: 'doughnut',
                 data: {
-                    labels: ['Created', 'Booked', 'Picked Up', 'In Transit', 'Delivered'],
+                    labels: ['Dibuat', 'Terjadwal', 'Kargo Diambil', 'Dalam Perjalanan', 'Terkirim'],
                     datasets: [{
                         data: [
                             {{ $statusCounts['CREATED'] ?? 0 }},
@@ -312,7 +312,7 @@
                 data: {
                     labels: {!! json_encode(array_keys($carrierCounts)) !!},
                     datasets: [{
-                        label: 'Consignments',
+                        label: 'Jumlah Kargo',
                         data: {!! json_encode(array_values($carrierCounts)) !!},
                         backgroundColor: '#60a5fa',
                         borderRadius: 6,

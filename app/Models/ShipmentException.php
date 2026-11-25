@@ -59,4 +59,22 @@ class ShipmentException extends Model
     {
         return $this->status === 'RESOLVED';
     }
+
+    public function getLocalizedTypeAttribute(): string
+    {
+        return \App\Services\TranslationHelper::translateExceptionType($this->exception_type);
+    }
+
+    public function getLocalizedSeverityAttribute(): string
+    {
+        return \App\Services\TranslationHelper::translateSeverity($this->severity);
+    }
+
+    public function getLocalizedStatusAttribute(): string
+    {
+        if (\Illuminate\Support\Facades\App::getLocale() === 'id' || session('locale') === 'id') {
+            return $this->isOpen() ? 'DIPROSES' : 'SELESAI';
+        }
+        return $this->status;
+    }
 }

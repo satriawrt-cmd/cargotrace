@@ -54,13 +54,14 @@ class PublicTrackingController extends Controller
 
         // Map points sequence for Leaflet.js
         $mapPoints = [];
+        $isId = \Illuminate\Support\Facades\App::getLocale() === 'id' || session('locale') === 'id';
         if ($shipment) {
             if ($shipment->origin) {
                 $mapPoints[] = [
                     'type' => 'origin',
-                    'title' => 'Pelabuhan Asal: ' . $shipment->origin->name,
+                    'title' => ($isId ? 'Pelabuhan Asal: ' : 'Origin Port: ') . $shipment->origin->name,
                     'location' => $shipment->origin->city . ', ' . $shipment->origin->country,
-                    'time' => $shipment->expected_departure?->format('M d, Y H:i'),
+                    'time' => $shipment->expected_departure?->format('d M Y H:i'),
                     'lat' => (float) $shipment->origin->latitude,
                     'lng' => (float) $shipment->origin->longitude,
                 ];
@@ -70,11 +71,11 @@ class PublicTrackingController extends Controller
                 if ($ev->latitude && $ev->longitude) {
                     $mapPoints[] = [
                         'type' => $ev->is_exception ? 'exception' : 'checkpoint',
-                        'title' => $ev->status . ' - ' . $ev->location_name,
-                        'location' => $ev->location_name,
-                        'time' => $ev->event_time->format('M d, Y H:i'),
-                        'description' => $ev->description,
-                        'weather' => $ev->weather_summary,
+                        'title' => $ev->localized_status . ' - ' . $ev->localized_location_name,
+                        'location' => $ev->localized_location_name,
+                        'time' => $ev->event_time->format('d M Y H:i'),
+                        'description' => $ev->localized_description,
+                        'weather' => $ev->localized_weather,
                         'lat' => (float) $ev->latitude,
                         'lng' => (float) $ev->longitude,
                     ];
@@ -84,8 +85,8 @@ class PublicTrackingController extends Controller
             if ($shipment->current_latitude && $shipment->current_longitude) {
                 $mapPoints[] = [
                     'type' => 'current',
-                    'title' => 'Posisi Kargo: ' . ($shipment->current_location_name ?: 'En Route'),
-                    'location' => $shipment->current_location_name,
+                    'title' => ($isId ? 'Posisi Kargo: ' : 'Cargo Position: ') . \App\Services\TranslationHelper::translateText($shipment->current_location_name ?: 'En Route'),
+                    'location' => \App\Services\TranslationHelper::translateText($shipment->current_location_name),
                     'lat' => (float) $shipment->current_latitude,
                     'lng' => (float) $shipment->current_longitude,
                 ];
@@ -94,7 +95,7 @@ class PublicTrackingController extends Controller
             if ($shipment->destination) {
                 $mapPoints[] = [
                     'type' => 'destination',
-                    'title' => 'Pelabuhan Tujuan: ' . $shipment->destination->name,
+                    'title' => ($isId ? 'Pelabuhan Tujuan: ' : 'Destination Port: ') . $shipment->destination->name,
                     'location' => $shipment->destination->city . ', ' . $shipment->destination->country,
                     'lat' => (float) $shipment->destination->latitude,
                     'lng' => (float) $shipment->destination->longitude,

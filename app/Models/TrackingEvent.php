@@ -41,4 +41,24 @@ class TrackingEvent extends Model
     {
         return $this->belongsTo(User::class, 'created_by_user_id');
     }
+
+    public function getLocalizedStatusAttribute(): string
+    {
+        return \App\Services\TranslationHelper::translateStatus($this->status);
+    }
+
+    public function getLocalizedDescriptionAttribute(): string
+    {
+        return \App\Services\TranslationHelper::translateText($this->description);
+    }
+
+    public function getLocalizedLocationNameAttribute(): string
+    {
+        return \App\Services\TranslationHelper::translateText($this->location_name);
+    }
+
+    public function getLocalizedWeatherAttribute(): string
+    {
+        return \App\Services\TranslationHelper::translateWeather($this->weather_summary);
+    }
 }
