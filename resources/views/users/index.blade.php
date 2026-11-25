@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'User Management (Admin Console)')
+@section('title', 'Manajemen Pengguna (Konsol Admin)')
 
 @section('content')
 <div class="space-y-6">
@@ -8,20 +8,20 @@
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
             <div class="flex items-center gap-2">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">System Administration</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Administrasi Sistem</span>
                 <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 font-bold border border-blue-200">
-                    {{ $users->total() }} Total Accounts
+                    {{ $users->total() }} Total Akun
                 </span>
             </div>
-            <h1 class="text-xl sm:text-2xl font-bold text-slate-900 mt-0.5">User Management</h1>
-            <p class="text-xs text-slate-500 mt-0.5">Manage system access roles across Administrators, Logistics Operators, and Enterprise Customers.</p>
+            <h1 class="text-xl sm:text-2xl font-bold text-slate-900 mt-0.5">Manajemen Pengguna</h1>
+            <p class="text-xs text-slate-500 mt-0.5">Kelola hak akses pengguna antara Administrator, Operator Logistik, dan Pelanggan.</p>
         </div>
 
         <div>
             <button type="button" onclick="document.getElementById('createUserModal').classList.remove('hidden')"
                     class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs rounded-xl shadow-xs transition flex items-center gap-1.5">
                 <i class="fa-solid fa-user-plus text-xs"></i>
-                <span>Add New User</span>
+                <span>Tambah Pengguna Baru</span>
             </button>
         </div>
     </div>
@@ -32,19 +32,19 @@
         <div class="flex items-center gap-1.5 overflow-x-auto text-xs pb-1 md:pb-0">
             <a href="{{ route('users.index', array_merge(request()->except('role', 'page'))) }}"
                class="px-3 py-1.5 rounded-xl font-semibold transition whitespace-nowrap {{ !request('role') ? 'bg-slate-900 text-white shadow-xs' : 'bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200' }}">
-                All ({{ $roleCounts['all'] }})
+                Semua ({{ $roleCounts['all'] }})
             </a>
             <a href="{{ route('users.index', array_merge(request()->except('role', 'page'), ['role' => 'admin'])) }}"
                class="px-3 py-1.5 rounded-xl font-semibold transition whitespace-nowrap {{ request('role') === 'admin' ? 'bg-blue-600 text-white shadow-xs' : 'bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200' }}">
-                Administrators ({{ $roleCounts['admin'] }})
+                Administrator ({{ $roleCounts['admin'] }})
             </a>
             <a href="{{ route('users.index', array_merge(request()->except('role', 'page'), ['role' => 'operator'])) }}"
                class="px-3 py-1.5 rounded-xl font-semibold transition whitespace-nowrap {{ request('role') === 'operator' ? 'bg-indigo-600 text-white shadow-xs' : 'bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200' }}">
-                Operators ({{ $roleCounts['operator'] }})
+                Operator ({{ $roleCounts['operator'] }})
             </a>
             <a href="{{ route('users.index', array_merge(request()->except('role', 'page'), ['role' => 'customer'])) }}"
                class="px-3 py-1.5 rounded-xl font-semibold transition whitespace-nowrap {{ request('role') === 'customer' ? 'bg-emerald-600 text-white shadow-xs' : 'bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200' }}">
-                Customers ({{ $roleCounts['customer'] }})
+                Pelanggan ({{ $roleCounts['customer'] }})
             </a>
         </div>
 
@@ -56,7 +56,7 @@
             <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
                 <i class="fa-solid fa-magnifying-glass text-xs"></i>
             </span>
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search name, email, company..."
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama, email, perusahaan..."
                    class="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:bg-white transition">
         </form>
     </div>
@@ -67,12 +67,12 @@
             <table class="w-full text-left border-collapse text-xs">
                 <thead>
                     <tr class="border-b border-slate-200 bg-slate-50/70 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                        <th class="py-3 px-4">User Details</th>
-                        <th class="py-3 px-4">Assigned Role</th>
-                        <th class="py-3 px-4">Company / Organization</th>
-                        <th class="py-3 px-4">Consignments</th>
-                        <th class="py-3 px-4">Preferred Currency</th>
-                        <th class="py-3 px-4 text-right">Actions</th>
+                        <th class="py-3 px-4">Detail Pengguna</th>
+                        <th class="py-3 px-4">Peran Akses</th>
+                        <th class="py-3 px-4">Perusahaan / Organisasi</th>
+                        <th class="py-3 px-4">Konsinyasi</th>
+                        <th class="py-3 px-4">Mata Uang Pilihan</th>
+                        <th class="py-3 px-4 text-right">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100 text-slate-700">
@@ -100,11 +100,11 @@
                                 </span>
                             @elseif($user->isOperator())
                                 <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">
-                                    <i class="fa-solid fa-headset text-[10px] mr-1"></i> Logistics Operator
+                                    <i class="fa-solid fa-headset text-[10px] mr-1"></i> Operator Logistik
                                 </span>
                             @else
                                 <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                                    <i class="fa-solid fa-building text-[10px] mr-1"></i> Customer
+                                    <i class="fa-solid fa-building text-[10px] mr-1"></i> Pelanggan
                                 </span>
                             @endif
                         </td>
@@ -120,7 +120,7 @@
                         <!-- Shipments Count -->
                         <td class="py-3.5 px-4">
                             <span class="font-mono font-bold text-slate-800">{{ $user->shipments_count }}</span>
-                            <span class="text-slate-400 text-[10px]"> consignments</span>
+                            <span class="text-slate-400 text-[10px]"> pengiriman</span>
                         </td>
 
                         <!-- Currency -->
@@ -132,15 +132,15 @@
                         <td class="py-3.5 px-4 text-right">
                             <div class="flex items-center justify-end gap-2">
                                 <button type="button" onclick="openEditModal({{ json_encode($user) }})"
-                                        class="px-2.5 py-1 text-slate-600 hover:text-blue-600 bg-slate-50 hover:bg-blue-50 rounded-lg border border-slate-200 text-xs font-semibold transition" title="Edit User">
+                                        class="px-2.5 py-1 text-slate-600 hover:text-blue-600 bg-slate-50 hover:bg-blue-50 rounded-lg border border-slate-200 text-xs font-semibold transition" title="Edit Pengguna">
                                     <i class="fa-solid fa-pen-to-square text-[11px]"></i>
                                 </button>
 
                                 @if($user->id !== Auth::id())
-                                <form action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Permanently delete user {{ $user->name }}?');" class="inline">
+                                <form action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Hapus permanen pengguna {{ $user->name }}?');" class="inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="px-2.5 py-1 text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 rounded-lg text-xs font-semibold transition" title="Delete User">
+                                    <button type="submit" class="px-2.5 py-1 text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 rounded-lg text-xs font-semibold transition" title="Hapus Pengguna">
                                         <i class="fa-solid fa-trash text-[11px]"></i>
                                     </button>
                                 </form>
@@ -151,7 +151,7 @@
                     @empty
                     <tr>
                         <td colspan="6" class="py-8 text-center text-slate-400 text-xs">
-                            No users found matching the selected criteria.
+                            Tidak ada pengguna ditemukan sesuai kriteria.
                         </td>
                     </tr>
                     @endforelse
@@ -172,8 +172,8 @@
     <div class="bg-white rounded-2xl border border-slate-200 shadow-xl max-w-md w-full p-6 space-y-4">
         <div class="flex items-center justify-between pb-3 border-b border-slate-100">
             <div>
-                <h3 class="text-sm font-bold text-slate-900">Add New User Account</h3>
-                <p class="text-xs text-slate-400">Create login credentials and assign appropriate system role.</p>
+                <h3 class="text-sm font-bold text-slate-900">Tambah Akun Pengguna Baru</h3>
+                <p class="text-xs text-slate-400">Buat kredensial login dan tetapkan peran akses sistem.</p>
             </div>
             <button type="button" onclick="document.getElementById('createUserModal').classList.add('hidden')" class="text-slate-400 hover:text-slate-600">
                 <i class="fa-solid fa-xmark text-sm"></i>
@@ -183,30 +183,30 @@
         <form action="{{ route('users.store') }}" method="POST" class="space-y-3 text-xs">
             @csrf
             <div>
-                <label class="block font-semibold text-slate-600 mb-1">Full Name</label>
-                <input type="text" name="name" required placeholder="e.g. Budi Santoso" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500">
+                <label class="block font-semibold text-slate-600 mb-1">Nama Lengkap</label>
+                <input type="text" name="name" required placeholder="contoh: Budi Santoso" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500">
             </div>
 
             <div>
-                <label class="block font-semibold text-slate-600 mb-1">Email Address</label>
-                <input type="email" name="email" required placeholder="user@company.com" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 font-mono">
+                <label class="block font-semibold text-slate-600 mb-1">Alamat Email</label>
+                <input type="email" name="email" required placeholder="user@perusahaan.com" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 font-mono">
             </div>
 
             <div class="grid grid-cols-2 gap-3">
                 <div>
-                    <label class="block font-semibold text-slate-600 mb-1">Role</label>
+                    <label class="block font-semibold text-slate-600 mb-1">Peran Akses</label>
                     <select name="role" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500">
-                        <option value="customer">Customer</option>
-                        <option value="operator">Logistics Operator</option>
+                        <option value="customer">Pelanggan (Customer)</option>
+                        <option value="operator">Operator Logistik</option>
                         <option value="admin">Administrator</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block font-semibold text-slate-600 mb-1">Currency</label>
+                    <label class="block font-semibold text-slate-600 mb-1">Mata Uang Pilihan</label>
                     <select name="preferred_currency" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 font-mono">
+                        <option value="IDR">IDR (Rp)</option>
                         <option value="USD">USD ($)</option>
                         <option value="EUR">EUR (€)</option>
-                        <option value="IDR">IDR (Rp)</option>
                         <option value="GBP">GBP (£)</option>
                         <option value="SGD">SGD (S$)</option>
                     </select>
@@ -214,26 +214,26 @@
             </div>
 
             <div>
-                <label class="block font-semibold text-slate-600 mb-1">Company / Organization</label>
-                <input type="text" name="company_name" placeholder="e.g. PT Global Trade Logistics" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500">
+                <label class="block font-semibold text-slate-600 mb-1">Perusahaan / Organisasi</label>
+                <input type="text" name="company_name" placeholder="contoh: PT Global Nusantara Logistik" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500">
             </div>
 
             <div>
-                <label class="block font-semibold text-slate-600 mb-1">Phone Number</label>
+                <label class="block font-semibold text-slate-600 mb-1">Nomor Telepon</label>
                 <input type="text" name="phone" placeholder="+62 812 3456 7890" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500">
             </div>
 
             <div>
-                <label class="block font-semibold text-slate-600 mb-1">Initial Password</label>
-                <input type="password" name="password" required minlength="8" placeholder="At least 8 characters" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 font-mono">
+                <label class="block font-semibold text-slate-600 mb-1">Kata Sandi Awal</label>
+                <input type="password" name="password" required minlength="8" placeholder="Minimal 8 karakter" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 font-mono">
             </div>
 
             <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
                 <button type="button" onclick="document.getElementById('createUserModal').classList.add('hidden')" class="px-4 py-2 rounded-xl text-slate-600 bg-slate-100 hover:bg-slate-200 font-semibold transition">
-                    Cancel
+                    Batal
                 </button>
                 <button type="submit" class="px-4 py-2 rounded-xl text-white bg-blue-600 hover:bg-blue-500 font-semibold shadow-xs transition">
-                    Create User
+                    Simpan Pengguna
                 </button>
             </div>
         </form>
@@ -245,8 +245,8 @@
     <div class="bg-white rounded-2xl border border-slate-200 shadow-xl max-w-md w-full p-6 space-y-4">
         <div class="flex items-center justify-between pb-3 border-b border-slate-100">
             <div>
-                <h3 class="text-sm font-bold text-slate-900">Edit User Details</h3>
-                <p class="text-xs text-slate-400">Modify profile attributes or assign different access role.</p>
+                <h3 class="text-sm font-bold text-slate-900">Ubah Detail Pengguna</h3>
+                <p class="text-xs text-slate-400">Sesuaikan data profil atau tetapkan peran akses baru.</p>
             </div>
             <button type="button" onclick="document.getElementById('editUserModal').classList.add('hidden')" class="text-slate-400 hover:text-slate-600">
                 <i class="fa-solid fa-xmark text-sm"></i>
@@ -257,30 +257,30 @@
             @csrf
             @method('PUT')
             <div>
-                <label class="block font-semibold text-slate-600 mb-1">Full Name</label>
+                <label class="block font-semibold text-slate-600 mb-1">Nama Lengkap</label>
                 <input type="text" id="edit_name" name="name" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500">
             </div>
 
             <div>
-                <label class="block font-semibold text-slate-600 mb-1">Email Address</label>
+                <label class="block font-semibold text-slate-600 mb-1">Alamat Email</label>
                 <input type="email" id="edit_email" name="email" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 font-mono">
             </div>
 
             <div class="grid grid-cols-2 gap-3">
                 <div>
-                    <label class="block font-semibold text-slate-600 mb-1">Role</label>
+                    <label class="block font-semibold text-slate-600 mb-1">Peran Akses</label>
                     <select id="edit_role" name="role" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500">
-                        <option value="customer">Customer</option>
-                        <option value="operator">Logistics Operator</option>
+                        <option value="customer">Pelanggan (Customer)</option>
+                        <option value="operator">Operator Logistik</option>
                         <option value="admin">Administrator</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block font-semibold text-slate-600 mb-1">Currency</label>
+                    <label class="block font-semibold text-slate-600 mb-1">Mata Uang Pilihan</label>
                     <select id="edit_currency" name="preferred_currency" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 font-mono">
+                        <option value="IDR">IDR (Rp)</option>
                         <option value="USD">USD ($)</option>
                         <option value="EUR">EUR (€)</option>
-                        <option value="IDR">IDR (Rp)</option>
                         <option value="GBP">GBP (£)</option>
                         <option value="SGD">SGD (S$)</option>
                     </select>
@@ -288,26 +288,26 @@
             </div>
 
             <div>
-                <label class="block font-semibold text-slate-600 mb-1">Company / Organization</label>
+                <label class="block font-semibold text-slate-600 mb-1">Perusahaan / Organisasi</label>
                 <input type="text" id="edit_company" name="company_name" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500">
             </div>
 
             <div>
-                <label class="block font-semibold text-slate-600 mb-1">Phone Number</label>
+                <label class="block font-semibold text-slate-600 mb-1">Nomor Telepon</label>
                 <input type="text" id="edit_phone" name="phone" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500">
             </div>
 
             <div>
-                <label class="block font-semibold text-slate-600 mb-1">Reset Password (Optional)</label>
-                <input type="password" name="password" minlength="8" placeholder="Leave blank to keep current" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 font-mono">
+                <label class="block font-semibold text-slate-600 mb-1">Ubah Kata Sandi (Opsional)</label>
+                <input type="password" name="password" minlength="8" placeholder="Kosongkan jika tidak ingin mengubah sandi" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 font-mono">
             </div>
 
             <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
                 <button type="button" onclick="document.getElementById('editUserModal').classList.add('hidden')" class="px-4 py-2 rounded-xl text-slate-600 bg-slate-100 hover:bg-slate-200 font-semibold transition">
-                    Cancel
+                    Batal
                 </button>
                 <button type="submit" class="px-4 py-2 rounded-xl text-white bg-blue-600 hover:bg-blue-500 font-semibold shadow-xs transition">
-                    Save Changes
+                    Simpan Perubahan
                 </button>
             </div>
         </form>

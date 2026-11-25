@@ -83,7 +83,7 @@
                 </div>
                 <div>
                     <h1 class="text-base font-bold text-slate-900 leading-tight">CargoTrace</h1>
-                    <p class="text-[11px] text-slate-400 font-medium">Shipment Visibility</p>
+                    <p class="text-[11px] text-slate-400 font-medium">Visibilitas Pengiriman</p>
                 </div>
             </div>
 
@@ -91,20 +91,20 @@
             <nav class="space-y-6">
                 <!-- Group 1: OVERVIEW -->
                 <div class="space-y-1">
-                    <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Overview</p>
+                    <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Ringkasan</p>
                     <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('dashboard') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
                         <i class="fa-solid fa-grip text-sm w-4"></i>
                         <span>Dashboard</span>
                     </a>
                     <a href="{{ route('public.track') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('public.track*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
                         <i class="fa-solid fa-earth-americas text-sm w-4 text-blue-500"></i>
-                        <span>Live Tracker</span>
+                        <span>Pelacak Langsung</span>
                     </a>
                     @auth
                     <a href="{{ route('notifications.index') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('notifications.*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
                         <div class="flex items-center gap-3">
                             <i class="fa-regular fa-bell text-sm w-4"></i>
-                            <span>Notifications</span>
+                            <span>Notifikasi</span>
                         </div>
                         @if(($unreadNotificationsCount ?? 0) > 0)
                         <span class="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-red-100 text-red-600">
@@ -117,38 +117,38 @@
 
                 <!-- Group 2: LOGISTICS & OPERATIONS -->
                 <div class="space-y-1">
-                    <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Logistics</p>
+                    <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Logistik</p>
                     <a href="{{ route('shipments.index') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('shipments.*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
                         <i class="fa-solid fa-box-archive text-sm w-4"></i>
-                        <span>{{ Auth::check() && Auth::user()->isCustomer() ? 'My Shipments' : 'Shipments' }}</span>
+                        <span>{{ Auth::check() && Auth::user()->isCustomer() ? 'Pengiriman Saya' : 'Daftar Pengiriman' }}</span>
                     </a>
                 </div>
 
                 <!-- Group 3: MASTER DATA (Administrator only) -->
                 @if(Auth::check() && Auth::user()->isAdmin())
                 <div class="space-y-1">
-                    <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Master Data</p>
+                    <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Data Master</p>
                     <a href="{{ route('users.index') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('users.*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
                         <i class="fa-solid fa-users-gear text-sm w-4"></i>
-                        <span>Users Management</span>
+                        <span>Manajemen Pengguna</span>
                     </a>
                     <a href="{{ route('carriers.index') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('carriers.*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
                         <i class="fa-solid fa-truck-fast text-sm w-4"></i>
-                        <span>Carriers</span>
+                        <span>Operator Pengangkutan</span>
                     </a>
                     <a href="{{ route('locations.index') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('locations.*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
                         <i class="fa-solid fa-location-dot text-sm w-4"></i>
-                        <span>World Ports</span>
+                        <span>Pelabuhan Dunia</span>
                     </a>
                 </div>
 
                 <!-- Group 4: CONFIGURATION & SYSTEM (Administrator only) -->
                 <div class="space-y-1">
-                    <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">System & Config</p>
+                    <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Sistem & Konfigurasi</p>
                     <a href="{{ route('currencies.index') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('currencies.*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
                         <div class="flex items-center gap-3">
                             <i class="fa-solid fa-coins text-sm w-4 text-amber-500"></i>
-                            <span>Currency Rates</span>
+                            <span>Kurs Mata Uang</span>
                         </div>
                         <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
                             {{ $activeCurrencyCode ?? 'USD' }}
@@ -156,7 +156,7 @@
                     </a>
                     <a href="{{ route('audit-logs.index') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition {{ request()->routeIs('audit-logs.*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
                         <i class="fa-solid fa-shield text-sm w-4"></i>
-                        <span>Audit Logs</span>
+                        <span>Log Audit</span>
                     </a>
                 </div>
                 @endif
@@ -174,21 +174,21 @@
                     <div class="min-w-0">
                         <p class="text-xs font-semibold text-slate-900 truncate leading-tight">{{ Auth::user()->name }}</p>
                         <span class="inline-block text-[10px] font-medium text-slate-400 uppercase tracking-wider">
-                            {{ Auth::user()->role }}
+                            {{ Auth::user()->role === 'admin' ? 'Administrator' : (Auth::user()->role === 'operator' ? 'Operator Logistik' : 'Pelanggan') }}
                         </span>
                     </div>
                 </div>
 
                 <form action="{{ route('logout') }}" method="POST" class="inline">
                     @csrf
-                    <button type="submit" title="Sign out" class="p-1.5 text-slate-400 hover:text-red-500 rounded-lg hover:bg-red-50 transition">
+                    <button type="submit" title="Keluar" class="p-1.5 text-slate-400 hover:text-red-500 rounded-lg hover:bg-red-50 transition">
                         <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
                     </button>
                 </form>
             </div>
             @else
             <a href="{{ route('login') }}" class="w-full flex items-center justify-center py-2 px-3 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-500 rounded-xl transition shadow-sm">
-                Sign In to Console
+                Masuk ke Konsol
             </a>
             @endauth
         </div>
@@ -203,7 +203,7 @@
                 <i class="fa-regular fa-square text-slate-300"></i>
                 <a href="{{ route('dashboard') }}" class="hover:text-slate-700">Dashboard</a>
                 <span>&gt;</span>
-                <span class="text-slate-800 font-semibold">@yield('title', 'Overview')</span>
+                <span class="text-slate-800 font-semibold">@yield('title', 'Ringkasan')</span>
             </div>
 
             <!-- Header Right: Global Currency Selector, Search bar, Notification Bell -->
@@ -228,14 +228,14 @@
                     <span class="absolute inset-y-0 left-0 flex items-center pl-2.5 text-slate-400">
                         <i class="fa-solid fa-magnifying-glass text-xs"></i>
                     </span>
-                    <input type="text" name="search" placeholder="Search..."
+                    <input type="text" name="search" placeholder="Cari pengiriman..."
                            class="w-48 pl-8 pr-8 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:bg-white transition">
                     <span class="absolute inset-y-0 right-0 flex items-center pr-2 text-[10px] font-mono text-slate-400">⌘K</span>
                 </form>
 
                 <!-- Header Actions (Notification Bell) -->
                 @auth
-                <a href="{{ route('notifications.index') }}" class="relative p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition" title="Notifications">
+                <a href="{{ route('notifications.index') }}" class="relative p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition" title="Notifikasi">
                     <i class="fa-regular fa-bell text-sm"></i>
                     @if(($unreadNotificationsCount ?? 0) > 0)
                     <span class="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">
@@ -267,7 +267,7 @@
             <div class="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs shadow-sm mb-4">
                 <div class="flex items-center gap-2 font-bold mb-1 text-red-700">
                     <i class="fa-solid fa-triangle-exclamation"></i>
-                    <span>Please review the errors below:</span>
+                    <span>Harap periksa kesalahan di bawah ini:</span>
                 </div>
                 <ul class="list-disc list-inside space-y-0.5 text-red-600 ml-4">
                     @foreach($errors->all() as $err)
@@ -285,8 +285,8 @@
 
         <!-- Minimal Footer -->
         <footer class="mt-auto border-t border-slate-200/80 bg-white py-4 px-6 text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-2">
-            <span>CargoTrace &copy; 2026 • Global Shipment Visibility & Tracking Platform</span>
-            <span>Display Currency: <strong class="text-slate-700 font-mono">{{ $activeCurrencyCode ?? 'USD' }}</strong> • Worldwide Coverage</span>
+            <span>CargoTrace &copy; 2026 • Platform Visibilitas & Pelacakan Pengiriman Global</span>
+            <span>Mata Uang Tampilan: <strong class="text-slate-700 font-mono">{{ $activeCurrencyCode ?? 'USD' }}</strong> • Jangkauan 6 Benua</span>
         </footer>
     </div>
 

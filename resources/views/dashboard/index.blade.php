@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Operations Dashboard')
+@section('title', 'Dashboard Operasional')
 
 @section('content')
 <div class="space-y-6">
@@ -8,23 +8,23 @@
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
             <div class="flex items-center gap-2">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Control Console</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Konsol Kontrol</span>
                 <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 font-bold border border-blue-200 uppercase">
-                    {{ Auth::check() ? Auth::user()->role : 'Public' }}
+                    {{ Auth::check() ? (Auth::user()->role === 'admin' ? 'Administrator' : (Auth::user()->role === 'operator' ? 'Operator Logistik' : 'Pelanggan')) : 'Publik' }}
                 </span>
             </div>
             <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 mt-0.5">
                 @if(Auth::check() && Auth::user()->isCustomer())
-                    Welcome, {{ Auth::user()->company_name ?: Auth::user()->name }}
+                    Selamat Datang, {{ Auth::user()->company_name ?: Auth::user()->name }}
                 @else
-                    Operations Dashboard
+                    Dashboard Operasional
                 @endif
             </h1>
             <p class="text-xs text-slate-500 mt-0.5">
                 @if(Auth::check() && Auth::user()->isCustomer())
-                    Overview of your registered global cargo consignments, milestone delivery schedules, and active bookings.
+                    Ringkasan konsinyasi kargo global terdaftar, jadwal tahapan pengiriman, dan pemesanan aktif Anda.
                 @else
-                    Overview of real-time shipment visibility, exception SLA management, and multi-currency billing across worldwide trade routes.
+                    Ringkasan visibilitas pengiriman real-time, manajemen SLA insiden, dan penagihan multi-mata uang rute perdagangan dunia.
                 @endif
             </p>
         </div>
@@ -33,13 +33,13 @@
             @if(Auth::check() && Auth::user()->canManageShipments())
             <a href="{{ route('shipments.create') }}" class="inline-flex items-center gap-2 px-3.5 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs rounded-xl shadow-xs transition">
                 <i class="fa-solid fa-plus text-xs"></i>
-                <span>Add Shipment</span>
+                <span>Tambah Pengiriman</span>
             </a>
             @endif
 
             <a href="{{ route('public.track') }}" class="inline-flex items-center gap-2 px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-xs rounded-xl border border-slate-200 shadow-xs transition">
                 <i class="fa-solid fa-earth-americas text-blue-500 text-xs"></i>
-                <span>Open Live Tracker</span>
+                <span>Buka Pelacak Langsung</span>
             </a>
         </div>
     </div>
@@ -49,73 +49,73 @@
         <!-- Total Shipments -->
         <div class="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-sm">
             <div class="flex items-center justify-between text-slate-400 mb-2">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">{{ Auth::check() && Auth::user()->isCustomer() ? 'My Cargo' : 'Total' }}</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">{{ Auth::check() && Auth::user()->isCustomer() ? 'Kargo Saya' : 'Total Kargo' }}</span>
                 <div class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center text-xs">
                     <i class="fa-solid fa-box"></i>
                 </div>
             </div>
             <div class="text-2xl font-bold text-slate-900 font-mono">{{ $totalShipments }}</div>
-            <span class="text-[11px] text-slate-400 mt-1 block">Active consignments</span>
+            <span class="text-[11px] text-slate-400 mt-1 block">Konsinyasi aktif</span>
         </div>
 
         <!-- In Transit -->
         <div class="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-sm">
             <div class="flex items-center justify-between text-slate-400 mb-2">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-blue-600">In Transit</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-blue-600">Dalam Perjalanan</span>
                 <div class="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-xs">
                     <i class="fa-solid fa-ship"></i>
                 </div>
             </div>
             <div class="text-2xl font-bold text-blue-600 font-mono">{{ $inTransitCount }}</div>
-            <span class="text-[11px] text-slate-400 mt-1 block">Voyages underway</span>
+            <span class="text-[11px] text-slate-400 mt-1 block">Pelayaran berjalan</span>
         </div>
 
         <!-- Delivered -->
         <div class="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-sm">
             <div class="flex items-center justify-between text-slate-400 mb-2">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-600">Delivered</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-600">Terkirim</span>
                 <div class="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs">
                     <i class="fa-solid fa-circle-check"></i>
                 </div>
             </div>
             <div class="text-2xl font-bold text-emerald-600 font-mono">{{ $deliveredCount }}</div>
-            <span class="text-[11px] text-slate-400 mt-1 block">Completed & signed</span>
+            <span class="text-[11px] text-slate-400 mt-1 block">Selesai & diserahkan</span>
         </div>
 
         <!-- Delayed -->
         <div class="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-sm">
             <div class="flex items-center justify-between text-slate-400 mb-2">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600">Delayed</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600">Terlambat</span>
                 <div class="w-6 h-6 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center text-xs">
                     <i class="fa-solid fa-clock"></i>
                 </div>
             </div>
             <div class="text-2xl font-bold text-amber-600 font-mono">{{ $delayedCount }}</div>
-            <span class="text-[11px] text-slate-400 mt-1 block">ETA revised</span>
+            <span class="text-[11px] text-slate-400 mt-1 block">Jadwal disesuaikan</span>
         </div>
 
         <!-- Open Exceptions -->
         <div class="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-sm">
             <div class="flex items-center justify-between text-slate-400 mb-2">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-red-600">Incidents</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-red-600">Insiden SLA</span>
                 <div class="w-6 h-6 rounded-lg bg-red-50 text-red-600 flex items-center justify-center text-xs">
                     <i class="fa-solid fa-triangle-exclamation"></i>
                 </div>
             </div>
             <div class="text-2xl font-bold text-red-600 font-mono">{{ $openExceptionsCount }}</div>
-            <span class="text-[11px] text-slate-400 mt-1 block">Exceptions open</span>
+            <span class="text-[11px] text-slate-400 mt-1 block">Pengecualian aktif</span>
         </div>
 
         <!-- On-Time Rate KPI -->
         <div class="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-sm">
             <div class="flex items-center justify-between text-slate-400 mb-2">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-600">On-Time KPI</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-600">Ketepatan Waktu</span>
                 <div class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center text-xs">
                     <i class="fa-solid fa-chart-line"></i>
                 </div>
             </div>
             <div class="text-2xl font-bold text-slate-900 font-mono">{{ $onTimeRate }}%</div>
-            <span class="text-[11px] text-slate-400 mt-1 block">Avg: {{ $avgDelayHours }}h delay</span>
+            <span class="text-[11px] text-slate-400 mt-1 block">Rata-rata: {{ $avgDelayHours }}j delay</span>
         </div>
     </div>
 
@@ -125,9 +125,9 @@
         <div class="flex items-center justify-between mb-2">
             <div class="flex items-center gap-2 font-bold text-amber-800">
                 <i class="fa-solid fa-triangle-exclamation text-amber-600"></i>
-                <span>Active Exceptions Requiring SLA Follow-up ({{ count($activeExceptions) }})</span>
+                <span>Insiden Aktif Memerlukan Tindak Lanjut SLA ({{ count($activeExceptions) }})</span>
             </div>
-            <span class="text-[10px] text-amber-700">Immediate attention</span>
+            <span class="text-[10px] text-amber-700">Perhatian Segera</span>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2">
             @foreach($activeExceptions as $exc)
@@ -142,7 +142,7 @@
                     <p class="text-[11px] text-slate-600 mt-0.5 line-clamp-1">{{ $exc->root_cause }}</p>
                 </div>
                 <a href="{{ route('shipments.show', $exc->shipment_id) }}" class="px-2.5 py-1 text-[11px] font-semibold text-blue-600 hover:text-blue-800 shrink-0">
-                    Inspect &rarr;
+                    Periksa &rarr;
                 </a>
             </div>
             @endforeach
@@ -156,26 +156,26 @@
         <!-- Status Doughnut Chart -->
         <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm flex flex-col justify-between">
             <div>
-                <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-4">Shipments by Status</h3>
+                <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-4">Pengiriman Berdasarkan Status</h3>
                 <div class="relative h-52 flex items-center justify-center">
                     <canvas id="statusChart"></canvas>
                 </div>
             </div>
-            <p class="text-[11px] text-slate-400 text-center mt-3">Distribution across shipment lifecycle</p>
+            <p class="text-[11px] text-slate-400 text-center mt-3">Distribusi siklus hidup pengiriman</p>
         </div>
 
         <!-- Carrier Bar Chart -->
         <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm lg:col-span-2 flex flex-col justify-between">
             <div>
                 <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Volume by Carrier</h3>
-                    <span class="text-[11px] text-slate-400">Total Load</span>
+                    <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Volume Berdasarkan Operator</h3>
+                    <span class="text-[11px] text-slate-400">Total Muatan</span>
                 </div>
                 <div class="relative h-52">
                     <canvas id="carrierChart"></canvas>
                 </div>
             </div>
-            <p class="text-[11px] text-slate-400 text-center mt-3">Active container bookings per shipping line</p>
+            <p class="text-[11px] text-slate-400 text-center mt-3">Pemesanan kontainer aktif per jalur pelayaran</p>
         </div>
     </div>
     @endif
@@ -185,14 +185,14 @@
         <div class="p-4 border-b border-slate-100 flex items-center justify-between">
             <div>
                 <h3 class="text-sm font-bold text-slate-900">
-                    {{ Auth::check() && Auth::user()->isCustomer() ? 'My Consignments Registry' : 'Recent Consignments' }}
+                    {{ Auth::check() && Auth::user()->isCustomer() ? 'Daftar Konsinyasi Saya' : 'Konsinyasi Terbaru' }}
                 </h3>
                 <p class="text-[11px] text-slate-400">
-                    {{ Auth::check() && Auth::user()->isCustomer() ? 'Your registered cargo shipments and arrival schedules' : 'Latest active trade movements' }}
+                    {{ Auth::check() && Auth::user()->isCustomer() ? 'Pengiriman kargo dan jadwal kedatangan Anda' : 'Pergerakan perdagangan aktif terkini' }}
                 </p>
             </div>
             <a href="{{ route('shipments.index') }}" class="text-xs font-semibold text-blue-600 hover:text-blue-700">
-                View All &rarr;
+                Lihat Semua &rarr;
             </a>
         </div>
 
@@ -200,13 +200,13 @@
             <table class="w-full text-left text-xs">
                 <thead>
                     <tr class="border-b border-slate-100 bg-slate-50/50 text-[11px] font-semibold text-slate-500">
-                        <th class="py-3 px-5">Shipment</th>
-                        <th class="py-3 px-4">Route</th>
-                        <th class="py-3 px-4">Carrier</th>
-                        <th class="py-3 px-4">Cargo</th>
+                        <th class="py-3 px-5">Pengiriman</th>
+                        <th class="py-3 px-4">Rute</th>
+                        <th class="py-3 px-4">Operator</th>
+                        <th class="py-3 px-4">Kargo</th>
                         <th class="py-3 px-4 text-center">Status</th>
-                        <th class="py-3 px-4 text-right">Cost ({{ $activeCurrencyCode }})</th>
-                        <th class="py-3 px-4 text-center">Action</th>
+                        <th class="py-3 px-4 text-right">Biaya ({{ $activeCurrencyCode }})</th>
+                        <th class="py-3 px-4 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100 text-slate-600">
@@ -229,15 +229,15 @@
                         <td class="py-3.5 px-4 text-center">
                             @if($s->current_status === 'DELIVERED')
                                 <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                                    Delivered
+                                    Terkirim
                                 </span>
                             @elseif($s->current_status === 'IN_TRANSIT')
                                 <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-200">
-                                    In Transit
+                                    Dalam Perjalanan
                                 </span>
                             @else
                                 <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-600 border border-slate-200">
-                                    {{ $s->current_status }}
+                                    {{ $s->current_status === 'CREATED' ? 'Dibuat' : ($s->current_status === 'BOOKED' ? 'Terjadwal' : ($s->current_status === 'PICKED_UP' ? 'Diambil' : str_replace('_', ' ', $s->current_status))) }}
                                 </span>
                             @endif
                         </td>
@@ -247,10 +247,10 @@
                         <td class="py-3.5 px-4 text-center">
                             <div class="flex items-center justify-center gap-1.5">
                                 <a href="{{ route('public.track', ['shipment_number' => $s->shipment_number]) }}"
-                                   class="p-1.5 text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 rounded-lg transition" title="Lacak di Live Tracker">
+                                   class="p-1.5 text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 rounded-lg transition" title="Lacak di Pelacak Langsung">
                                     <i class="fa-solid fa-satellite-dish text-xs"></i>
                                 </a>
-                                <a href="{{ route('shipments.show', $s->id) }}" class="p-1.5 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-lg transition" title="Inspect">
+                                <a href="{{ route('shipments.show', $s->id) }}" class="p-1.5 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-lg transition" title="Rincian">
                                     <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
                                 </a>
                             </div>
@@ -258,7 +258,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="7" class="py-8 text-center text-slate-400">No shipments registered.</td>
+                        <td colspan="7" class="py-8 text-center text-slate-400">Belum ada pengiriman terdaftar.</td>
                     </tr>
                     @endforelse
                 </tbody>

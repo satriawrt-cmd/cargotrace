@@ -1,19 +1,19 @@
 @extends('layouts.app')
 
-@section('title', 'Notifications')
+@section('title', 'Notifikasi')
 
 @section('content')
 <div class="max-w-4xl mx-auto space-y-6">
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-            <h1 class="text-2xl font-bold tracking-tight text-slate-900">Notifications</h1>
-            <p class="text-xs text-slate-500 mt-0.5">Real-time alerts, checkpoint telemetry updates, and incident alerts.</p>
+            <h1 class="text-2xl font-bold tracking-tight text-slate-900">Pemberitahuan & Notifikasi</h1>
+            <p class="text-xs text-slate-500 mt-0.5">Peringatan real-time, pembaruan status titik pelacakan, dan insiden kargo.</p>
         </div>
 
         <form action="{{ route('notifications.read-all') }}" method="POST">
             @csrf
             <button type="submit" class="px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-200 shadow-xs transition">
-                <i class="fa-solid fa-check-double mr-1 text-slate-400"></i> Mark All as Read
+                <i class="fa-solid fa-check-double mr-1 text-slate-400"></i> Tandai Semua Sudah Dibaca
             </button>
         </form>
     </div>
@@ -48,12 +48,12 @@
                 <form action="{{ route('notifications.read', $notif->id) }}" method="POST">
                     @csrf
                     <button type="submit" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs text-slate-700 font-medium transition">
-                        Dismiss
+                        Tutup
                     </button>
                 </form>
                 @elseif($notif->action_url)
                 <a href="{{ $notif->action_url }}" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs text-slate-600 font-medium transition">
-                    View
+                    Lihat
                 </a>
                 @endif
             </div>
@@ -61,7 +61,7 @@
         @empty
         <div class="p-8 text-center text-slate-400 text-xs">
             <i class="fa-regular fa-bell-slash text-xl mb-1.5 block text-slate-300"></i>
-            No notifications at this time.
+            Tidak ada notifikasi saat ini.
         </div>
         @endforelse
     </div>

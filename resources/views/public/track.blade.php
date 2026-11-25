@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Global Public Tracking')
+@section('title', 'Pelacakan Publik Global')
 
 @section('content')
 <div class="space-y-6">
@@ -11,9 +11,9 @@
         </div>
 
         <div>
-            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">Track Global Consignments</h1>
+            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">Lacak Pengiriman Global</h1>
             <p class="text-xs sm:text-sm text-slate-500 max-w-xl mx-auto mt-1">
-                Real-time visibility across international trade routes with verified waypoint telemetry and status progression.
+                Visibilitas waktu nyata di seluruh rute perdagangan internasional dengan telemetri titik pemeriksaan dan perkembangan status.
             </p>
         </div>
 
@@ -24,18 +24,18 @@
                     <i class="fa-solid fa-barcode text-xs"></i>
                 </span>
                 <input type="text" name="shipment_number" value="{{ $shipmentNumber ?? '' }}"
-                       placeholder="Enter tracking number (e.g. CT-2026-EU4091)"
+                       placeholder="Masukkan nomor pelacakan (contoh: CT-2026-EU4091)"
                        class="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 font-mono text-xs placeholder-slate-400 focus:outline-none focus:bg-white focus:border-blue-500 transition">
             </div>
             <button type="submit" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs rounded-xl shadow-xs transition flex items-center justify-center gap-1.5">
                 <i class="fa-solid fa-magnifying-glass text-xs"></i>
-                <span>Track</span>
+                <span>Lacak</span>
             </button>
         </form>
 
         <!-- Quick Demo Tracker Pills (Soft Calm Badges) -->
         <div class="flex flex-wrap items-center justify-center gap-2 text-xs pt-1">
-            <span class="text-slate-400 text-[11px]">Quick Select:</span>
+            <span class="text-slate-400 text-[11px]">Pilihan Cepat:</span>
             @foreach($quickDemoShipments ?? [] as $qs)
             <a href="{{ route('public.track', ['shipment_number' => $qs->shipment_number]) }}"
                class="px-2.5 py-1 rounded-lg border text-[11px] font-mono transition
@@ -52,35 +52,35 @@
         <!-- Number & Badges -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-100">
             <div>
-                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Consignment Number</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Nomor Konsinyasi</span>
                 <h2 class="text-xl sm:text-2xl font-bold text-slate-900 font-mono mt-0.5">{{ $shipment->shipment_number }}</h2>
                 <p class="text-xs text-slate-500 mt-0.5">
-                    Carrier: <strong class="text-slate-800">{{ $shipment->carrier->name }}</strong> • Cargo: {{ $shipment->cargo_type }}
+                    Operator: <strong class="text-slate-800">{{ $shipment->carrier->name }}</strong> • Kargo: {{ $shipment->cargo_type }}
                 </p>
             </div>
 
             <div class="flex items-center gap-2">
                 @if($shipment->current_status === 'DELIVERED')
                     <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                        Delivered
+                        Terkirim
                     </span>
                 @elseif($shipment->current_status === 'IN_TRANSIT')
                     <span class="px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200">
-                        In Transit
+                        Dalam Perjalanan
                     </span>
                 @else
                     <span class="px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200">
-                        {{ str_replace('_', ' ', $shipment->current_status) }}
+                        {{ $shipment->current_status === 'CREATED' ? 'Dibuat' : ($shipment->current_status === 'BOOKED' ? 'Terjadwal' : ($shipment->current_status === 'PICKED_UP' ? 'Diambil' : str_replace('_', ' ', $shipment->current_status))) }}
                     </span>
                 @endif
 
                 @if($shipment->delay_status === 'DELAYED')
                 <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-red-50 text-red-700 border border-red-200">
-                    Delayed (+{{ $shipment->delay_hours }}h)
+                    Terlambat (+{{ $shipment->delay_hours }} jam)
                 </span>
                 @else
                 <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                    On Schedule
+                    Tepat Waktu
                 </span>
                 @endif
             </div>
@@ -89,6 +89,13 @@
         <!-- Lifecycle Stepper -->
         @php
             $steps = ['CREATED', 'BOOKED', 'PICKED_UP', 'IN_TRANSIT', 'DELIVERED'];
+            $stepLabels = [
+                'CREATED' => 'Dibuat',
+                'BOOKED' => 'Terjadwal',
+                'PICKED_UP' => 'Diambil',
+                'IN_TRANSIT' => 'Dalam Perjalanan',
+                'DELIVERED' => 'Terkirim'
+            ];
             $currentIndex = array_search($shipment->current_status, $steps);
             if ($currentIndex === false) $currentIndex = 0;
         @endphp
@@ -105,7 +112,7 @@
                         @endif
                     </div>
                     <span class="text-[10px] font-semibold mt-1.5 {{ $idx <= $currentIndex ? 'text-slate-900' : 'text-slate-400' }}">
-                        {{ str_replace('_', ' ', $step) }}
+                        {{ $stepLabels[$step] ?? $step }}
                     </span>
                 </div>
                 @endforeach
@@ -119,17 +126,17 @@
         <!-- Route Origin & Destination -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
             <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-100">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-0.5">Origin Port</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-0.5">Pelabuhan Asal</span>
                 <span class="font-bold text-slate-900 text-sm">{{ $shipment->origin->city }}</span>
                 <p class="text-slate-500 text-[11px]">{{ $shipment->origin->name }}, {{ $shipment->origin->country }}</p>
-                <span class="text-[10px] text-slate-400 mt-1 block">Departed: {{ $shipment->expected_departure->format('M d, Y') }}</span>
+                <span class="text-[10px] text-slate-400 mt-1 block">Berangkat: {{ $shipment->expected_departure->format('d M Y') }}</span>
             </div>
 
             <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-100">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-0.5">Destination Port</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-0.5">Pelabuhan Tujuan</span>
                 <span class="font-bold text-slate-900 text-sm">{{ $shipment->destination->city }}</span>
                 <p class="text-slate-500 text-[11px]">{{ $shipment->destination->name }}, {{ $shipment->destination->country }}</p>
-                <span class="text-[10px] text-slate-400 mt-1 block">ETA: {{ $shipment->estimated_arrival->format('M d, Y') }}</span>
+                <span class="text-[10px] text-slate-400 mt-1 block">Estimasi Tiba (ETA): {{ $shipment->estimated_arrival->format('d M Y') }}</span>
             </div>
         </div>
 
@@ -308,7 +315,7 @@
 
         <!-- Timeline Checkpoints -->
         <div class="space-y-3 pt-2">
-            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Verified Checkpoints</h3>
+            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Titik Pemeriksaan Terverifikasi</h3>
 
             <div class="relative pl-6 space-y-3 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200">
                 @forelse($shipment->trackingEvents as $ev)
@@ -321,7 +328,7 @@
                     <div class="p-3 rounded-xl {{ $ev->is_exception ? 'bg-red-50/60 border border-red-200' : 'bg-slate-50 border border-slate-100' }} text-xs">
                         <div class="flex items-center justify-between gap-1 mb-0.5">
                             <span class="font-bold text-slate-900">{{ $ev->status }} • {{ $ev->location_name }}</span>
-                            <span class="text-[10px] text-slate-400 font-mono">{{ $ev->event_time->format('M d, H:i') }}</span>
+                            <span class="text-[10px] text-slate-400 font-mono">{{ $ev->event_time->format('d M, H:i') }}</span>
                         </div>
                         <p class="text-slate-600">{{ $ev->description }}</p>
                         @if($ev->weather_summary)
@@ -332,7 +339,7 @@
                     </div>
                 </div>
                 @empty
-                <p class="text-xs text-slate-400">No checkpoints logged yet.</p>
+                <p class="text-xs text-slate-400">Belum ada riwayat titik pemeriksaan tercatat.</p>
                 @endforelse
             </div>
         </div>
@@ -340,9 +347,9 @@
     @elseif($shipmentNumber)
     <div class="p-8 text-center rounded-2xl bg-white border border-slate-200 max-w-md mx-auto shadow-sm">
         <i class="fa-solid fa-magnifying-glass text-xl text-slate-400 mb-2 block"></i>
-        <h3 class="text-sm font-bold text-slate-800">No Consignment Found</h3>
+        <h3 class="text-sm font-bold text-slate-800">Pengiriman Tidak Ditemukan</h3>
         <p class="text-xs text-slate-500 mt-1">
-            Could not find any consignment matching "<span class="font-mono text-slate-700">{{ $shipmentNumber }}</span>".
+            Tidak ditemukan konsinyasi dengan nomor "<span class="font-mono text-slate-700">{{ $shipmentNumber }}</span>".
         </p>
     </div>
     @endif

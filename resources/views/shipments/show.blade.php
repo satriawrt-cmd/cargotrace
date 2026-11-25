@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Shipment ' . $shipment->shipment_number)
+@section('title', 'Pengiriman ' . $shipment->shipment_number)
 
 @section('content')
 <div class="space-y-6">
@@ -12,8 +12,8 @@
             </a>
             <div>
                 <div class="flex items-center gap-2">
-                    <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Consignment</span>
-                    <span class="text-[10px] px-1.5 py-0.2 rounded bg-blue-50 text-blue-700 font-mono font-bold">VERIFIED</span>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Konsinyasi</span>
+                    <span class="text-[10px] px-1.5 py-0.2 rounded bg-blue-50 text-blue-700 font-mono font-bold">TERVERIFIKASI</span>
                 </div>
                 <h1 class="text-xl sm:text-2xl font-bold text-slate-900 font-mono mt-0.5">{{ $shipment->shipment_number }}</h1>
             </div>
@@ -28,7 +28,7 @@
             @endcan
 
             @can('delete', $shipment)
-            <form action="{{ route('shipments.destroy', $shipment->id) }}" method="POST" onsubmit="return confirm('Permanently delete shipment?');" class="inline">
+            <form action="{{ route('shipments.destroy', $shipment->id) }}" method="POST" onsubmit="return confirm('Hapus permanen pengiriman ini?');" class="inline">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="px-3 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 text-xs font-semibold transition">
@@ -46,7 +46,7 @@
             <!-- Origin -> Destination -->
             <div class="flex items-center gap-6">
                 <div>
-                    <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Origin</span>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Asal</span>
                     <h3 class="text-base sm:text-lg font-bold text-slate-900">{{ $shipment->origin->city }}</h3>
                     <p class="text-xs text-slate-500">{{ $shipment->origin->country }} ({{ $shipment->origin->code }})</p>
                 </div>
@@ -62,7 +62,7 @@
                 </div>
 
                 <div>
-                    <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Destination</span>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Tujuan</span>
                     <h3 class="text-base sm:text-lg font-bold text-slate-900">{{ $shipment->destination->city }}</h3>
                     <p class="text-xs text-slate-500">{{ $shipment->destination->country }} ({{ $shipment->destination->code }})</p>
                 </div>
@@ -72,25 +72,25 @@
             <div class="flex items-center gap-2">
                 @if($shipment->current_status === 'DELIVERED')
                     <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                        Delivered
+                        Terkirim
                     </span>
                 @elseif($shipment->current_status === 'IN_TRANSIT')
                     <span class="px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200">
-                        In Transit
+                        Dalam Perjalanan
                     </span>
                 @else
                     <span class="px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200">
-                        {{ str_replace('_', ' ', $shipment->current_status) }}
+                        {{ $shipment->current_status === 'CREATED' ? 'Dibuat' : ($shipment->current_status === 'BOOKED' ? 'Terjadwal' : ($shipment->current_status === 'PICKED_UP' ? 'Diambil' : str_replace('_', ' ', $shipment->current_status))) }}
                     </span>
                 @endif
 
                 @if($shipment->delay_status === 'DELAYED')
                     <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-red-50 text-red-700 border border-red-200">
-                        Delayed (+{{ $shipment->delay_hours }}h)
+                        Terlambat (+{{ $shipment->delay_hours }}j)
                     </span>
                 @else
                     <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                        On Schedule
+                        Tepat Waktu
                     </span>
                 @endif
             </div>
@@ -99,27 +99,27 @@
         <!-- Details Grid -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
             <div class="p-3.5 rounded-xl bg-slate-50/70 border border-slate-100">
-                <span class="text-slate-400 font-semibold uppercase text-[10px] block mb-1">Departure Schedule</span>
-                <span class="font-bold text-slate-800 font-mono">{{ $shipment->expected_departure->format('M d, Y H:i') }}</span>
+                <span class="text-slate-400 font-semibold uppercase text-[10px] block mb-1">Jadwal Keberangkatan</span>
+                <span class="font-bold text-slate-800 font-mono">{{ $shipment->expected_departure->format('d M Y H:i') }}</span>
                 @if($shipment->actual_departure)
-                <p class="text-[10px] text-emerald-600 mt-1">Actual: {{ $shipment->actual_departure->format('M d, H:i') }}</p>
+                <p class="text-[10px] text-emerald-600 mt-1">Aktual: {{ $shipment->actual_departure->format('d M, H:i') }}</p>
                 @endif
             </div>
 
             <div class="p-3.5 rounded-xl bg-slate-50/70 border border-slate-100">
-                <span class="text-slate-400 font-semibold uppercase text-[10px] block mb-1">Estimated Arrival</span>
-                <span class="font-bold text-slate-800 font-mono">{{ $shipment->estimated_arrival->format('M d, Y H:i') }}</span>
-                <p class="text-[10px] text-slate-400 mt-1">Expected: {{ $shipment->expected_arrival->format('M d, H:i') }}</p>
+                <span class="text-slate-400 font-semibold uppercase text-[10px] block mb-1">Estimasi Tiba (ETA)</span>
+                <span class="font-bold text-slate-800 font-mono">{{ $shipment->estimated_arrival->format('d M Y H:i') }}</span>
+                <p class="text-[10px] text-slate-400 mt-1">Diharapkan: {{ $shipment->expected_arrival->format('d M, H:i') }}</p>
             </div>
 
             <div class="p-3.5 rounded-xl bg-slate-50/70 border border-slate-100">
-                <span class="text-slate-400 font-semibold uppercase text-[10px] block mb-1">Cargo & Weight</span>
+                <span class="text-slate-400 font-semibold uppercase text-[10px] block mb-1">Kargo & Berat</span>
                 <span class="font-bold text-slate-800 line-clamp-1">{{ $shipment->cargo_type }}</span>
                 <p class="text-[10px] text-slate-400 mt-1">{{ number_format($shipment->weight_kg, 1) }} kg • {{ number_format($shipment->volume_cbm, 1) }} CBM</p>
             </div>
 
             <div class="p-3.5 rounded-xl bg-slate-50/70 border border-slate-100">
-                <span class="text-slate-400 font-semibold uppercase text-[10px] block mb-1">Consignee</span>
+                <span class="text-slate-400 font-semibold uppercase text-[10px] block mb-1">Penerima (Consignee)</span>
                 <span class="font-bold text-slate-800">{{ $shipment->customer->name }}</span>
                 <p class="text-[10px] text-slate-400 mt-1">{{ $shipment->customer->company_name ?? $shipment->customer->email }}</p>
             </div>
@@ -129,7 +129,7 @@
         <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-800 flex items-start gap-2">
             <i class="fa-solid fa-triangle-exclamation text-amber-600 mt-0.5"></i>
             <div>
-                <strong>Delay Advisory:</strong> {{ $shipment->delay_reason }}
+                <strong>Pemberitahuan Keterlambatan:</strong> {{ $shipment->delay_reason }}
             </div>
         </div>
         @endif
@@ -139,9 +139,9 @@
     <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-                <h3 class="text-sm font-bold text-slate-900">Multi-Currency Financial Ledger</h3>
+                <h3 class="text-sm font-bold text-slate-900">Buku Besar Keuangan Multi-Mata Uang</h3>
                 <p class="text-[11px] text-slate-400">
-                    Base billing: <span class="font-bold text-slate-700 font-mono">{{ $shipment->currency_code }}</span> • Active view: <span class="font-bold text-blue-600 font-mono">{{ $activeCurrencyCode }}</span>
+                    Tagihan dasar: <span class="font-bold text-slate-700 font-mono">{{ $shipment->currency_code }}</span> • Tampilan aktif: <span class="font-bold text-blue-600 font-mono">{{ $activeCurrencyCode }}</span>
                 </p>
             </div>
             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
@@ -151,35 +151,35 @@
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
             <div class="p-3 rounded-xl bg-slate-50 border border-slate-100">
-                <span class="text-[10px] uppercase font-bold text-slate-400 block mb-0.5">Freight Cost</span>
+                <span class="text-[10px] uppercase font-bold text-slate-400 block mb-0.5">Biaya Kirim (Freight)</span>
                 <span class="font-bold text-slate-900 font-mono text-sm">
                     {{ $currencyService->convertAndFormat($shipment->shipping_cost, $shipment->currency_code, $activeCurrencyCode) }}
                 </span>
-                <span class="block text-[10px] text-slate-400 font-mono mt-0.5">Base: {{ $currencyService->format($shipment->shipping_cost, $shipment->currency_code) }}</span>
+                <span class="block text-[10px] text-slate-400 font-mono mt-0.5">Asli: {{ $currencyService->format($shipment->shipping_cost, $shipment->currency_code) }}</span>
             </div>
 
             <div class="p-3 rounded-xl bg-slate-50 border border-slate-100">
-                <span class="text-[10px] uppercase font-bold text-slate-400 block mb-0.5">Declared Value</span>
+                <span class="text-[10px] uppercase font-bold text-slate-400 block mb-0.5">Nilai Kargo Dinyatakan</span>
                 <span class="font-bold text-slate-900 font-mono text-sm">
                     {{ $currencyService->convertAndFormat($shipment->declared_value, $shipment->currency_code, $activeCurrencyCode) }}
                 </span>
-                <span class="block text-[10px] text-slate-400 font-mono mt-0.5">Base: {{ $currencyService->format($shipment->declared_value, $shipment->currency_code) }}</span>
+                <span class="block text-[10px] text-slate-400 font-mono mt-0.5">Asli: {{ $currencyService->format($shipment->declared_value, $shipment->currency_code) }}</span>
             </div>
 
             <div class="p-3 rounded-xl bg-slate-50 border border-slate-100">
-                <span class="text-[10px] uppercase font-bold text-slate-400 block mb-0.5">Insurance Premium</span>
+                <span class="text-[10px] uppercase font-bold text-slate-400 block mb-0.5">Premi Asuransi</span>
                 <span class="font-bold text-slate-900 font-mono text-sm">
                     {{ $currencyService->convertAndFormat($shipment->insurance_fee, $shipment->currency_code, $activeCurrencyCode) }}
                 </span>
-                <span class="block text-[10px] text-slate-400 font-mono mt-0.5">Base: {{ $currencyService->format($shipment->insurance_fee, $shipment->currency_code) }}</span>
+                <span class="block text-[10px] text-slate-400 font-mono mt-0.5">Asli: {{ $currencyService->format($shipment->insurance_fee, $shipment->currency_code) }}</span>
             </div>
 
             <div class="p-3 rounded-xl bg-blue-50/60 border border-blue-200">
-                <span class="text-[10px] uppercase font-bold text-blue-700 block mb-0.5">Total Payable</span>
+                <span class="text-[10px] uppercase font-bold text-blue-700 block mb-0.5">Total Tagihan</span>
                 <span class="font-extrabold text-blue-700 font-mono text-sm">
                     {{ $currencyService->convertAndFormat($shipment->total_cost, $shipment->currency_code, $activeCurrencyCode) }}
                 </span>
-                <span class="block text-[10px] text-slate-500 font-mono mt-0.5">Base: {{ $currencyService->format($shipment->total_cost, $shipment->currency_code) }}</span>
+                <span class="block text-[10px] text-slate-500 font-mono mt-0.5">Asli: {{ $currencyService->format($shipment->total_cost, $shipment->currency_code) }}</span>
             </div>
         </div>
     </div>
@@ -193,7 +193,7 @@
                     <i class="fa-solid fa-map-location-dot"></i>
                 </span>
                 <div>
-                    <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Live Route & Geographical Position</h3>
+                    <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Rute Pengiriman & Posisi Terkini</h3>
                     <p class="text-[11px] text-slate-400">
                         Lokasi Terkini: <strong class="text-slate-700">{{ $shipment->current_location_name ?: 'En Route' }}</strong>
                     </p>
@@ -202,8 +202,8 @@
 
             <!-- Legend Pills -->
             <div class="flex items-center gap-3 text-xs">
-                <span class="flex items-center gap-1.5 text-slate-600"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-emerald-100"></span> Asal (Origin)</span>
-                <span class="flex items-center gap-1.5 text-slate-600"><span class="w-2.5 h-2.5 rounded-full bg-blue-600 ring-2 ring-blue-100"></span> Tujuan (Destination)</span>
+                <span class="flex items-center gap-1.5 text-slate-600"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-emerald-100"></span> Asal</span>
+                <span class="flex items-center gap-1.5 text-slate-600"><span class="w-2.5 h-2.5 rounded-full bg-blue-600 ring-2 ring-blue-100"></span> Tujuan</span>
                 <span class="flex items-center gap-1.5 text-slate-600"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 ring-2 ring-rose-100"></span> Posisi Kargo</span>
             </div>
         </div>
@@ -360,18 +360,18 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- Milestone Transition Form -->
         <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm space-y-3">
-            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Status Progression</h3>
-            <p class="text-[11px] text-slate-400">Advance lifecycle milestone. Current: <strong>{{ $shipment->current_status }}</strong></p>
+            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Kemajuan Status Siklus Hidup</h3>
+            <p class="text-[11px] text-slate-400">Pindahkan tahapan status pengiriman. Status saat ini: <strong>{{ $shipment->current_status }}</strong></p>
 
             @if($shipment->isTerminal())
             <div class="p-3 rounded-xl bg-slate-50 text-xs text-slate-500 border border-slate-200">
-                Consignment is in a terminal state ({{ $shipment->current_status }}) and cannot transition further.
+                Konsinyasi berada dalam status akhir ({{ $shipment->current_status }}) dan tidak dapat diubah lagi.
             </div>
             @else
             <form action="{{ route('shipments.status', $shipment->id) }}" method="POST" class="space-y-3">
                 @csrf
                 <div>
-                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Target Milestone</label>
+                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Target Status Berikutnya</label>
                     <select name="status" required class="w-full px-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-blue-500">
                         @foreach(\App\Models\Shipment::VALID_TRANSITIONS[$shipment->current_status] ?? [] as $next)
                             <option value="{{ $next }}">{{ $next }}</option>
@@ -379,11 +379,11 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Notes</label>
-                    <input type="text" name="notes" placeholder="Log details..." class="w-full px-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-blue-500">
+                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Catatan</label>
+                    <input type="text" name="notes" placeholder="Rincian catatan perpindahan status..." class="w-full px-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-blue-500">
                 </div>
                 <button type="submit" class="w-full py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs shadow-xs transition">
-                    Transition Status
+                    Perbarui Status
                 </button>
             </form>
             @endif
@@ -391,8 +391,8 @@
 
         <!-- Add Checkpoint Form -->
         <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm space-y-3">
-            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Append Checkpoint</h3>
-            <p class="text-[11px] text-slate-400">Appends telemetry coordinate with external weather integration.</p>
+            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Tambah Titik Pemeriksaan</h3>
+            <p class="text-[11px] text-slate-400">Menambahkan titik koordinat telemetri beserta integrasi cuaca riil.</p>
 
             <form action="{{ route('shipments.tracking.store', $shipment->id) }}" method="POST" class="space-y-3">
                 @csrf
@@ -400,37 +400,37 @@
                     <div>
                         <label class="block text-[11px] font-semibold text-slate-600 mb-1">Status</label>
                         <select name="status" required class="w-full px-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-blue-500">
-                            <option value="IN_TRANSIT">IN TRANSIT</option>
-                            <option value="PORT_ARRIVAL">PORT ARRIVAL</option>
-                            <option value="CUSTOMS_CLEARANCE">CUSTOMS CLEARANCE</option>
-                            <option value="DEPARTED">DEPARTED</option>
-                            <option value="DELIVERED">DELIVERED</option>
+                            <option value="IN_TRANSIT">Dalam Perjalanan (IN TRANSIT)</option>
+                            <option value="PORT_ARRIVAL">Tiba di Pelabuhan (PORT ARRIVAL)</option>
+                            <option value="CUSTOMS_CLEARANCE">Pemeriksaan Bea Cukai (CUSTOMS)</option>
+                            <option value="DEPARTED">Berangkat (DEPARTED)</option>
+                            <option value="DELIVERED">Terkirim (DELIVERED)</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-[11px] font-semibold text-slate-600 mb-1">Location Name</label>
-                        <input type="text" name="location_name" required placeholder="Port or sea waypoint" class="w-full px-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-blue-500">
+                        <label class="block text-[11px] font-semibold text-slate-600 mb-1">Nama Lokasi</label>
+                        <input type="text" name="location_name" required placeholder="Pelabuhan atau titik koordinat laut" class="w-full px-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:border-blue-500">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-2">
                     <div>
                         <label class="block text-[11px] font-semibold text-slate-600 mb-1">Latitude</label>
-                        <input type="number" step="any" name="latitude" placeholder="e.g. 1.2902" class="w-full px-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none">
+                        <input type="number" step="any" name="latitude" placeholder="contoh: 1.2902" class="w-full px-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none">
                     </div>
                     <div>
                         <label class="block text-[11px] font-semibold text-slate-600 mb-1">Longitude</label>
-                        <input type="number" step="any" name="longitude" placeholder="e.g. 103.8519" class="w-full px-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none">
+                        <input type="number" step="any" name="longitude" placeholder="contoh: 103.8519" class="w-full px-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Description</label>
-                    <input type="text" name="description" required placeholder="Checkpoint notes..." class="w-full px-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none">
+                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Deskripsi Catatan</label>
+                    <input type="text" name="description" required placeholder="Catatan titik pemeriksaan..." class="w-full px-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none">
                 </div>
 
                 <button type="submit" class="w-full py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs shadow-xs transition">
-                    Save Checkpoint
+                    Simpan Titik Pemeriksaan
                 </button>
             </form>
         </div>
@@ -441,59 +441,59 @@
     <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm space-y-4">
         <div class="flex items-center justify-between">
             <div>
-                <h3 class="text-sm font-bold text-slate-900">Incident & Exception Management</h3>
-                <p class="text-[11px] text-slate-400">Operational holds, storm reroutes, and biosecurity issues</p>
+                <h3 class="text-sm font-bold text-slate-900">Manajemen Insiden & Pengecualian SLA</h3>
+                <p class="text-[11px] text-slate-400">Pemeriksaan kepabeanan, kendala cuaca badai, dan penanganan karantina</p>
             </div>
 
             @can('update', $shipment)
             <button type="button" onclick="document.getElementById('raiseExceptionDrawer').classList.toggle('hidden')" class="px-3 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-xs font-semibold transition">
-                + Raise Exception
+                + Laporkan Insiden Baru
             </button>
             @endcan
         </div>
 
         <!-- Hidden Drawer to Raise Exception -->
         <div id="raiseExceptionDrawer" class="hidden p-4 rounded-xl bg-slate-50 border border-red-200 space-y-3">
-            <h4 class="text-xs font-bold uppercase text-red-700">Log New Incident Exception</h4>
+            <h4 class="text-xs font-bold uppercase text-red-700">Catat Insiden Pengecualian Baru</h4>
             <form action="{{ route('shipments.exceptions.store', $shipment->id) }}" method="POST" class="space-y-3">
                 @csrf
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div>
-                        <label class="block text-[11px] font-semibold text-slate-600 mb-1">Exception Type</label>
+                        <label class="block text-[11px] font-semibold text-slate-600 mb-1">Jenis Insiden</label>
                         <select name="exception_type" required class="w-full px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-xl">
-                            <option value="CUSTOMS_HOLD">CUSTOMS HOLD</option>
-                            <option value="WEATHER_DELAY">WEATHER DELAY</option>
-                            <option value="PORT_CONGESTION">PORT CONGESTION</option>
-                            <option value="DAMAGED">DAMAGED CARGO</option>
-                            <option value="MISROUTED">MISROUTED</option>
-                            <option value="DOCUMENTATION_ISSUE">DOCUMENTATION ISSUE</option>
+                            <option value="CUSTOMS_HOLD">Penahanan Bea Cukai (CUSTOMS HOLD)</option>
+                            <option value="WEATHER_DELAY">Kendala Cuaca / Badai (WEATHER DELAY)</option>
+                            <option value="PORT_CONGESTION">Antrean Pelabuhan (PORT CONGESTION)</option>
+                            <option value="DAMAGED">Kargo Rusak (DAMAGED CARGO)</option>
+                            <option value="MISROUTED">Salah Rute (MISROUTED)</option>
+                            <option value="DOCUMENTATION_ISSUE">Kendala Dokumen (DOCUMENTATION ISSUE)</option>
                         </select>
                     </div>
 
                     <div>
-                        <label class="block text-[11px] font-semibold text-slate-600 mb-1">Severity</label>
+                        <label class="block text-[11px] font-semibold text-slate-600 mb-1">Tingkat Keparahan</label>
                         <select name="severity" required class="w-full px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-xl">
-                            <option value="LOW">LOW (0 - 6h)</option>
-                            <option value="MEDIUM" selected>MEDIUM (6 - 24h)</option>
-                            <option value="HIGH">HIGH (> 24h)</option>
-                            <option value="CRITICAL">CRITICAL</option>
+                            <option value="LOW">Rendah / LOW (0 - 6 jam)</option>
+                            <option value="MEDIUM" selected>Sedang / MEDIUM (6 - 24 jam)</option>
+                            <option value="HIGH">Tinggi / HIGH (> 24 jam)</option>
+                            <option value="CRITICAL">Kritis / CRITICAL</option>
                         </select>
                     </div>
 
                     <div>
-                        <label class="block text-[11px] font-semibold text-slate-600 mb-1">Delay Impact (Hours)</label>
+                        <label class="block text-[11px] font-semibold text-slate-600 mb-1">Dampak Keterlambatan (Jam)</label>
                         <input type="number" name="delay_impact_hours" min="0" value="12" class="w-full px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-xl">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Root Cause</label>
-                    <textarea name="root_cause" required rows="2" placeholder="Incident explanation..." class="w-full px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-xl"></textarea>
+                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Penyebab Masalah (Root Cause)</label>
+                    <textarea name="root_cause" required rows="2" placeholder="Penjelasan penyebab kendala atau insiden..." class="w-full px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-xl"></textarea>
                 </div>
 
                 <div class="flex justify-end gap-2">
-                    <button type="button" onclick="document.getElementById('raiseExceptionDrawer').classList.add('hidden')" class="px-3 py-1 text-xs text-slate-500">Cancel</button>
-                    <button type="submit" class="px-4 py-1.5 rounded-xl bg-red-600 text-white font-semibold text-xs">Save Incident</button>
+                    <button type="button" onclick="document.getElementById('raiseExceptionDrawer').classList.add('hidden')" class="px-3 py-1 text-xs text-slate-500">Batal</button>
+                    <button type="submit" class="px-4 py-1.5 rounded-xl bg-red-600 text-white font-semibold text-xs">Simpan Insiden</button>
                 </div>
             </form>
         </div>
@@ -506,13 +506,13 @@
                     <div class="flex items-center gap-2">
                         <span class="font-bold text-slate-900">{{ $exc->exception_type }}</span>
                         <span class="px-2 py-0.2 rounded-full text-[10px] font-semibold {{ $exc->isOpen() ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700' }}">
-                            {{ $exc->status }}
+                            {{ $exc->isOpen() ? 'DIPROSES' : 'SELESAI' }}
                         </span>
                         <span class="text-[10px] text-slate-500 font-mono">{{ $exc->severity }}</span>
                     </div>
                     <p class="text-slate-700 mt-1">{{ $exc->root_cause }}</p>
                     @if($exc->resolution_notes)
-                    <p class="text-[11px] text-emerald-700 mt-1">Resolution: {{ $exc->resolution_notes }}</p>
+                    <p class="text-[11px] text-emerald-700 mt-1">Solusi Penyelesaian: {{ $exc->resolution_notes }}</p>
                     @endif
                 </div>
 
@@ -520,15 +520,15 @@
                 <form action="{{ route('exceptions.resolve', $exc->id) }}" method="POST" class="flex items-center gap-2 shrink-0">
                     @csrf
                     @method('PATCH')
-                    <input type="text" name="resolution_notes" required placeholder="Resolution summary..." class="px-2.5 py-1 text-xs bg-white border border-slate-200 rounded-lg">
+                    <input type="text" name="resolution_notes" required placeholder="Ringkasan penyelesaian..." class="px-2.5 py-1 text-xs bg-white border border-slate-200 rounded-lg">
                     <button type="submit" class="px-3 py-1 rounded-lg bg-emerald-600 text-white font-semibold text-xs">
-                        Resolve
+                        Selesaikan
                     </button>
                 </form>
                 @endif
             </div>
             @empty
-            <p class="text-xs text-slate-400 text-center py-2">No active exceptions logged for this consignment.</p>
+            <p class="text-xs text-slate-400 text-center py-2">Tidak ada insiden atau kendala aktif untuk pengiriman ini.</p>
             @endforelse
         </div>
     </div>
@@ -537,7 +537,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- Checkpoint Timeline -->
         <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm lg:col-span-2 space-y-4">
-            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Tracking Timeline</h3>
+            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Garis Waktu Pelacakan</h3>
 
             <div class="relative pl-6 space-y-4 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200">
                 @forelse($shipment->trackingEvents as $ev)
@@ -550,7 +550,7 @@
                     <div class="p-3.5 rounded-xl {{ $ev->is_exception ? 'bg-red-50/50 border border-red-200' : 'bg-slate-50 border border-slate-100' }}">
                         <div class="flex items-center justify-between gap-1 mb-1">
                             <span class="text-xs font-bold text-slate-900">{{ $ev->status }} • {{ $ev->location_name }}</span>
-                            <span class="text-[10px] font-mono text-slate-400">{{ $ev->event_time->format('M d, H:i') }}</span>
+                            <span class="text-[10px] font-mono text-slate-400">{{ $ev->event_time->format('d M, H:i') }}</span>
                         </div>
                         <p class="text-xs text-slate-600">{{ $ev->description }}</p>
                         @if($ev->weather_summary)
@@ -561,28 +561,28 @@
                     </div>
                 </div>
                 @empty
-                <p class="text-xs text-slate-400">No checkpoints recorded.</p>
+                <p class="text-xs text-slate-400">Belum ada titik pemeriksaan tercatat.</p>
                 @endforelse
             </div>
         </div>
 
         <!-- Manifest Items -->
         <div class="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm space-y-3">
-            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Manifest Items</h3>
+            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Daftar Item Manifest</h3>
 
             <div class="space-y-2">
                 @forelse($shipment->items as $item)
                 <div class="p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs">
                     <div class="font-bold text-slate-800">{{ $item->item_description }}</div>
                     <div class="grid grid-cols-2 gap-1 mt-1 text-[11px] text-slate-500">
-                        <div>Qty: <strong>{{ $item->quantity }}</strong></div>
-                        <div>Weight: <strong>{{ number_format($item->weight_kg, 1) }} kg</strong></div>
-                        <div>Package: {{ $item->package_type }}</div>
-                        <div>Value: {{ $currencyService->format($item->declared_value, $shipment->currency_code) }}</div>
+                        <div>Jml: <strong>{{ $item->quantity }}</strong></div>
+                        <div>Berat: <strong>{{ number_format($item->weight_kg, 1) }} kg</strong></div>
+                        <div>Kemasan: {{ $item->package_type }}</div>
+                        <div>Nilai: {{ $currencyService->format($item->declared_value, $shipment->currency_code) }}</div>
                     </div>
                 </div>
                 @empty
-                <p class="text-xs text-slate-400">Consolidated freight container.</p>
+                <p class="text-xs text-slate-400">Kontainer kargo terkonsolidasi.</p>
                 @endforelse
             </div>
         </div>

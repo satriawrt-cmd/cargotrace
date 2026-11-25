@@ -46,7 +46,7 @@ class UserManagementAndRoleAccessTest extends TestCase
         // 1. List users
         $response = $this->get(route('users.index'));
         $response->assertStatus(200);
-        $response->assertSee('User Management');
+        $response->assertSee('Manajemen Pengguna');
 
         // 2. Create new user
         $storeResponse = $this->post(route('users.store'), [
@@ -147,7 +147,7 @@ class UserManagementAndRoleAccessTest extends TestCase
         // Accessing public tracker displays the dedicated Live Tracker page inside same app layout
         $response = $this->get(route('public.track'));
         $response->assertStatus(200);
-        $response->assertSee('Track Global Consignments');
+        $response->assertSee('Lacak Pengiriman Global');
         $response->assertSee('publicWorldMap');
 
         // Accessing with tracking number loads specific consignment
