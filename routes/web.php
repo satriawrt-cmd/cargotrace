@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 Route::get('/', function () {
-    return Auth::check() ? redirect()->route('dashboard') : redirect()->route('public.track');
+    return Auth::check() ? redirect()->route('dashboard') : redirect()->route('login');
 })->name('home');
 
 // Dedicated Live Tracker (Inside the same web console, accessible with or without login)

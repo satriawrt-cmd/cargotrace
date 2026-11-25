@@ -24,6 +24,6 @@ class ExampleTest extends TestCase
         $response->assertStatus(200);
 
         $rootResponse = $this->get('/');
-        $rootResponse->assertRedirect(route('public.track'));
+        $rootResponse->assertRedirect(route('login'));
     }
 }
