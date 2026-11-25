@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CarrierController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PublicTrackingController;
@@ -37,6 +38,10 @@ Route::get('/quick-login/{role}', [AuthController::class, 'quickLogin'])->name('
 
 // Global currency switcher (publicly accessible or authenticated)
 Route::post('/currency/switch', [CurrencyController::class, 'switchCurrency'])->name('currency.switch');
+
+// Global language switcher (English & Indonesian)
+Route::post('/language/switch', [LanguageController::class, 'switchLanguage'])->name('language.switch');
+Route::get('/language/{locale}', [LanguageController::class, 'switchLanguage'])->name('language.switch.get');
 
 /*
 |--------------------------------------------------------------------------

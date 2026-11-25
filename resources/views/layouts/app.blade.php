@@ -206,8 +206,20 @@
                 <span class="text-slate-800 font-semibold">@yield('title', 'Ringkasan')</span>
             </div>
 
-            <!-- Header Right: Global Currency Selector, Search bar, Notification Bell -->
+            <!-- Header Right: Language, Global Currency Selector, Search bar, Notification Bell -->
             <div class="flex items-center gap-3">
+                <!-- Global Language Switcher Dropdown (Soft Style) -->
+                <form action="{{ route('language.switch') }}" method="POST" class="inline-flex items-center">
+                    @csrf
+                    <div class="flex items-center bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs text-slate-700 hover:border-slate-300 transition">
+                        <i class="fa-solid fa-globe text-blue-500 mr-1.5 text-xs"></i>
+                        <select name="locale" onchange="this.form.submit()" class="bg-transparent text-xs font-semibold focus:outline-none cursor-pointer pr-1 text-slate-800">
+                            <option value="id" {{ ($currentLocale ?? 'id') === 'id' ? 'selected' : '' }}>🇮🇩 ID</option>
+                            <option value="en" {{ ($currentLocale ?? 'id') === 'en' ? 'selected' : '' }}>🇬🇧 EN</option>
+                        </select>
+                    </div>
+                </form>
+
                 <!-- Global Currency Switcher Dropdown (Soft Style) -->
                 <form action="{{ route('currency.switch') }}" method="POST" class="inline-flex items-center">
                     @csrf

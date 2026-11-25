@@ -44,11 +44,14 @@ class AppServiceProvider extends ServiceProvider
                 $unreadCount = Auth::user()->notifications()->whereNull('read_at')->count();
             }
 
+            $currentLocale = session('locale', config('app.locale', 'id'));
+
             $view->with([
                 'globalCurrencies' => $activeCurrencies,
                 'activeCurrencyCode' => $selectedCurrency,
                 'currencyService' => $currencyService,
                 'unreadNotificationsCount' => $unreadCount,
+                'currentLocale' => $currentLocale,
             ]);
         });
     }

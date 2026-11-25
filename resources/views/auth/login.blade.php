@@ -11,7 +11,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
 </head>
-<body class="h-full flex flex-col justify-center items-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
+<body class="h-full flex flex-col justify-center items-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50 relative">
+
+    <!-- Top Right Language Switcher -->
+    <div class="absolute top-4 right-4 sm:top-6 sm:right-6">
+        <form action="{{ route('language.switch') }}" method="POST" class="inline-flex items-center">
+            @csrf
+            <div class="flex items-center bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs text-slate-700 shadow-sm hover:border-slate-300 transition">
+                <i class="fa-solid fa-globe text-blue-500 mr-1.5 text-xs"></i>
+                <select name="locale" onchange="this.form.submit()" class="bg-transparent text-xs font-semibold focus:outline-none cursor-pointer pr-1 text-slate-800">
+                    <option value="id" {{ ($currentLocale ?? 'id') === 'id' ? 'selected' : '' }}>🇮🇩 ID</option>
+                    <option value="en" {{ ($currentLocale ?? 'id') === 'en' ? 'selected' : '' }}>🇬🇧 EN</option>
+                </select>
+            </div>
+        </form>
+    </div>
 
     <div class="sm:mx-auto sm:w-full sm:max-w-md text-center mb-6">
         <div class="inline-flex items-center gap-3 mb-2">
