@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-slate-50 text-slate-800">
+<html lang="en" class="h-full bg-[#FAF6F0] text-[#423225]">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,15 +11,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
 </head>
-<body class="h-full flex flex-col justify-center items-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50 relative">
+<body class="h-full flex flex-col justify-center items-center py-12 px-4 sm:px-6 lg:px-8 bg-[#FAF6F0] relative">
 
     <!-- Top Right Language Switcher -->
     <div class="absolute top-4 right-4 sm:top-6 sm:right-6">
         <form action="{{ route('language.switch') }}" method="POST" class="inline-flex items-center">
             @csrf
-            <div class="flex items-center bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs text-slate-700 shadow-sm hover:border-slate-300 transition">
-                <i class="fa-solid fa-globe text-blue-500 mr-1.5 text-xs"></i>
-                <select name="locale" onchange="this.form.submit()" class="bg-transparent text-xs font-semibold focus:outline-none cursor-pointer pr-1 text-slate-800">
+            <div class="flex items-center bg-[#FAF5EE] border border-[#EDE4DC] rounded-xl px-2.5 py-1.5 text-xs text-[#423225] shadow-2xs hover:border-[#CCBEB1] transition">
+                <i class="fa-solid fa-globe text-[#997E67] mr-1.5 text-xs"></i>
+                <select name="locale" onchange="this.form.submit()" class="bg-transparent text-xs font-semibold focus:outline-none cursor-pointer pr-1 text-[#423225]">
                     <option value="id" {{ ($currentLocale ?? 'id') === 'id' ? 'selected' : '' }}>🇮🇩 ID</option>
                     <option value="en" {{ ($currentLocale ?? 'id') === 'en' ? 'selected' : '' }}>🇬🇧 EN</option>
                 </select>
@@ -29,73 +29,66 @@
 
     <div class="sm:mx-auto sm:w-full sm:max-w-md text-center mb-6">
         <div class="inline-flex items-center gap-3 mb-2">
-            <div class="w-11 h-11 rounded-2xl bg-blue-600 flex items-center justify-center text-white shadow-sm shadow-blue-500/20">
+            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#664930] via-[#85654B] to-[#997E67] flex items-center justify-center text-[#FFDBBB] shadow-md shadow-[#664930]/15">
                 <i class="fa-solid fa-ship text-lg"></i>
             </div>
             <div class="text-left">
-                <h1 class="text-xl font-bold tracking-tight text-slate-900">CargoTrace</h1>
-                <p class="text-[11px] text-slate-400 font-medium">Customer Portal</p>
+                <h1 class="text-xl font-bold tracking-tight text-[#3D2A1A]">CargoTrace</h1>
+                <p class="text-[11px] text-[#997E67] font-medium">Customer Portal</p>
             </div>
         </div>
-        <h2 class="mt-4 text-lg font-bold text-slate-900">Create your customer account</h2>
-        <p class="mt-0.5 text-xs text-slate-500">Already registered? <a href="{{ route('login') }}" class="text-blue-600 hover:text-blue-700 font-medium underline">Sign in</a></p>
+        <h2 class="mt-4 text-lg font-bold text-[#3D2A1A]">Create your customer account</h2>
+        <p class="mt-0.5 text-xs text-[#7A6350]">Already registered? <a href="{{ route('login') }}" class="text-[#664930] hover:text-[#3D2A1A] font-semibold underline">Sign in</a></p>
     </div>
 
     <div class="w-full sm:max-w-md">
-        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/90 shadow-sm">
+        <div class="bg-white/95 p-6 sm:p-8 rounded-3xl border border-[#EDE4DC] shadow-sm">
             <form action="{{ route('register.post') }}" method="POST" class="space-y-3.5">
                 @csrf
                 <div>
-                    <label for="name" class="block text-xs font-semibold text-slate-700 mb-1">Full Name</label>
-                    <input id="name" name="name" type="text" required value="{{ old('name') }}" placeholder="James Cook"
-                           class="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:bg-white focus:border-blue-500">
-                    @error('name') <p class="text-red-500 text-[10px] mt-1">{{ $message }}</p> @enderror
+                    <label for="name" class="block text-xs font-semibold text-[#443224] mb-1">Full Name</label>
+                    <input id="name" name="name" type="text" required value="{{ old('name') }}" placeholder="John Doe"
+                           class="w-full px-3.5 py-2 text-xs bg-[#FAF5EE] border border-[#EDE4DC] rounded-xl text-[#3D2A1A] placeholder-[#B5A190] focus:outline-none focus:bg-white focus:border-[#997E67]">
+                    @error('name') <p class="text-[#8C3A30] text-[10px] mt-1">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
-                    <label for="email" class="block text-xs font-semibold text-slate-700 mb-1">Business Email</label>
-                    <input id="email" name="email" type="email" required value="{{ old('email') }}" placeholder="james@company.com"
-                           class="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:bg-white focus:border-blue-500">
-                    @error('email') <p class="text-red-500 text-[10px] mt-1">{{ $message }}</p> @enderror
+                    <label for="email" class="block text-xs font-semibold text-[#443224] mb-1">Business / Company Email</label>
+                    <input id="email" name="email" type="email" required value="{{ old('email') }}" placeholder="john@company.com"
+                           class="w-full px-3.5 py-2 text-xs bg-[#FAF5EE] border border-[#EDE4DC] rounded-xl text-[#3D2A1A] placeholder-[#B5A190] focus:outline-none focus:bg-white focus:border-[#997E67]">
+                    @error('email') <p class="text-[#8C3A30] text-[10px] mt-1">{{ $message }}</p> @enderror
                 </div>
 
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label for="company_name" class="block text-xs font-semibold text-slate-700 mb-1">Company</label>
-                        <input id="company_name" name="company_name" type="text" value="{{ old('company_name') }}" placeholder="Global Logistics Inc"
-                               class="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:bg-white focus:border-blue-500">
-                    </div>
-                    <div>
-                        <label for="preferred_currency" class="block text-xs font-semibold text-slate-700 mb-1">Preferred Currency</label>
-                        <select id="preferred_currency" name="preferred_currency" class="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:bg-white focus:border-blue-500">
-                            <option value="USD">USD ($)</option>
-                            <option value="EUR">EUR (€)</option>
-                            <option value="IDR">IDR (Rp)</option>
-                            <option value="SGD">SGD (S$)</option>
-                            <option value="GBP">GBP (£)</option>
-                            <option value="JPY">JPY (¥)</option>
-                            <option value="AUD">AUD (A$)</option>
-                        </select>
-                    </div>
+                <div>
+                    <label for="company_name" class="block text-xs font-semibold text-[#443224] mb-1">Company Name (Optional)</label>
+                    <input id="company_name" name="company_name" type="text" value="{{ old('company_name') }}" placeholder="Acme Logistics Corp"
+                           class="w-full px-3.5 py-2 text-xs bg-[#FAF5EE] border border-[#EDE4DC] rounded-xl text-[#3D2A1A] placeholder-[#B5A190] focus:outline-none focus:bg-white focus:border-[#997E67]">
                 </div>
 
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label for="password" class="block text-xs font-semibold text-slate-700 mb-1">Password</label>
-                        <input id="password" name="password" type="password" required
-                               class="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:bg-white focus:border-blue-500">
-                    </div>
-                    <div>
-                        <label for="password_confirmation" class="block text-xs font-semibold text-slate-700 mb-1">Confirm</label>
-                        <input id="password_confirmation" name="password_confirmation" type="password" required
-                               class="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:bg-white focus:border-blue-500">
-                    </div>
+                <div>
+                    <label for="phone" class="block text-xs font-semibold text-[#443224] mb-1">Phone Number</label>
+                    <input id="phone" name="phone" type="text" value="{{ old('phone') }}" placeholder="+1 555-0199"
+                           class="w-full px-3.5 py-2 text-xs bg-[#FAF5EE] border border-[#EDE4DC] rounded-xl text-[#3D2A1A] placeholder-[#B5A190] focus:outline-none focus:bg-white focus:border-[#997E67]">
                 </div>
-                @error('password') <p class="text-red-500 text-[10px] mt-1">{{ $message }}</p> @enderror
 
-                <button type="submit" class="w-full py-2.5 px-4 mt-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs shadow-sm transition">
-                    Create Account
-                </button>
+                <div>
+                    <label for="password" class="block text-xs font-semibold text-[#443224] mb-1">Password</label>
+                    <input id="password" name="password" type="password" required placeholder="Minimum 8 characters"
+                           class="w-full px-3.5 py-2 text-xs bg-[#FAF5EE] border border-[#EDE4DC] rounded-xl text-[#3D2A1A] placeholder-[#B5A190] focus:outline-none focus:bg-white focus:border-[#997E67]">
+                    @error('password') <p class="text-[#8C3A30] text-[10px] mt-1">{{ $message }}</p> @enderror
+                </div>
+
+                <div>
+                    <label for="password_confirmation" class="block text-xs font-semibold text-[#443224] mb-1">Confirm Password</label>
+                    <input id="password_confirmation" name="password_confirmation" type="password" required placeholder="Repeat password"
+                           class="w-full px-3.5 py-2 text-xs bg-[#FAF5EE] border border-[#EDE4DC] rounded-xl text-[#3D2A1A] placeholder-[#B5A190] focus:outline-none focus:bg-white focus:border-[#997E67]">
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" class="w-full py-2.5 px-4 rounded-xl bg-[#664930] hover:bg-[#523A25] text-[#FFF8F2] font-semibold text-xs shadow-sm transition border border-[#523A25]">
+                        Register as Customer
+                    </button>
+                </div>
             </form>
         </div>
     </div>

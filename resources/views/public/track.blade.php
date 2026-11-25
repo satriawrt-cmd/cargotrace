@@ -4,42 +4,45 @@
 
 @section('content')
 <div class="space-y-6">
-    <!-- Clean Soft Hero Search (Minimal SaaS Style) -->
-    <div class="p-8 sm:p-10 rounded-2xl bg-white border border-slate-200/90 shadow-sm max-w-4xl mx-auto text-center space-y-4">
-        <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center mx-auto text-xl shadow-xs">
+    <!-- Clean Soft Hero Search (Neutral Elegance Style) -->
+    <div class="p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-[#FFFDF9] via-[#FAF5EE] to-[#F5ECE1] border border-[#EADCCF] shadow-sm max-w-4xl mx-auto text-center space-y-4 relative overflow-hidden">
+        <!-- Soft decorative glow circle -->
+        <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-[#FFDBBB]/30 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="w-12 h-12 rounded-2xl bg-[#FFDBBB] text-[#664930] border border-[#F0CCAC] flex items-center justify-center mx-auto text-xl shadow-2xs relative z-10">
             <i class="fa-solid fa-earth-americas"></i>
         </div>
 
-        <div>
-            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">Lacak Pengiriman Global</h1>
-            <p class="text-xs sm:text-sm text-slate-500 max-w-xl mx-auto mt-1">
+        <div class="relative z-10">
+            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-[#3D2A1A]">Lacak Pengiriman Global</h1>
+            <p class="text-xs sm:text-sm text-[#7A6350] max-w-xl mx-auto mt-1 leading-relaxed">
                 Visibilitas waktu nyata di seluruh rute perdagangan internasional dengan telemetri titik pemeriksaan dan perkembangan status.
             </p>
         </div>
 
         <!-- Search Form -->
-        <form action="{{ route('public.track') }}" method="GET" class="flex flex-col sm:flex-row gap-2 max-w-lg mx-auto pt-2">
+        <form action="{{ route('public.track') }}" method="GET" class="flex flex-col sm:flex-row gap-2 max-w-lg mx-auto pt-2 relative z-10">
             <div class="relative flex-1">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#997E67]">
                     <i class="fa-solid fa-barcode text-xs"></i>
                 </span>
                 <input type="text" name="shipment_number" value="{{ $shipmentNumber ?? '' }}"
                        placeholder="Masukkan nomor pelacakan (contoh: CT-2026-EU4091)"
-                       class="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 font-mono text-xs placeholder-slate-400 focus:outline-none focus:bg-white focus:border-blue-500 transition">
+                       class="w-full pl-9 pr-4 py-2.5 bg-white border border-[#EDE4DC] rounded-xl text-[#3D2A1A] font-mono text-xs placeholder-[#B5A190] focus:outline-none focus:bg-white focus:border-[#997E67] transition shadow-2xs">
             </div>
-            <button type="submit" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs rounded-xl shadow-xs transition flex items-center justify-center gap-1.5">
+            <button type="submit" class="px-5 py-2.5 bg-[#664930] hover:bg-[#523A25] text-[#FFF8F2] font-semibold text-xs rounded-xl shadow-sm transition flex items-center justify-center gap-1.5 border border-[#523A25]">
                 <i class="fa-solid fa-magnifying-glass text-xs"></i>
                 <span>Lacak</span>
             </button>
         </form>
 
-        <!-- Quick Demo Tracker Pills (Soft Calm Badges) -->
-        <div class="flex flex-wrap items-center justify-center gap-2 text-xs pt-1">
-            <span class="text-slate-400 text-[11px]">Pilihan Cepat:</span>
+        <!-- Quick Demo Tracker Pills (Neutral Elegance Style) -->
+        <div class="flex flex-wrap items-center justify-center gap-2 text-xs pt-1 relative z-10">
+            <span class="text-[#997E67] text-[11px] font-medium">Pilihan Cepat:</span>
             @foreach($quickDemoShipments ?? [] as $qs)
             <a href="{{ route('public.track', ['shipment_number' => $qs->shipment_number]) }}"
                class="px-2.5 py-1 rounded-lg border text-[11px] font-mono transition
-               {{ ($shipment && $shipment->id === $qs->id) ? 'bg-blue-600 text-white border-blue-600 font-bold shadow-2xs' : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200' }}">
+               {{ ($shipment && $shipment->id === $qs->id) ? 'bg-[#664930] text-[#FFF8F2] border-[#664930] font-bold shadow-2xs' : 'bg-white/80 hover:bg-white text-[#664930] border-[#E8DCCF]' }}">
                 {{ $qs->shipment_number }} ({{ $qs->origin->code }} &rarr; {{ $qs->destination->code }})
             </a>
             @endforeach
@@ -47,39 +50,39 @@
     </div>
 
     @if($shipment)
-    <!-- Shipment Overview Card -->
-    <div class="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-sm max-w-4xl mx-auto space-y-6">
+    <!-- Shipment Overview Card (Neutral Elegance Style) -->
+    <div class="p-6 sm:p-7 rounded-3xl bg-white/95 border border-[#EDE4DC] shadow-sm max-w-4xl mx-auto space-y-6">
         <!-- Number & Badges -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-100">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#EDE4DC]">
             <div>
-                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Nomor Konsinyasi</span>
-                <h2 class="text-xl sm:text-2xl font-bold text-slate-900 font-mono mt-0.5">{{ $shipment->shipment_number }}</h2>
-                <p class="text-xs text-slate-500 mt-0.5">
-                    Operator: <strong class="text-slate-800">{{ $shipment->carrier->name }}</strong> • Kargo: {{ $shipment->cargo_type }}
+                <span class="text-[10px] font-bold uppercase tracking-wider text-[#997E67]">Nomor Konsinyasi</span>
+                <h2 class="text-xl sm:text-2xl font-bold text-[#3D2A1A] font-mono mt-0.5">{{ $shipment->shipment_number }}</h2>
+                <p class="text-xs text-[#7A6350] mt-0.5">
+                    Operator: <strong class="text-[#3D2A1A]">{{ $shipment->carrier->name }}</strong> • Kargo: {{ $shipment->localized_cargo_type }}
                 </p>
             </div>
 
             <div class="flex items-center gap-2">
                 @if($shipment->current_status === 'DELIVERED')
-                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-[#EDF5EC] text-[#345937] border border-[#CCE2CB]">
                         Terkirim
                     </span>
                 @elseif($shipment->current_status === 'IN_TRANSIT')
-                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200">
+                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-[#F5EDE3] text-[#72543B] border border-[#E2D2C0]">
                         Dalam Perjalanan
                     </span>
                 @else
-                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200">
+                    <span class="px-3 py-1 rounded-full text-xs font-semibold bg-[#FAF4ED] text-[#6E5947] border border-[#E8DCCF]">
                         {{ $shipment->current_status === 'CREATED' ? 'Dibuat' : ($shipment->current_status === 'BOOKED' ? 'Terjadwal' : ($shipment->current_status === 'PICKED_UP' ? 'Diambil' : str_replace('_', ' ', $shipment->current_status))) }}
                     </span>
                 @endif
 
                 @if($shipment->delay_status === 'DELAYED')
-                <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-red-50 text-red-700 border border-red-200">
+                <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-[#FFF5EC] text-[#8C4626] border border-[#F2DAC4]">
                     Terlambat (+{{ $shipment->delay_hours }} jam)
                 </span>
                 @else
-                <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-[#EDF5EC] text-[#345937] border border-[#CCE2CB]">
                     Tepat Waktu
                 </span>
                 @endif
@@ -104,78 +107,78 @@
                 @foreach($steps as $idx => $step)
                 <div class="flex flex-col items-center">
                     <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition
-                        {{ $idx <= $currentIndex ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-400 border border-slate-200' }}">
+                        {{ $idx <= $currentIndex ? 'bg-[#664930] text-[#FFF8F2]' : 'bg-[#FAF5EE] text-[#997E67] border border-[#EDE4DC]' }}">
                         @if($idx < $currentIndex)
                             <i class="fa-solid fa-check text-[10px]"></i>
                         @else
                             {{ $idx + 1 }}
                         @endif
                     </div>
-                    <span class="text-[10px] font-semibold mt-1.5 {{ $idx <= $currentIndex ? 'text-slate-900' : 'text-slate-400' }}">
+                    <span class="text-[10px] font-semibold mt-1.5 {{ $idx <= $currentIndex ? 'text-[#3D2A1A]' : 'text-[#997E67]' }}">
                         {{ $stepLabels[$step] ?? $step }}
                     </span>
                 </div>
                 @endforeach
             </div>
-            <div class="w-full bg-slate-100 h-1 rounded-full mt-3 overflow-hidden">
-                <div class="bg-blue-600 h-full rounded-full transition-all duration-300"
+            <div class="w-full bg-[#FAF5EE] h-1.5 rounded-full mt-3 overflow-hidden border border-[#EDE4DC]">
+                <div class="bg-[#664930] h-full rounded-full transition-all duration-300"
                      style="width: {{ (($currentIndex + 0.5) / count($steps)) * 100 }}%"></div>
             </div>
         </div>
 
         <!-- Route Origin & Destination -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-100">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-0.5">Pelabuhan Asal</span>
-                <span class="font-bold text-slate-900 text-sm">{{ $shipment->origin->city }}</span>
-                <p class="text-slate-500 text-[11px]">{{ $shipment->origin->name }}, {{ $shipment->origin->country }}</p>
-                <span class="text-[10px] text-slate-400 mt-1 block">Berangkat: {{ $shipment->expected_departure->format('d M Y') }}</span>
+            <div class="p-3.5 rounded-2xl bg-[#FAF6F1] border border-[#EDE4DC]">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-[#997E67] block mb-0.5">Pelabuhan Asal</span>
+                <span class="font-bold text-[#3D2A1A] text-sm">{{ $shipment->origin->city }}</span>
+                <p class="text-[#7A6350] text-[11px]">{{ $shipment->origin->name }}, {{ $shipment->origin->country }}</p>
+                <span class="text-[10px] text-[#997E67] mt-1 block">Berangkat: {{ $shipment->expected_departure->format('d M Y') }}</span>
             </div>
 
-            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-100">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-0.5">Pelabuhan Tujuan</span>
-                <span class="font-bold text-slate-900 text-sm">{{ $shipment->destination->city }}</span>
-                <p class="text-slate-500 text-[11px]">{{ $shipment->destination->name }}, {{ $shipment->destination->country }}</p>
-                <span class="text-[10px] text-slate-400 mt-1 block">Estimasi Tiba (ETA): {{ $shipment->estimated_arrival->format('d M Y') }}</span>
+            <div class="p-3.5 rounded-2xl bg-[#FAF6F1] border border-[#EDE4DC]">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-[#997E67] block mb-0.5">Pelabuhan Tujuan</span>
+                <span class="font-bold text-[#3D2A1A] text-sm">{{ $shipment->destination->city }}</span>
+                <p class="text-[#7A6350] text-[11px]">{{ $shipment->destination->name }}, {{ $shipment->destination->country }}</p>
+                <span class="text-[10px] text-[#997E67] mt-1 block">Estimasi Tiba (ETA): {{ $shipment->estimated_arrival->format('d M Y') }}</span>
             </div>
         </div>
 
-        <!-- Interactive World Map (Shopee / Logistics Style Container) -->
-        <div class="rounded-2xl bg-white border border-slate-200/90 shadow-sm overflow-hidden space-y-0">
+        <!-- Interactive World Map Container -->
+        <div class="rounded-2xl bg-white border border-[#EDE4DC] shadow-sm overflow-hidden space-y-0">
             <!-- Map Header Bar with Compass & Target status -->
-            <div class="px-5 py-3.5 bg-slate-50/80 border-b border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div class="px-5 py-3.5 bg-[#FAF5EE]/90 border-b border-[#EDE4DC] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div class="flex items-center gap-2.5">
-                    <span class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center text-sm shadow-2xs">
+                    <span class="w-8 h-8 rounded-xl bg-[#FFDBBB] text-[#664930] border border-[#F0CCAC] flex items-center justify-center text-sm shadow-2xs">
                         <i class="fa-solid fa-map-location-dot"></i>
                     </span>
                     <div>
-                        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Pelacakan Rute & Posisi Terkini</h3>
-                        <p class="text-[11px] text-slate-400">
-                            Lokasi Kargo: <strong class="text-slate-700">{{ $shipment->current_location_name ?: 'En Route' }}</strong>
+                        <h3 class="text-xs font-bold text-[#443224] uppercase tracking-wider">Pelacakan Rute & Posisi Terkini</h3>
+                        <p class="text-[11px] text-[#997E67]">
+                            Lokasi Kargo: <strong class="text-[#3D2A1A]">{{ $shipment->current_location_name ?: 'En Route' }}</strong>
                         </p>
                     </div>
                 </div>
 
                 <div class="flex items-center gap-3 text-xs">
-                    <span class="flex items-center gap-1.5 text-slate-600"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-emerald-100"></span> Asal</span>
-                    <span class="flex items-center gap-1.5 text-slate-600"><span class="w-2.5 h-2.5 rounded-full bg-blue-600 ring-2 ring-blue-100"></span> Tujuan</span>
-                    <span class="flex items-center gap-1.5 text-slate-600"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 ring-2 ring-rose-100"></span> Kargo</span>
+                    <span class="flex items-center gap-1.5 text-[#6E5947]"><span class="w-2.5 h-2.5 rounded-full bg-[#664930] ring-2 ring-[#FFDBBB]"></span> Asal</span>
+                    <span class="flex items-center gap-1.5 text-[#6E5947]"><span class="w-2.5 h-2.5 rounded-full bg-[#997E67] ring-2 ring-[#CCBEB1]"></span> Tujuan</span>
+                    <span class="flex items-center gap-1.5 text-[#6E5947]"><span class="w-2.5 h-2.5 rounded-full bg-[#8C4626] ring-2 ring-[#FFDBBB]"></span> Kargo</span>
                 </div>
             </div>
 
-            <!-- Relative Map Frame with Compass & GPS Locate Button Overlay (Shopee Style) -->
+            <!-- Relative Map Frame with Compass & GPS Locate Button Overlay -->
             <div class="relative w-full h-[400px] z-0">
-                <!-- Compass North Overlay (Shopee Style) -->
-                <div class="absolute top-3 left-3 z-[400] bg-white/95 backdrop-blur-xs p-1.5 rounded-full shadow-md border border-slate-200/90 flex items-center justify-center w-10 h-10 select-none hover:bg-slate-50 transition cursor-pointer" title="Arah Utara (North)">
+                <!-- Compass North Overlay -->
+                <div class="absolute top-3 left-3 z-[400] bg-white/95 backdrop-blur-xs p-1.5 rounded-full shadow-md border border-[#EDE4DC] flex items-center justify-center w-10 h-10 select-none hover:bg-[#FAF5EE] transition cursor-pointer" title="Arah Utara (North)">
                     <div class="relative w-6 h-6 flex items-center justify-center">
-                        <div class="w-1 h-3 bg-rose-500 rounded-t-sm absolute top-0"></div>
-                        <div class="w-1 h-3 bg-slate-300 rounded-b-sm absolute bottom-0"></div>
-                        <span class="text-[8px] font-black text-rose-600 absolute -top-1">U</span>
+                        <div class="w-1 h-3 bg-[#8C4626] rounded-t-sm absolute top-0"></div>
+                        <div class="w-1 h-3 bg-[#CCBEB1] rounded-b-sm absolute bottom-0"></div>
+                        <span class="text-[8px] font-black text-[#8C4626] absolute -top-1">U</span>
                     </div>
                 </div>
 
-                <!-- GPS Re-Center Target Button (Shopee Style) -->
-                <button type="button" id="recenterPublicMapBtn" class="absolute bottom-4 right-4 z-[400] bg-white/95 backdrop-blur-xs w-11 h-11 rounded-full shadow-lg border border-slate-200/90 flex items-center justify-center text-slate-700 hover:text-rose-600 hover:scale-105 active:scale-95 transition" title="Pusatkan ke Posisi Kargo">
+                <!-- GPS Re-Center Target Button -->
+                <button type="button" id="recenterPublicMapBtn" class="absolute bottom-4 right-4 z-[400] bg-white/95 backdrop-blur-xs w-11 h-11 rounded-full shadow-lg border border-[#EDE4DC] flex items-center justify-center text-[#664930] hover:text-[#3D2A1A] hover:scale-105 active:scale-95 transition" title="Pusatkan ke Posisi Kargo">
                     <i class="fa-solid fa-crosshairs text-lg"></i>
                 </button>
 
@@ -183,36 +186,36 @@
                 <div id="publicWorldMap" class="w-full h-full"></div>
             </div>
 
-            <!-- Shopee / SPX Delivery Status Card Banner (Under Map) -->
-            <div class="p-5 bg-white border-t border-slate-200/90 space-y-5">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+            <!-- Delivery Status Card Banner (Under Map) -->
+            <div class="p-5 bg-white border-t border-[#EDE4DC] space-y-5">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#EDE4DC]">
                     <div>
-                        <span class="text-[11px] font-bold uppercase tracking-wider text-teal-600 block mb-0.5">
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-[#997E67] block mb-0.5">
                             <i class="fa-regular fa-calendar-check mr-1"></i> Estimasi Pengiriman Global
                         </span>
-                        <h2 class="text-lg sm:text-xl font-extrabold text-slate-800">
+                        <h2 class="text-lg sm:text-xl font-extrabold text-[#3D2A1A]">
                             Estimasi tiba: {{ $shipment->estimated_arrival->format('d M') }} – {{ $shipment->estimated_arrival->copy()->addDays(2)->format('d M Y') }}
                         </h2>
                     </div>
                     <div>
                         @if($shipment->delay_status === 'DELAYED')
-                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200 flex items-center gap-1.5">
-                                <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-[#FFF5EC] text-[#8C4626] border border-[#F2DAC4] flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-[#8C4626]"></span>
                                 Terlambat (+{{ $shipment->delay_hours }} jam)
                             </span>
                         @else
-                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1.5">
-                                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-[#EDF5EC] text-[#345937] border border-[#CCE2CB] flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-[#345937]"></span>
                                 Tepat Waktu (On Schedule)
                             </span>
                         @endif
                     </div>
                 </div>
 
-                <!-- Shopee 3-Step Milestone Stepper -->
+                <!-- 3-Step Milestone Stepper -->
                 <div class="py-2">
                     <div class="relative flex items-center justify-between max-w-2xl mx-auto px-4 sm:px-10">
-                        <div class="absolute left-10 right-10 top-5 h-0.5 bg-slate-200 -z-0"></div>
+                        <div class="absolute left-10 right-10 top-5 h-0.5 bg-[#EDE4DC] -z-0"></div>
                         @php
                             $stepperPct = '15%';
                             if ($shipment->current_status === 'DELIVERED') {
@@ -223,76 +226,76 @@
                                 $stepperPct = '25%';
                             }
                         @endphp
-                        <div class="absolute left-10 top-5 h-0.5 bg-emerald-500 -z-0 transition-all duration-500" style="width: {{ $stepperPct }};"></div>
+                        <div class="absolute left-10 top-5 h-0.5 bg-[#664930] -z-0 transition-all duration-500" style="width: {{ $stepperPct }};"></div>
 
                         <!-- Step 1: Sedang Dikirim -->
                         <div class="flex flex-col items-center z-10 text-center">
                             <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm shadow-sm transition
-                                {{ in_array($shipment->current_status, ['BOOKED', 'PICKED_UP', 'IN_TRANSIT', 'DELIVERED']) ? 'bg-emerald-500 text-white ring-4 ring-emerald-100' : 'bg-slate-100 text-slate-400' }}">
+                                {{ in_array($shipment->current_status, ['BOOKED', 'PICKED_UP', 'IN_TRANSIT', 'DELIVERED']) ? 'bg-[#664930] text-[#FFF8F2] ring-4 ring-[#FFDBBB]' : 'bg-[#FAF5EE] text-[#997E67]' }}">
                                 <i class="fa-solid fa-box-archive"></i>
                             </div>
-                            <span class="text-xs font-bold mt-2 {{ in_array($shipment->current_status, ['BOOKED', 'PICKED_UP', 'IN_TRANSIT', 'DELIVERED']) ? 'text-emerald-700' : 'text-slate-400' }}">
+                            <span class="text-xs font-bold mt-2 {{ in_array($shipment->current_status, ['BOOKED', 'PICKED_UP', 'IN_TRANSIT', 'DELIVERED']) ? 'text-[#3D2A1A]' : 'text-[#997E67]' }}">
                                 Sedang Dikirim
                             </span>
-                            <span class="text-[10px] text-slate-400 max-w-[90px] truncate">{{ $shipment->origin->city }}</span>
+                            <span class="text-[10px] text-[#997E67] max-w-[90px] truncate">{{ $shipment->origin->city }}</span>
                         </div>
 
                         <!-- Step 2: Menuju Tujuan -->
                         <div class="flex flex-col items-center z-10 text-center">
                             <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm shadow-sm transition
-                                {{ in_array($shipment->current_status, ['IN_TRANSIT', 'DELIVERED']) ? 'bg-emerald-500 text-white ring-4 ring-emerald-100' : 'bg-slate-100 text-slate-400' }}">
+                                {{ in_array($shipment->current_status, ['IN_TRANSIT', 'DELIVERED']) ? 'bg-[#664930] text-[#FFF8F2] ring-4 ring-[#FFDBBB]' : 'bg-[#FAF5EE] text-[#997E67]' }}">
                                 <i class="fa-solid fa-ship"></i>
                             </div>
-                            <span class="text-xs font-bold mt-2 {{ in_array($shipment->current_status, ['IN_TRANSIT', 'DELIVERED']) ? 'text-emerald-700' : 'text-slate-400' }}">
+                            <span class="text-xs font-bold mt-2 {{ in_array($shipment->current_status, ['IN_TRANSIT', 'DELIVERED']) ? 'text-[#3D2A1A]' : 'text-[#997E67]' }}">
                                 Menuju Tujuan
                             </span>
-                            <span class="text-[10px] text-slate-400">Dalam Pelayaran</span>
+                            <span class="text-[10px] text-[#997E67]">Dalam Pelayaran</span>
                         </div>
 
                         <!-- Step 3: Pesanan Tiba -->
                         <div class="flex flex-col items-center z-10 text-center">
                             <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm shadow-sm transition
-                                {{ $shipment->current_status === 'DELIVERED' ? 'bg-emerald-500 text-white ring-4 ring-emerald-100' : 'bg-slate-100 text-slate-400' }}">
+                                {{ $shipment->current_status === 'DELIVERED' ? 'bg-[#664930] text-[#FFF8F2] ring-4 ring-[#FFDBBB]' : 'bg-[#FAF5EE] text-[#997E67]' }}">
                                 <i class="fa-solid fa-check"></i>
                             </div>
-                            <span class="text-xs font-bold mt-2 {{ $shipment->current_status === 'DELIVERED' ? 'text-emerald-700' : 'text-slate-400' }}">
+                            <span class="text-xs font-bold mt-2 {{ $shipment->current_status === 'DELIVERED' ? 'text-[#3D2A1A]' : 'text-[#997E67]' }}">
                                 Pesanan Tiba
                             </span>
-                            <span class="text-[10px] text-slate-400 max-w-[90px] truncate">{{ $shipment->destination->city }}</span>
+                            <span class="text-[10px] text-[#997E67] max-w-[90px] truncate">{{ $shipment->destination->city }}</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Shopee Garansi Tiba Banner -->
-                <div class="p-3.5 rounded-xl bg-teal-50/80 border border-teal-200/90 text-xs text-teal-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <!-- Garansi Tiba Banner -->
+                <div class="p-3.5 rounded-2xl bg-[#FAF6F1] border border-[#EDE4DC] text-xs text-[#523A25] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div class="flex items-center gap-2.5">
-                        <div class="w-7 h-7 rounded-lg bg-teal-500 text-white flex items-center justify-center text-xs flex-shrink-0">
+                        <div class="w-7 h-7 rounded-lg bg-[#FFDBBB] text-[#664930] flex items-center justify-center text-xs flex-shrink-0 shadow-2xs">
                             <i class="fa-solid fa-stopwatch"></i>
                         </div>
                         <div>
-                            <strong class="font-semibold text-teal-950">Garansi Tiba Global:</strong> Jaminan SLA ketepatan waktu pengiriman internasional CargoTrace.
+                            <strong class="font-semibold text-[#3D2A1A]">Garansi Tiba Global:</strong> Jaminan SLA ketepatan waktu pengiriman internasional CargoTrace.
                         </div>
                     </div>
-                    <span class="text-[11px] font-bold text-teal-700 bg-white px-2.5 py-1 rounded-md border border-teal-200 shadow-2xs whitespace-nowrap self-start sm:self-auto">
+                    <span class="text-[11px] font-bold text-[#664930] bg-[#FFDBBB]/70 px-2.5 py-1 rounded-md border border-[#F0CCAC] shadow-2xs whitespace-nowrap self-start sm:self-auto">
                         Verified SLA
                     </span>
                 </div>
 
                 <!-- Kurir & Resi Card with 1-Click Copy -->
-                <div class="p-4 rounded-xl bg-slate-50/80 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="p-4 rounded-2xl bg-[#FAF6F1] border border-[#EDE4DC] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div class="flex items-center gap-3">
-                        <div class="w-11 h-11 rounded-xl bg-white border border-slate-200 shadow-2xs flex items-center justify-center text-blue-600 text-xl">
+                        <div class="w-11 h-11 rounded-xl bg-white border border-[#EDE4DC] shadow-2xs flex items-center justify-center text-[#664930] text-xl">
                             <i class="fa-solid fa-boxes-packing"></i>
                         </div>
                         <div>
                             <div class="flex items-center gap-2">
-                                <span class="text-xs font-bold text-slate-900">{{ $shipment->carrier->name }}</span>
-                                <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 font-semibold uppercase">{{ $shipment->carrier->service_type }}</span>
+                                <span class="text-xs font-bold text-[#3D2A1A]">{{ $shipment->carrier->name }}</span>
+                                <span class="text-[10px] px-1.5 py-0.5 rounded bg-[#FFDBBB]/50 text-[#664930] font-semibold uppercase">{{ $shipment->carrier->service_type }}</span>
                             </div>
                             <div class="flex items-center gap-2 mt-0.5">
-                                <span class="font-mono text-xs font-bold text-slate-700" id="publicResiSpan">{{ $shipment->shipment_number }}</span>
+                                <span class="font-mono text-xs font-bold text-[#523A25]" id="publicResiSpan">{{ $shipment->shipment_number }}</span>
                                 <button type="button" onclick="navigator.clipboard.writeText('{{ $shipment->shipment_number }}'); this.querySelector('span').innerText='Tersalin!'; setTimeout(() => this.querySelector('span').innerText='Salin', 2000);"
-                                        class="text-[11px] text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 transition">
+                                        class="text-[11px] text-[#664930] hover:text-[#3D2A1A] font-semibold flex items-center gap-1 transition">
                                     <i class="fa-regular fa-copy"></i>
                                     <span>Salin</span>
                                 </button>
@@ -301,9 +304,9 @@
                     </div>
 
                     <div class="flex items-center gap-3">
-                        <span class="text-xs text-slate-500">Rute: <strong class="text-slate-800">{{ $shipment->origin->city }} &rarr; {{ $shipment->destination->city }}</strong></span>
+                        <span class="text-xs text-[#7A6350]">Rute: <strong class="text-[#3D2A1A]">{{ $shipment->origin->city }} &rarr; {{ $shipment->destination->city }}</strong></span>
                         @auth
-                        <a href="{{ route('shipments.show', $shipment->id) }}" class="px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-blue-600 text-xs font-semibold shadow-2xs transition flex items-center gap-1">
+                        <a href="{{ route('shipments.show', $shipment->id) }}" class="px-3 py-1.5 rounded-xl bg-white border border-[#EDE4DC] text-[#664930] hover:text-[#3D2A1A] text-xs font-semibold shadow-2xs transition flex items-center gap-1">
                             <span>Console Details</span>
                             <i class="fa-solid fa-arrow-right text-[10px]"></i>
                         </a>
@@ -315,41 +318,41 @@
 
         <!-- Timeline Checkpoints -->
         <div class="space-y-3 pt-2">
-            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Titik Pemeriksaan Terverifikasi</h3>
+            <h3 class="text-xs font-bold text-[#443224] uppercase tracking-wider">Titik Pemeriksaan Terverifikasi</h3>
 
-            <div class="relative pl-6 space-y-3 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200">
+            <div class="relative pl-6 space-y-3 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-[#EDE4DC]">
                 @forelse($shipment->trackingEvents as $ev)
                 <div class="relative">
                     <div class="absolute -left-6 top-1 w-5 h-5 rounded-full flex items-center justify-center text-[10px]
-                        {{ $ev->is_exception ? 'bg-red-500 text-white' : 'bg-blue-600 text-white' }}">
+                        {{ $ev->is_exception ? 'bg-[#8C4626] text-white' : 'bg-[#664930] text-[#FFF8F2]' }}">
                         <i class="fa-solid fa-check text-[9px]"></i>
                     </div>
 
-                    <div class="p-3 rounded-xl {{ $ev->is_exception ? 'bg-red-50/60 border border-red-200' : 'bg-slate-50 border border-slate-100' }} text-xs">
+                    <div class="p-3 rounded-2xl {{ $ev->is_exception ? 'bg-[#FFF5EC] border border-[#F2DAC4]' : 'bg-[#FAF6F1] border border-[#EDE4DC]' }} text-xs">
                         <div class="flex items-center justify-between gap-1 mb-0.5">
-                            <span class="font-bold text-slate-900">{{ $ev->status }} • {{ $ev->location_name }}</span>
-                            <span class="text-[10px] text-slate-400 font-mono">{{ $ev->event_time->format('d M, H:i') }}</span>
+                            <span class="font-bold text-[#3D2A1A]">{{ $ev->localized_status }} • {{ $ev->localized_location_name }}</span>
+                            <span class="text-[10px] text-[#997E67] font-mono">{{ $ev->event_time->format('d M, H:i') }}</span>
                         </div>
-                        <p class="text-slate-600">{{ $ev->description }}</p>
+                        <p class="text-[#6E5947]">{{ $ev->localized_description }}</p>
                         @if($ev->weather_summary)
-                        <span class="inline-block mt-1 text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
-                            {{ $ev->weather_summary }}
+                        <span class="inline-block mt-1 text-[10px] text-[#664930] bg-[#FFDBBB]/50 px-2 py-0.5 rounded border border-[#F0CCAC]">
+                            {{ $ev->localized_weather }}
                         </span>
                         @endif
                     </div>
                 </div>
                 @empty
-                <p class="text-xs text-slate-400">Belum ada riwayat titik pemeriksaan tercatat.</p>
+                <p class="text-xs text-[#997E67]">Belum ada riwayat titik pemeriksaan tercatat.</p>
                 @endforelse
             </div>
         </div>
     </div>
     @elseif($shipmentNumber)
-    <div class="p-8 text-center rounded-2xl bg-white border border-slate-200 max-w-md mx-auto shadow-sm">
-        <i class="fa-solid fa-magnifying-glass text-xl text-slate-400 mb-2 block"></i>
-        <h3 class="text-sm font-bold text-slate-800">Pengiriman Tidak Ditemukan</h3>
-        <p class="text-xs text-slate-500 mt-1">
-            Tidak ditemukan konsinyasi dengan nomor "<span class="font-mono text-slate-700">{{ $shipmentNumber }}</span>".
+    <div class="p-8 text-center rounded-3xl bg-white/95 border border-[#EDE4DC] max-w-md mx-auto shadow-sm">
+        <i class="fa-solid fa-magnifying-glass text-xl text-[#997E67] mb-2 block"></i>
+        <h3 class="text-sm font-bold text-[#3D2A1A]">Pengiriman Tidak Ditemukan</h3>
+        <p class="text-xs text-[#7A6350] mt-1">
+            Tidak ditemukan konsinyasi dengan nomor "<span class="font-mono text-[#3D2A1A] font-bold">{{ $shipmentNumber }}</span>".
         </p>
     </div>
     @endif
@@ -359,7 +362,7 @@
 @push('scripts')
 @if($shipment)
 <style>
-    /* Shopee / SPX Style Callout Bubble & Pin styles */
+    /* Neutral Elegance Style Callout Bubble & Pin styles */
     .vehicle-callout-wrapper {
         display: flex;
         flex-direction: column;
@@ -371,13 +374,13 @@
     .shopee-bubble {
         position: relative;
         background: #ffffff;
-        color: #e11d48;
+        color: #664930;
         font-size: 11px;
         font-weight: 700;
         padding: 4px 10px;
-        border-radius: 6px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        border: 1px solid rgba(225, 29, 72, 0.25);
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(102, 73, 48, 0.15);
+        border: 1px solid #CCBEB1;
         white-space: nowrap;
         margin-bottom: 6px;
         display: flex;
@@ -400,15 +403,15 @@
         position: relative;
         width: 44px;
         height: 44px;
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-        border: 2.5px solid #ffffff;
+        background: linear-gradient(135deg, #664930 0%, #3D2A1A 100%);
+        border: 2.5px solid #FFDBBB;
         border-radius: 14px;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #f59e0b;
+        color: #FFDBBB;
         font-size: 18px;
-        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.35);
+        box-shadow: 0 8px 18px rgba(102, 73, 48, 0.35);
         transition: transform 0.2s ease;
     }
     .vehicle-badge:hover {
@@ -418,7 +421,7 @@
         position: absolute;
         inset: -4px;
         border-radius: 16px;
-        background: rgba(245, 158, 11, 0.35);
+        background: rgba(255, 219, 187, 0.45);
         animation: ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
         z-index: -1;
     }
@@ -432,7 +435,7 @@
         justify-content: center;
         color: #ffffff;
         font-size: 11px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 4px 10px rgba(102, 73, 48, 0.25);
     }
 </style>
 
@@ -453,7 +456,7 @@
             worldCopyJump: true
         });
 
-        // OpenStreetMap Standard Tiles (Natural Green Land & Blue Sea, No API Key)
+        // OpenStreetMap Standard Tiles
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             maxZoom: 19
@@ -469,24 +472,24 @@
             [destLat, destLng]
         ];
 
-        // Shopee / Logistics Style Polyline (Coral/Orange Glow + Dashed Center)
+        // Neutral Elegance Route Polyline
         L.polyline(routePoints, {
-            color: '#ea580c',
+            color: '#664930',
             weight: 5,
             opacity: 0.85
         }).addTo(map);
 
         L.polyline(routePoints, {
-            color: '#ffffff',
+            color: '#FFDBBB',
             weight: 2,
-            opacity: 0.9,
+            opacity: 0.95,
             dashArray: '6, 8'
         }).addTo(map);
 
         // Origin Pin
         const originIcon = L.divIcon({
             className: 'custom-origin-div',
-            html: `<div class="port-pin bg-emerald-600"><i class="fa-solid fa-anchor"></i></div>`,
+            html: `<div class="port-pin bg-[#664930]"><i class="fa-solid fa-anchor"></i></div>`,
             iconSize: [28, 28],
             iconAnchor: [14, 14]
         });
@@ -496,18 +499,18 @@
         // Destination Pin
         const destIcon = L.divIcon({
             className: 'custom-dest-div',
-            html: `<div class="port-pin bg-blue-600"><i class="fa-solid fa-location-dot"></i></div>`,
+            html: `<div class="port-pin bg-[#997E67]"><i class="fa-solid fa-location-dot"></i></div>`,
             iconSize: [28, 28],
             iconAnchor: [14, 14]
         });
         L.marker([destLat, destLng], { icon: destIcon }).addTo(map)
             .bindPopup("<b>Pelabuhan Tujuan:</b> {{ $shipment->destination->name }}");
 
-        // Current Vessel Marker (Shopee Callout Bubble)
+        // Current Vessel Marker
         const shipmentStatus = "{{ $shipment->current_status }}";
         let calloutText = "Memproses pesanan";
         if (shipmentStatus === 'IN_TRANSIT') {
-            calloutText = "Sedang Berlayar (In Transit)";
+            calloutText = "Sedang Berlayar";
         } else if (shipmentStatus === 'DELIVERED') {
             calloutText = "Pesanan Tiba";
         } else if (shipmentStatus === 'PICKED_UP') {
@@ -517,7 +520,7 @@
         const vehicleHtml = `
             <div class="vehicle-callout-wrapper">
                 <div class="shopee-bubble">
-                    <span class="w-1.5 h-1.5 rounded-full bg-rose-500 inline-block animate-ping"></span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#8C4626] inline-block animate-ping"></span>
                     <span>${calloutText}</span>
                 </div>
                 <div class="vehicle-badge">
