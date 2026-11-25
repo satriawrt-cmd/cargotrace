@@ -13,10 +13,10 @@
             </p>
         </div>
 
-        @if(Auth::user()->canManageShipments())
+        @if(Auth::user()->canManageShipments() || Auth::user()->isCustomer())
         <a href="{{ route('shipments.create') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-[#1E3A8A] hover:bg-[#1D4ED8] text-white font-semibold text-xs rounded-xl shadow-sm transition border border-sky-400/30">
             <i class="fa-solid fa-plus text-xs"></i>
-            <span>Tambah Pengiriman</span>
+            <span>{{ Auth::user()->isCustomer() ? 'Pesan Pengiriman Baru' : 'Tambah Pengiriman' }}</span>
         </a>
         @endif
     </div>
@@ -200,6 +200,14 @@
                             </div>
                             <p class="text-xs font-semibold text-slate-700">Tidak ada pengiriman ditemukan</p>
                             <p class="text-[11px] text-slate-400 mt-0.5">Coba sesuaikan kriteria pencarian atau tambahkan pengiriman baru.</p>
+                            @if(Auth::user()->canManageShipments() || Auth::user()->isCustomer())
+                            <div class="mt-4">
+                                <a href="{{ route('shipments.create') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-[#1E3A8A] hover:bg-[#1D4ED8] text-white font-semibold text-xs rounded-xl shadow-sm transition">
+                                    <i class="fa-solid fa-plus"></i>
+                                    <span>{{ Auth::user()->isCustomer() ? 'Pesan Pengiriman Sekarang' : 'Tambah Pengiriman Baru' }}</span>
+                                </a>
+                            </div>
+                            @endif
                         </td>
                     </tr>
                     @endforelse

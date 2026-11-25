@@ -8,7 +8,16 @@ class StoreShipmentRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()?->canManageShipments() ?? false;
+        return auth()->check();
+    }
+
+    protected function prepareForValidation(): void
+    {
+        if (auth()->check() && auth()->user()->isCustomer()) {
+            $this->merge([
+                'customer_id' => auth()->id(),
+            ]);
+        }
     }
 
     public function rules(): array

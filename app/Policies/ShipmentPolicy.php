@@ -32,7 +32,7 @@ class ShipmentPolicy
      */
     public function create(User $user): bool
     {
-        return $user->canManageShipments();
+        return true; // Admin, Operator, and Customer can all create/book shipments
     }
 
     /**

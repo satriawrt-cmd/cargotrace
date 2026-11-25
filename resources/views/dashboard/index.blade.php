@@ -33,10 +33,10 @@
         </div>
 
         <div class="flex items-center gap-2.5 shrink-0 relative z-10">
-            @if(Auth::check() && Auth::user()->canManageShipments())
+            @if(Auth::check() && (Auth::user()->canManageShipments() || Auth::user()->isCustomer()))
             <a href="{{ route('shipments.create') }}" class="inline-flex items-center gap-2 px-4 py-2.5 bg-[#38BDF8] hover:bg-[#7DD3FC] text-[#082F49] font-bold text-xs rounded-xl shadow-sm transition border border-sky-400">
                 <i class="fa-solid fa-plus text-xs"></i>
-                <span>New Shipment</span>
+                <span>{{ Auth::user()->isCustomer() ? 'Book Shipment' : 'New Shipment' }}</span>
             </a>
             @endif
 
@@ -261,7 +261,21 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="7" class="py-8 text-center text-slate-400">No shipments found.</td>
+                        <td colspan="7" class="py-12 text-center text-slate-400">
+                            <div class="w-10 h-10 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center mx-auto mb-2 text-base border border-slate-200">
+                                <i class="fa-solid fa-box-open"></i>
+                            </div>
+                            <p class="text-xs font-semibold text-slate-700">No shipments found for your account</p>
+                            <p class="text-[11px] text-slate-400 mt-0.5">Book your first cargo shipment to begin tracking in real-time.</p>
+                            @if(Auth::check() && (Auth::user()->canManageShipments() || Auth::user()->isCustomer()))
+                            <div class="mt-4">
+                                <a href="{{ route('shipments.create') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-[#1E3A8A] hover:bg-[#1D4ED8] text-white font-semibold text-xs rounded-xl shadow-sm transition">
+                                    <i class="fa-solid fa-plus"></i>
+                                    <span>{{ Auth::user()->isCustomer() ? 'Book Shipment Now' : 'Create New Shipment' }}</span>
+                                </a>
+                            </div>
+                            @endif
+                        </td>
                     </tr>
                     @endforelse
                 </tbody>

@@ -78,6 +78,7 @@
         .leaflet-container {
             font-family: 'Plus Jakarta Sans', sans-serif !important;
         }
+        /* Custom scrollbar in Ocean Maritime tones */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #0B132B; }
         ::-webkit-scrollbar-thumb { background: #1E3A8A; border-radius: 3px; }
@@ -85,10 +86,10 @@
     </style>
     @stack('styles')
 </head>
-<body class="h-full bg-[#F8FAFC] text-[#0F172A] antialiased flex flex-col md:flex-row">
+<body class="min-h-screen bg-[#F8FAFC] text-[#0F172A] antialiased flex flex-col md:flex-row">
 
-    <!-- Sidebar Navigation (Ocean Maritime Style) -->
-    <aside class="w-full md:w-64 bg-[#0B132B] border-r border-[#1E293B] shrink-0 flex flex-col justify-between h-auto md:min-h-screen text-slate-300">
+    <!-- Sidebar Navigation (Ocean Maritime Fixed Style) -->
+    <aside class="w-full md:w-64 bg-[#0B132B] border-r border-[#1E293B] shrink-0 md:sticky md:top-0 md:h-screen md:overflow-y-auto flex flex-col justify-between text-slate-300 z-40 select-none">
         <div class="p-5">
             <!-- App Brand Header -->
             <div class="flex items-center gap-3 mb-6">
@@ -165,17 +166,34 @@
                         <span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
                         <span>Logistics</span>
                     </p>
-                    <a href="{{ route('shipments.index') }}" class="group relative flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-all duration-150 {{ request()->routeIs('shipments.*') ? 'bg-[#1E293B] text-white font-bold border border-slate-700/60 shadow-xs' : 'text-slate-400 hover:bg-white/5 hover:text-white' }}">
+
+                    <!-- My Shipments / All Shipments -->
+                    <a href="{{ route('shipments.index') }}" class="group relative flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-all duration-150 {{ request()->routeIs('shipments.index') ? 'bg-[#1E293B] text-white font-bold border border-slate-700/60 shadow-xs' : 'text-slate-400 hover:bg-white/5 hover:text-white' }}">
                         <div class="flex items-center gap-3">
-                            <div class="w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-transform group-hover:scale-105 shrink-0 {{ request()->routeIs('shipments.*') ? 'bg-[#1E3A8A] text-white shadow-xs' : 'bg-white/5 text-slate-400 group-hover:bg-white/10 group-hover:text-white' }}">
+                            <div class="w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-transform group-hover:scale-105 shrink-0 {{ request()->routeIs('shipments.index') ? 'bg-[#1E3A8A] text-white shadow-xs' : 'bg-white/5 text-slate-400 group-hover:bg-white/10 group-hover:text-white' }}">
                                 <i class="fa-solid fa-box-archive"></i>
                             </div>
                             <span>{{ Auth::check() && Auth::user()->isCustomer() ? 'My Shipments' : 'Shipments' }}</span>
                         </div>
-                        @if(request()->routeIs('shipments.*'))
+                        @if(request()->routeIs('shipments.index'))
                         <span class="w-2 h-2 rounded-full bg-[#38BDF8] shadow-xs shadow-sky-400/50"></span>
                         @endif
                     </a>
+
+                    <!-- Customer Book Shipment / Admin Add Shipment -->
+                    @auth
+                    <a href="{{ route('shipments.create') }}" class="group relative flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-all duration-150 {{ request()->routeIs('shipments.create') ? 'bg-[#1E293B] text-white font-bold border border-slate-700/60 shadow-xs' : 'text-slate-400 hover:bg-white/5 hover:text-white' }}">
+                        <div class="flex items-center gap-3">
+                            <div class="w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-transform group-hover:scale-105 shrink-0 {{ request()->routeIs('shipments.create') ? 'bg-[#1E3A8A] text-white shadow-xs' : 'bg-white/5 text-slate-400 group-hover:bg-white/10 group-hover:text-white' }}">
+                                <i class="fa-solid fa-plus text-[#38BDF8]"></i>
+                            </div>
+                            <span>{{ Auth::user()->isCustomer() ? 'Book Shipment' : 'New Shipment' }}</span>
+                        </div>
+                        @if(request()->routeIs('shipments.create'))
+                        <span class="w-2 h-2 rounded-full bg-[#38BDF8] shadow-xs shadow-sky-400/50"></span>
+                        @endif
+                    </a>
+                    @endauth
                 </div>
 
                 <!-- Group 3: MASTER DATA (Administrator only) -->
@@ -253,8 +271,8 @@
             </nav>
         </div>
 
-        <!-- User Profile Card at bottom of Sidebar -->
-        <div class="p-4 border-t border-[#1E293B] bg-[#080E1A]">
+        <!-- User Profile Card at bottom of Sidebar (Sticky bottom, seamless dark background) -->
+        <div class="p-4 border-t border-[#1E293B] bg-[#080E1A] sticky bottom-0">
             @auth
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2.5 min-w-0">

@@ -133,13 +133,28 @@ class ShipmentController extends Controller
 
     public function store(StoreShipmentRequest $request)
     {
+        $validated = $request->validated();
+        if (Auth::user()->isCustomer()) {
+            $validated['customer_id'] = Auth::id();
+        }
+
         $shipment = $this->shipmentService->createShipment(
-            $request->validated(),
+            $validated,
             Auth::user()
         );
 
+        $isId = \Illuminate\Support\Facades\App::getLocale() === 'id' || session('locale') === 'id';
+        $msg = $isId
+            ? "Pengiriman kargo {$shipment->shipment_number} berhasil didaftarkan! Anda dapat langsung memantau statusnya."
+            : "Shipment {$shipment->shipment_number} created successfully! You can track its journey in real-time.";
+
+        if (Auth::user()->isCustomer()) {
+            return redirect()->route('public.track', ['shipment_number' => $shipment->shipment_number])
+                ->with('success', $msg);
+        }
+
         return redirect()->route('shipments.show', $shipment->id)
-            ->with('success', "Shipment {$shipment->shipment_number} created successfully!");
+            ->with('success', $msg);
     }
 
     public function edit(Shipment $shipment)
