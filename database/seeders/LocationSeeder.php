@@ -10,9 +10,9 @@ class LocationSeeder extends Seeder
     public function run(): void
     {
         $locations = [
-            // Asia
+            // Asia - Genuine Major Container Seaports & Hubs
             [
-                'name' => 'Port of Singapore',
+                'name' => 'Port of Singapore (PSA Singapore)',
                 'code' => 'SGSIN',
                 'city' => 'Singapore',
                 'country' => 'Singapore',
@@ -23,7 +23,7 @@ class LocationSeeder extends Seeder
                 'timezone' => 'Asia/Singapore',
             ],
             [
-                'name' => 'Port of Shanghai',
+                'name' => 'Port of Shanghai (Yangshan & Waigaoqiao)',
                 'code' => 'CNSHA',
                 'city' => 'Shanghai',
                 'country' => 'China',
@@ -34,7 +34,7 @@ class LocationSeeder extends Seeder
                 'timezone' => 'Asia/Shanghai',
             ],
             [
-                'name' => 'Port of Tokyo',
+                'name' => 'Port of Tokyo (Ohi Container Terminal)',
                 'code' => 'JPTYO',
                 'city' => 'Tokyo',
                 'country' => 'Japan',
@@ -45,7 +45,7 @@ class LocationSeeder extends Seeder
                 'timezone' => 'Asia/Tokyo',
             ],
             [
-                'name' => 'Port of Tanjung Priok',
+                'name' => 'Port of Tanjung Priok (JICT Jakarta)',
                 'code' => 'IDTPP',
                 'city' => 'Jakarta',
                 'country' => 'Indonesia',
@@ -56,7 +56,18 @@ class LocationSeeder extends Seeder
                 'timezone' => 'Asia/Jakarta',
             ],
             [
-                'name' => 'Jebel Ali Port',
+                'name' => 'Port of Tanjung Perak (Teluk Lamong Surabaya)',
+                'code' => 'IDSUB',
+                'city' => 'Surabaya',
+                'country' => 'Indonesia',
+                'continent' => 'Asia',
+                'type' => 'SEAPORT',
+                'latitude' => -7.2008000,
+                'longitude' => 112.7297000,
+                'timezone' => 'Asia/Jakarta',
+            ],
+            [
+                'name' => 'Jebel Ali Port (DP World Dubai)',
                 'code' => 'AEDXB',
                 'city' => 'Dubai',
                 'country' => 'United Arab Emirates',
@@ -66,10 +77,32 @@ class LocationSeeder extends Seeder
                 'longitude' => 55.0620000,
                 'timezone' => 'Asia/Dubai',
             ],
-
-            // Europe
             [
-                'name' => 'Port of Rotterdam',
+                'name' => 'Port of Klang (Westports Malaysia)',
+                'code' => 'MYPKG',
+                'city' => 'Port Klang',
+                'country' => 'Malaysia',
+                'continent' => 'Asia',
+                'type' => 'SEAPORT',
+                'latitude' => 2.9900000,
+                'longitude' => 101.3900000,
+                'timezone' => 'Asia/Kuala_Lumpur',
+            ],
+            [
+                'name' => 'Port of Busan (Busan New Port)',
+                'code' => 'KRPUS',
+                'city' => 'Busan',
+                'country' => 'South Korea',
+                'continent' => 'Asia',
+                'type' => 'SEAPORT',
+                'latitude' => 35.0800000,
+                'longitude' => 128.8300000,
+                'timezone' => 'Asia/Seoul',
+            ],
+
+            // Europe - Genuine Major Deepwater Container Ports
+            [
+                'name' => 'Port of Rotterdam (Maasvlakte 2)',
                 'code' => 'NLRTM',
                 'city' => 'Rotterdam',
                 'country' => 'Netherlands',
@@ -80,18 +113,7 @@ class LocationSeeder extends Seeder
                 'timezone' => 'Europe/Amsterdam',
             ],
             [
-                'name' => 'Port of Hamburg',
-                'code' => 'DEHAM',
-                'city' => 'Hamburg',
-                'country' => 'Germany',
-                'continent' => 'Europe',
-                'type' => 'SEAPORT',
-                'latitude' => 53.5320000,
-                'longitude' => 9.9670000,
-                'timezone' => 'Europe/Berlin',
-            ],
-            [
-                'name' => 'Port of Antwerp',
+                'name' => 'Port of Antwerp-Bruges (Antwerp Gateway)',
                 'code' => 'BEANR',
                 'city' => 'Antwerp',
                 'country' => 'Belgium',
@@ -102,7 +124,18 @@ class LocationSeeder extends Seeder
                 'timezone' => 'Europe/Brussels',
             ],
             [
-                'name' => 'Port of Felixstowe',
+                'name' => 'Port of Hamburg (Altenwerder Terminal)',
+                'code' => 'DEHAM',
+                'city' => 'Hamburg',
+                'country' => 'Germany',
+                'continent' => 'Europe',
+                'type' => 'SEAPORT',
+                'latitude' => 53.5320000,
+                'longitude' => 9.9670000,
+                'timezone' => 'Europe/Berlin',
+            ],
+            [
+                'name' => 'Port of Felixstowe (Trinity Terminal)',
                 'code' => 'GBFXT',
                 'city' => 'Felixstowe',
                 'country' => 'United Kingdom',
@@ -112,10 +145,21 @@ class LocationSeeder extends Seeder
                 'longitude' => 1.3090000,
                 'timezone' => 'Europe/London',
             ],
-
-            // North America
             [
-                'name' => 'Port of Los Angeles',
+                'name' => 'Port of Valencia (Noatum Terminal)',
+                'code' => 'ESVLC',
+                'city' => 'Valencia',
+                'country' => 'Spain',
+                'continent' => 'Europe',
+                'type' => 'SEAPORT',
+                'latitude' => 39.4500000,
+                'longitude' => -0.3200000,
+                'timezone' => 'Europe/Madrid',
+            ],
+
+            // North America - Major Container Terminals
+            [
+                'name' => 'Port of Los Angeles (San Pedro Bay Pier 400)',
                 'code' => 'USLAX',
                 'city' => 'Los Angeles',
                 'country' => 'United States',
@@ -126,7 +170,7 @@ class LocationSeeder extends Seeder
                 'timezone' => 'America/Los_Angeles',
             ],
             [
-                'name' => 'Port of New York & New Jersey',
+                'name' => 'Port of New York & New Jersey (Maher Newark)',
                 'code' => 'USNYC',
                 'city' => 'New York',
                 'country' => 'United States',
@@ -137,7 +181,7 @@ class LocationSeeder extends Seeder
                 'timezone' => 'America/New_York',
             ],
             [
-                'name' => 'Port of Vancouver',
+                'name' => 'Port of Vancouver (Deltaport Roberts Bank)',
                 'code' => 'CAVAN',
                 'city' => 'Vancouver',
                 'country' => 'Canada',
@@ -148,7 +192,7 @@ class LocationSeeder extends Seeder
                 'timezone' => 'America/Vancouver',
             ],
             [
-                'name' => 'Port of Balboa (Panama Canal)',
+                'name' => 'Port of Balboa (Panama Canal Pacific Terminal)',
                 'code' => 'PABLB',
                 'city' => 'Panama City',
                 'country' => 'Panama',
@@ -159,9 +203,9 @@ class LocationSeeder extends Seeder
                 'timezone' => 'America/Panama',
             ],
 
-            // South America
+            // South America - Major Container Terminals
             [
-                'name' => 'Port of Santos',
+                'name' => 'Port of Santos (Santos Brasil Tecon)',
                 'code' => 'BRSSZ',
                 'city' => 'Santos',
                 'country' => 'Brazil',
@@ -172,7 +216,7 @@ class LocationSeeder extends Seeder
                 'timezone' => 'America/Sao_Paulo',
             ],
             [
-                'name' => 'Port of Buenos Aires',
+                'name' => 'Port of Buenos Aires (Terminales Río de la Plata)',
                 'code' => 'ARBUE',
                 'city' => 'Buenos Aires',
                 'country' => 'Argentina',
@@ -183,9 +227,9 @@ class LocationSeeder extends Seeder
                 'timezone' => 'America/Argentina/Buenos_Aires',
             ],
 
-            // Africa
+            // Africa - Strategic Maritime Gateways
             [
-                'name' => 'Port Said (Suez Canal)',
+                'name' => 'Port Said (Suez Canal Container Terminal)',
                 'code' => 'EGPSD',
                 'city' => 'Port Said',
                 'country' => 'Egypt',
@@ -196,18 +240,7 @@ class LocationSeeder extends Seeder
                 'timezone' => 'Africa/Cairo',
             ],
             [
-                'name' => 'Port of Cape Town',
-                'code' => 'ZACPT',
-                'city' => 'Cape Town',
-                'country' => 'South Africa',
-                'continent' => 'Africa',
-                'type' => 'SEAPORT',
-                'latitude' => -33.9167000,
-                'longitude' => 18.4333000,
-                'timezone' => 'Africa/Johannesburg',
-            ],
-            [
-                'name' => 'Port of Durban',
+                'name' => 'Port of Durban (Pier 2 Container Terminal)',
                 'code' => 'ZADUR',
                 'city' => 'Durban',
                 'country' => 'South Africa',
@@ -217,21 +250,32 @@ class LocationSeeder extends Seeder
                 'longitude' => 31.0200000,
                 'timezone' => 'Africa/Johannesburg',
             ],
-
-            // Oceania
             [
-                'name' => 'Port of Sydney',
-                'code' => 'AUMYD',
+                'name' => 'Port of Cape Town (Cape Town Container Terminal)',
+                'code' => 'ZACPT',
+                'city' => 'Cape Town',
+                'country' => 'South Africa',
+                'continent' => 'Africa',
+                'type' => 'SEAPORT',
+                'latitude' => -33.9167000,
+                'longitude' => 18.4333000,
+                'timezone' => 'Africa/Johannesburg',
+            ],
+
+            // Oceania - Major Australian & NZ Ports
+            [
+                'name' => 'Port Botany (Sydney Patrick Terminals)',
+                'code' => 'AUSYD',
                 'city' => 'Sydney',
                 'country' => 'Australia',
                 'continent' => 'Oceania',
                 'type' => 'SEAPORT',
-                'latitude' => -33.8600000,
-                'longitude' => 151.2100000,
+                'latitude' => -33.9700000,
+                'longitude' => 151.2150000,
                 'timezone' => 'Australia/Sydney',
             ],
             [
-                'name' => 'Port of Melbourne',
+                'name' => 'Port of Melbourne (Swanson Dock Terminal)',
                 'code' => 'AUMEL',
                 'city' => 'Melbourne',
                 'country' => 'Australia',
@@ -242,7 +286,7 @@ class LocationSeeder extends Seeder
                 'timezone' => 'Australia/Melbourne',
             ],
             [
-                'name' => 'Port of Auckland',
+                'name' => 'Port of Auckland (Fergusson Container Terminal)',
                 'code' => 'NZAKL',
                 'city' => 'Auckland',
                 'country' => 'New Zealand',

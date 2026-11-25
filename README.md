@@ -37,7 +37,7 @@ CargoTrace comes pre-seeded with genuine deep-water container ports and intermod
 - **North America:** Los Angeles (`USLAX`), New York/New Jersey (`USNYC`), Vancouver (`CAVAN`), Balboa Panama Canal (`PABLB`).
 - **South America:** Santos (`BRSSZ`), Buenos Aires (`ARBUE`).
 - **Africa:** Port Said / Suez Canal (`EGPSD`), Cape Town (`ZACPT`), Durban (`ZADUR`).
-- **Oceania:** Sydney (`AUMYD`), Melbourne (`AUMEL`), Auckland (`NZAKL`).
+- **Oceania:** Sydney (`AUSYD`), Melbourne (`AUMEL`), Auckland (`NZAKL`).
 
 ### 2. Multi-Currency Financial Engine (`Mata Uang Dunia`)
 - Each consignment records an immutable base currency, freight shipping cost, declared cargo value, and insurance premium.
@@ -58,7 +58,7 @@ Status transitions are strictly validated at the backend service layer:
 - Automatic arrival timestamp logging on entry to `DELIVERED`.
 
 ### 4. Interactive World Map & Weather Telemetry
-- Implemented with **Leaflet.js** and **OpenStreetMap (CARTO Voyager)**.
+- Implemented with **Leaflet.js** and **OpenStreetMap (Standard Tiles)**.
 - Nautical route polyline drawn across intermediate waypoints.
 - Distinct color-coded pins:
   - 🟢 **Green Pin:** Origin Port
@@ -262,9 +262,9 @@ erDiagram
 
 ---
 
-## ⚡ Demo Credentials & Quick 1-Click Evaluation
+## ⚡ Demo Credentials & Evaluation Accounts
 
-The web login screen (`/login`) includes **1-Click Quick Demo Access Pills** for instant switching between roles:
+The pre-seeded accounts and roles can be used to log in at `/login`:
 
 | Role | Email | Password | Primary Permissions |
 | :--- | :--- | :--- | :--- |

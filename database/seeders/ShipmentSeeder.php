@@ -32,7 +32,7 @@ class ShipmentSeeder extends Seeder
         $shanghai = Location::where('code', 'CNSHA')->first();
         $rotterdam = Location::where('code', 'NLRTM')->first();
         $singapore = Location::where('code', 'SGSIN')->first();
-        $sydney = Location::where('code', 'AUMYD')->first();
+        $sydney = Location::where('code', 'AUSYD')->first();
         $jakarta = Location::where('code', 'IDTPP')->first();
         $losAngeles = Location::where('code', 'USLAX')->first();
         $santos = Location::where('code', 'BRSSZ')->first();
