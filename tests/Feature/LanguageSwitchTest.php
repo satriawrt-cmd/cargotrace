@@ -49,6 +49,14 @@ class LanguageSwitchTest extends TestCase
 
         $trackResponse->assertStatus(200);
         $trackResponse->assertSee('Track Global Consignments');
+
+        // 5. Visit shipments index with English session
+        $shipmentsResponse = $this->actingAs($admin)
+            ->withSession(['locale' => 'en'])
+            ->get(route('shipments.index'));
+
+        $shipmentsResponse->assertStatus(200);
+        $shipmentsResponse->assertSee('Shipments');
     }
 
     public function test_can_switch_language_to_indonesian_and_render_indonesian_views(): void
@@ -83,6 +91,14 @@ class LanguageSwitchTest extends TestCase
 
         $trackResponse->assertStatus(200);
         $trackResponse->assertSee('Lacak Pengiriman Global');
+
+        // 5. Visit shipments index with Indonesian session
+        $shipmentsResponse = $this->actingAs($admin)
+            ->withSession(['locale' => 'id'])
+            ->get(route('shipments.index'));
+
+        $shipmentsResponse->assertStatus(200);
+        $shipmentsResponse->assertSee('Daftar Pengiriman');
     }
 
     public function test_get_language_switcher_route(): void
